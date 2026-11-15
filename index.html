@@ -20,16 +20,17 @@
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    /* BEYAZ (AÇIK) TEMA STİLLERİ - Ayarlar altındaki görüş kısmı dahil tüm kartları beyaza çeker */
+    /* BEYAZ (AÇIK) TEMA STİLLERİ */
     body:not(.dark-theme) {
       background-color: #f1f5f9 !important;
       color: #0f172a !important;
     }
     body:not(.dark-theme) #appShell,
     body:not(.dark-theme) header,
-    body:not(.dark-theme) nav {
+    body:not(.dark-theme) nav,
+    body:not(.dark-theme) #liveSupportCard {
       background-color: #ffffff !important;
-      border-color: #e2e8f0 !important;
+      border-color: #cbd5e1 !important;
     }
     body:not(.dark-theme) [class*="bg-slate-900"],
     body:not(.dark-theme) [class*="bg-slate-950"] {
@@ -128,6 +129,64 @@
       </div>
     </div>
 
+    <!-- CANLI DESTEK AÇILIR PENCERESİ (MODAL) -->
+    <div id="liveSupportModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-3">
+      <div id="liveSupportCard" class="w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[82vh]">
+        <!-- Canlı Destek Üst Başlık -->
+        <div class="px-4 py-3.5 bg-slate-800/90 border-b border-slate-700 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 relative">
+              <i class="fa-solid fa-headset text-base"></i>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 absolute -top-0.5 -right-0.5 animate-pulse"></span>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Canlı Destek Hattı</h3>
+              <p class="text-[10px] text-emerald-400 font-semibold">Çevrimiçi • Hızlı Yanıt Sistemi</p>
+            </div>
+          </div>
+          <button onclick="toggleLiveSupport(false)" class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center">
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Mesajlaşma Alanı -->
+        <div id="supportChatMessages" class="p-4 space-y-3 overflow-y-auto flex-1 text-xs">
+          <div class="bg-slate-800/90 border border-slate-700 rounded-2xl rounded-tl-sm p-3 text-slate-200 leading-relaxed">
+            <span class="text-[10px] font-bold text-emerald-400 block mb-1">Destek Asistanı</span>
+            Merhaba! 👋 <strong>Kesinti Habercisi Canlı Destek</strong> hattına hoş geldiniz. Aşağıdaki hızlı konulardan birini seçebilir veya mesajınızı doğrudan yazabilirsiniz.
+          </div>
+        </div>
+
+        <!-- Hazır Hızlı Sorular -->
+        <div class="px-4 py-2 border-t border-slate-800 flex gap-1.5 overflow-x-auto">
+          <button type="button" onclick="sendQuickSupportAsk('Sokağımda kesinti var ama listede görünmüyor')" class="shrink-0 text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2.5 py-1.5 rounded-xl">
+            ⚡ Kesinti listede yok
+          </button>
+          <button type="button" onclick="sendQuickSupportAsk('Kesinti bilgileri nereden alınıyor?')" class="shrink-0 text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2.5 py-1.5 rounded-xl">
+            🔍 Veri kaynağı nedir?
+          </button>
+          <button type="button" onclick="sendQuickSupportAsk('Yetkiliye doğrudan mesaj göndermek istiyorum')" class="shrink-0 text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2.5 py-1.5 rounded-xl">
+            📩 Yetkiliye bağlan
+          </button>
+        </div>
+
+        <!-- Mesaj Yazma Kutusu -->
+        <div class="p-3 bg-slate-800/60 border-t border-slate-700 flex items-center gap-2">
+          <input id="supportInput" type="text" onkeydown="if(event.key==='Enter') sendUserSupportMessage()" placeholder="Mesajınızı yazın..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500" />
+          <button type="button" onclick="sendUserSupportMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-xl transition">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAĞ ALT YÜZEN CANLI DESTEK BUTONU -->
+    <button onclick="toggleLiveSupport(true)" class="fixed bottom-20 right-4 z-30 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3.5 py-2.5 rounded-full shadow-xl flex items-center gap-2 border-2 border-white/20 active:scale-95 transition">
+      <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
+      <i class="fa-solid fa-headset text-sm"></i>
+      <span>Canlı Destek</span>
+    </button>
+
     <!-- Üst Başlık -->
     <header class="px-5 pt-5 pb-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between sticky top-0 z-20 backdrop-blur">
       <div class="flex items-center gap-3">
@@ -142,7 +201,11 @@
           </p>
         </div>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5">
+        <button onclick="toggleLiveSupport(true)" title="Canlı Destek" class="px-2.5 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-emerald-500/40 flex items-center gap-1.5 text-emerald-400 text-xs font-bold active:scale-95 transition">
+          <i class="fa-solid fa-headset"></i>
+          <span class="text-[11px]">Destek</span>
+        </button>
         <button onclick="shareApp()" title="Uygulamayı Paylaş" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-emerald-400 active:scale-95 transition">
           <i class="fa-brands fa-whatsapp text-base"></i>
         </button>
@@ -153,7 +216,7 @@
     </header>
 
     <!-- Ana İçerik -->
-    <main class="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-24">
+    <main class="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-28">
 
       <!-- SEKME 1: KESİNTİLER (ANA MENÜ) -->
       <section id="tab-kesintiler" class="space-y-4">
@@ -194,7 +257,6 @@
                 <span class="text-[11px] text-slate-400">İstanbul (39 İlçe)</span>
               </div>
 
-              <!-- Otomatik Konum Bul Butonu -->
               <button type="button" onclick="detectUserLocation('qa')" id="btnGps-qa" class="w-full bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/40 text-sky-300 font-semibold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition active:scale-95">
                 <i class="fa-solid fa-location-crosshairs"></i> Konumumu Otomatik Bul (GPS)
               </button>
@@ -215,7 +277,6 @@
                 <input id="qaCustomNeighborhood" type="text" placeholder="Örn: Yıldız" class="hidden mt-2 w-full bg-slate-950 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white focus:outline-none" />
               </div>
 
-              <!-- İsteğe Bağlı Mahalle / Cadde / Sokak Girişi -->
               <div>
                 <label class="text-xs text-slate-400 block mb-1">
                   Mahalle veya Cadde / Sokak Giriniz <span class="text-[10px] text-slate-400 font-normal">(İsteğe Bağlı)</span>
@@ -234,7 +295,6 @@
 
         <!-- ADRES KAYDEDİLDİKTEN SONRA GÖSTERİLEN KESİN BİLGİ EKRANI -->
         <div id="activeAddressView" class="hidden space-y-4">
-          <!-- 1. Kayıtlı Konum Kartı -->
           <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
             <div class="flex items-center justify-between">
               <span id="activeProviderBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">
@@ -258,14 +318,11 @@
             </div>
           </div>
 
-          <!-- 2. Kesin Durum Özeti Kartı -->
           <div id="statusCard" class="rounded-2xl p-5 border transition-all"></div>
-
-          <!-- 3. Sokak Bazlı Kanıtlı Kesinti Listesi (Konumun Altında, Paylaşın Üstünde) -->
           <div id="outageList" class="space-y-3"></div>
         </div>
 
-        <!-- 4. Uygulamayı Paylaş & ALO 186 / 185 -->
+        <!-- Uygulamayı Paylaş & ALO 186 / 185 -->
         <div class="pt-1 space-y-2.5">
           <button onclick="shareApp()" class="w-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-semibold text-xs py-3 rounded-2xl flex items-center justify-center gap-2 transition">
             <i class="fa-brands fa-whatsapp text-base"></i> Uygulamayı Paylaş
@@ -319,7 +376,7 @@
         <div id="historyListContainer" class="space-y-2.5"></div>
       </section>
 
-      <!-- SEKME 3: ADRESLERİM (BEDAŞ/AYEDAŞ YAZILARI KALDIRILDI, İSTEĞE BAĞLI MAHALLE/CADDE EKLENDİ) -->
+      <!-- SEKME 3: ADRESLERİM -->
       <section id="tab-adreslerim" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
           <h2 class="text-sm font-bold text-white mb-1">Kayıtlı Adreslerim</h2>
@@ -338,7 +395,6 @@
             <button type="button" onclick="setFormLabel('Diğer')" class="py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-amber-500 text-xs font-semibold text-white">📍 Diğer</button>
           </div>
 
-          <!-- Otomatik Konum Tespit Butonu -->
           <button type="button" onclick="detectUserLocation('inp')" id="btnGps-inp" class="w-full bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/40 text-sky-300 font-semibold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition active:scale-95">
             <i class="fa-solid fa-location-crosshairs"></i> Konumumu Otomatik Bul (GPS)
           </button>
@@ -360,7 +416,6 @@
               <input id="inpCustomNeighborhood" type="text" placeholder="Örn: Yıldız" class="hidden mt-2 w-full bg-slate-900 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white focus:outline-none" />
             </div>
 
-            <!-- İsteğe Bağlı Mahalle veya Cadde/Sokak -->
             <div>
               <label class="text-xs text-slate-400 block mb-1">
                 Mahalle veya Cadde / Sokak Giriniz <span class="text-[10px] text-slate-400 font-normal">(İsteğe Bağlı)</span>
@@ -380,7 +435,6 @@
       <!-- SEKME 4: AYARLAR -->
       <section id="tab-ayarlar" class="hidden space-y-3.5">
 
-        <!-- En Üst Bar: Sağ Üst Köşede Koyu Mod Tiki -->
         <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4">
           <div class="flex items-center justify-between">
             <div>
@@ -621,12 +675,44 @@
     const CONTACT_EMAIL = "orhansamet785@gmail.com";
     const STORAGE_KEY = "kh_user_addresses_v5";
     const THEME_KEY = "kh_dark_mode_v2";
-    let addresses = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+    // Eski sürümlerdeki kayıtlı adresleri kaybetmemek için otomatik taşıma (Migration)
+    function loadSavedAddressesSafely() {
+      const current = localStorage.getItem(STORAGE_KEY);
+      if (current) {
+        try { return JSON.parse(current) || []; } catch (e) { return []; }
+      }
+      for (const oldKey of ["kh_user_addresses_v4", "kh_user_addresses_v3", "kh_user_addresses_v2"]) {
+        const oldVal = localStorage.getItem(oldKey);
+        if (oldVal) {
+          try {
+            const parsed = JSON.parse(oldVal);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+              return parsed;
+            }
+          } catch (e) {}
+        }
+      }
+      return [];
+    }
+
+    let addresses = loadSavedAddressesSafely();
     let liveData = null;
     let currentScenario = "live";
     let selectedQuickLabel = "Evim";
     let selectedHistoryMonths = 1;
     let audioCtx = null;
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
 
     function applyTheme(isDark) {
       document.body.classList.toggle("dark-theme", isDark);
@@ -652,6 +738,81 @@
           Son Kontrol: ${formatted}
         `;
       }
+      return formatted;
+    }
+
+    // CANLI DESTEK SİSTEMİ FONKSİYONLARI
+    function toggleLiveSupport(show) {
+      const modal = document.getElementById("liveSupportModal");
+      if (!modal) return;
+      modal.classList.toggle("hidden", !show);
+      if (show) {
+        setTimeout(() => {
+          document.getElementById("supportInput")?.focus();
+        }, 150);
+      }
+    }
+
+    function appendSupportChatBubble(sender, text, isUser = false, actionHtml = "") {
+      const box = document.getElementById("supportChatMessages");
+      if (!box) return;
+      const div = document.createElement("div");
+      if (isUser) {
+        div.className = "bg-amber-500/20 border border-amber-500/40 rounded-2xl rounded-tr-sm p-3 text-white ml-8 leading-relaxed";
+        div.innerHTML = `<span class="text-[10px] font-bold text-amber-400 block mb-0.5">Siz</span>${escapeHtml(text)}`;
+      } else {
+        div.className = "bg-slate-800/90 border border-slate-700 rounded-2xl rounded-tl-sm p-3 text-slate-200 mr-6 leading-relaxed space-y-2";
+        div.innerHTML = `<span class="text-[10px] font-bold text-emerald-400 block mb-0.5">${escapeHtml(sender)}</span><div>${text}</div>${actionHtml}`;
+      }
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function sendQuickSupportAsk(questionText) {
+      appendSupportChatBubble("Siz", questionText, true);
+      setTimeout(() => {
+        if (questionText.includes("listede görünmüyor")) {
+          appendSupportChatBubble(
+            "Destek Asistanı",
+            "Anlık arıza kaynaklı kesintiler dağıtım şirketinin sistemine 15-30 dakika gecikmeli düşebilir. Dilerseniz ALO 186 (Elektrik) veya ALO 185 (Su) hattını arayabilir ya da sokağınızı bize bildirebilirsiniz.",
+            false,
+            `<a href="mailto:${CONTACT_EMAIL}?subject=Listede%20Olmayan%20Kesinti%20Bildirimi" class="inline-block bg-emerald-500 text-slate-950 font-bold text-[10px] px-2.5 py-1.5 rounded-lg mt-1">📩 Sokağımı Destek Ekibine Bildir</a>`
+          );
+        } else if (questionText.includes("nereden alınıyor")) {
+          appendSupportChatBubble(
+            "Destek Asistanı",
+            "Uygulamamızdaki tüm veriler <strong>BEDAŞ</strong> (Avrupa Yakası), <strong>AYEDAŞ</strong> (Anadolu Yakası) ve <strong>İSKİ</strong> resmi kesinti duyuru sistemlerinden otomatik çekilmektedir. Her kesinti kartının altındaki <strong>'Detay'</strong> butonuna basarak resmi kanıt bağlantısını görebilirsiniz."
+          );
+        } else {
+          appendSupportChatBubble(
+            "Destek Asistanı",
+            `Destek ekibimize (<strong>${CONTACT_EMAIL}</strong>) doğrudan mesaj göndermek için aşağıdaki butona dokunabilir veya mesaj kutusuna yazıp gönderebilirsiniz.`,
+            false,
+            `<a href="mailto:${CONTACT_EMAIL}?subject=Canl%C4%B1%20Destek%20Talebi" class="inline-block bg-amber-500 text-slate-950 font-bold text-[10px] px-2.5 py-1.5 rounded-lg mt-1">📧 Doğrudan E-Posta Gönder</a>`
+          );
+        }
+      }, 300);
+    }
+
+    function sendUserSupportMessage() {
+      const inp = document.getElementById("supportInput");
+      const msg = inp ? inp.value.trim() : "";
+      if (!msg) return;
+      inp.value = "";
+      appendSupportChatBubble("Siz", msg, true);
+
+      const active = getActiveAddress();
+      const locInfo = active ? `${active.district} / ${formatMah(active.neighborhood)} Mah.` : "Belirtilmedi";
+      const mailHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Kesinti Habercisi - Canlı Destek Mesajı")}&body=${encodeURIComponent("Kullanıcı Konumu: " + locInfo + "\n\nMesaj:\n" + msg)}`;
+
+      setTimeout(() => {
+        appendSupportChatBubble(
+          "Destek Asistanı",
+          "Mesajınız kaydedildi. Yetkili ekibimizin size en hızlı şekilde dönüş yapabilmesi için aşağıdaki butona dokunarak mesajınızı doğrudan destek adresimize iletebilirsiniz:",
+          false,
+          `<a href="${mailHref}" class="inline-block bg-emerald-500 text-slate-950 font-bold text-[11px] px-3 py-1.5 rounded-xl mt-1"><i class="fa-solid fa-paper-plane mr-1"></i> Mesajı Yetkiliye İlet (${CONTACT_EMAIL})</a>`
+        );
+      }, 350);
     }
 
     function toggleFeedbackBox() {
@@ -724,7 +885,6 @@
         .trim();
     }
 
-    // ADRES GİRERKEN BEDAŞ / AYEDAŞ YAZILARI SİLİNDİ (SADECE YAKA ADI)
     function buildDistrictGroups(selectEl) {
       selectEl.innerHTML = "";
 
@@ -1200,7 +1360,7 @@
         ...item,
         date: formatPastDate(item.daysAgo),
         duration: calcExactDuration(item.start, item.end),
-        semt: `${addr.district} / ${mah} Mah.${addr.optionalDetail ? " (" + addr.optionalDetail + ")" : ""}`
+        semt: `${addr.district} / ${mah} Mah.${addr.optionalDetail ? " (" + escapeHtml(addr.optionalDetail) + ")" : ""}`
       }));
     }
 
@@ -1236,7 +1396,7 @@
         </div>
         <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
           <p class="text-[10px] text-slate-400 uppercase">Sorgulanan Bölge</p>
-          <p class="text-xs font-bold text-white mt-1 truncate">${mah} Mah.</p>
+          <p class="text-xs font-bold text-white mt-1 truncate">${escapeHtml(mah)} Mah.</p>
         </div>
       `;
 
@@ -1346,7 +1506,6 @@
       renderMainScreen(false);
     }
 
-    // KAYITLI ADRESLER LİSTESİ (BEDAŞ/AYEDAŞ ROZETİ SİLİNDİ, İSTEĞE BAĞLI DETAY GÖSTERİLİR)
     function renderAddresses() {
       const container = document.getElementById("savedAddressesList");
       container.innerHTML = "";
@@ -1356,7 +1515,7 @@
       }
       addresses.forEach(addr => {
         const mahName = formatMah(addr.neighborhood);
-        const detailText = addr.optionalDetail ? ` • ${addr.optionalDetail}` : "";
+        const detailText = addr.optionalDetail ? ` • ${escapeHtml(addr.optionalDetail)}` : "";
         const div = document.createElement("div");
         div.className = `p-3 rounded-xl border flex items-center justify-between cursor-pointer transition ${
           addr.active ? "bg-amber-500/10 border-amber-500/50" : "bg-slate-900 border-slate-700/80"
@@ -1368,8 +1527,8 @@
               <i class="fa-solid ${addr.label === 'İş Yerim' ? 'fa-briefcase' : 'fa-house'}"></i>
             </div>
             <div>
-              <p class="text-xs font-bold text-white">${addr.label} • ${addr.district}</p>
-              <p class="text-[11px] text-slate-400">${mahName} Mah.${detailText}</p>
+              <p class="text-xs font-bold text-white">${escapeHtml(addr.label)} • ${escapeHtml(addr.district)}</p>
+              <p class="text-[11px] text-slate-400">${escapeHtml(mahName)} Mah.${detailText}</p>
             </div>
           </div>
           <div class="flex items-center gap-2">
@@ -1438,7 +1597,6 @@
       }, 450);
     }
 
-    // DUYURU METNİNDEN SOKAKLARI AYIKLAYAN VE KANITLAYAN YARDIMCI FONKSİYON
     function extractStreetsFromRecord(record) {
       if (Array.isArray(record.sokaklar) && record.sokaklar.length > 0) {
         return record.sokaklar;
@@ -1452,20 +1610,55 @@
     }
 
     function highlightUserDetailInText(text, userDetail) {
-      let cleanText = text.replace(/Mahallesi/gi, "Mah.").replace(/\bmah\b/gi, "Mah.");
+      let cleanText = escapeHtml(text).replace(/Mahallesi/gi, "Mah.").replace(/\bmah\b/gi, "Mah.");
       if (!userDetail) return cleanText;
-      const escaped = userDetail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const safeDetail = escapeHtml(userDetail);
+      const escaped = safeDetail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const regex = new RegExp(`(${escaped})`, "gi");
       return cleanText.replace(regex, '<mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">$1</mark>');
     }
 
-    // SOKAK KANITLI KART OLUŞTURUCU
-    function buildVerifiedOutageCardHtml(k, userDetail) {
+    // KESİNTİ KARTININ EN ALTINDAKİ "DETAY (KAYNAK KANITI)" AÇMA/KAPAMA FONKSİYONU
+    function toggleProofDetail(detailId, chevId) {
+      const box = document.getElementById(detailId);
+      const chev = document.getElementById(chevId);
+      if (!box) return;
+      const isHidden = box.classList.contains("hidden");
+      box.classList.toggle("hidden", !isHidden);
+      if (chev) {
+        chev.style.transform = isHidden ? "rotate(180deg)" : "rotate(0deg)";
+      }
+    }
+
+    function getOfficialSourceMeta(kurum) {
+      if (kurum === "İSKİ") {
+        return {
+          fullName: "İSKİ (İstanbul Su ve Kanalizasyon İdaresi) Arıza Kesinti Sistemi",
+          officialUrl: "https://iski.istanbul/abone-hizmetleri/ariza-kesinti/",
+          domain: "iski.istanbul"
+        };
+      }
+      if (kurum === "AYEDAŞ") {
+        return {
+          fullName: "AYEDAŞ (İstanbul Anadolu Yakası Elektrik Dağıtım A.Ş.) Planlı Kesinti Sistemi",
+          officialUrl: "https://www.ayedas.com.tr/planli-kesintiler",
+          domain: "ayedas.com.tr"
+        };
+      }
+      return {
+        fullName: "BEDAŞ (Boğaziçi Elektrik Dağıtım A.Ş.) Planlı Kesinti ve Arıza Sistemi",
+        officialUrl: "https://www.bedas.com.tr/tr/planli-kesintiler/",
+        domain: "bedas.com.tr"
+      };
+    }
+
+    // SOKAK KANITLI VE EN ALTTA "DETAY" KAYNAK KANIT KUTULU KART OLUŞTURUCU
+    function buildVerifiedOutageCardHtml(k, userDetail, idx = 0) {
       const isSu = k.kurum === "İSKİ";
       const streets = extractStreetsFromRecord(k);
       const normUser = normalizeTr(userDetail);
+      const safeUserDetail = escapeHtml(userDetail);
 
-      // Kullanıcının isteğe bağlı girdiği cadde/sokak listede veya resmi metinde var mı kontrol et
       const isDirectStreetMatch =
         normUser.length >= 2 &&
         (streets.some(s => normalizeTr(s).includes(normUser) || normUser.includes(normalizeTr(s))) ||
@@ -1482,7 +1675,7 @@
                   matchedThis
                     ? "bg-amber-500 text-slate-950 border-amber-400 font-bold"
                     : "bg-slate-900 text-slate-200 border-slate-700"
-                }"><i class="fa-solid fa-road mr-1 opacity-75"></i>${st}</span>`;
+                }"><i class="fa-solid fa-road mr-1 opacity-75"></i>${escapeHtml(st)}</span>`;
               })
               .join("")
           : `<span class="text-[11px] text-slate-300">Semt geneli şebeke hattı</span>`;
@@ -1494,7 +1687,7 @@
             <div class="bg-amber-500/15 border border-amber-500/50 rounded-xl p-2.5 flex items-start gap-2">
               <i class="fa-solid fa-circle-check text-amber-400 text-sm mt-0.5"></i>
               <div class="text-xs text-slate-200 leading-relaxed">
-                <strong class="text-amber-400">DOĞRUDAN SOKAK KANITI:</strong> Girdiğiniz <strong>"${userDetail}"</strong> adresi bu kesintinin etkilediği sokaklar listesinde doğrudan yer almaktadır!
+                <strong class="text-amber-400">DOĞRUDAN SOKAK KANITI:</strong> Girdiğiniz <strong>"${safeUserDetail}"</strong> adresi bu kesintinin etkilediği sokaklar listesinde doğrudan yer almaktadır!
               </div>
             </div>
           `;
@@ -1503,7 +1696,7 @@
             <div class="bg-sky-500/15 border border-sky-500/40 rounded-xl p-2.5 flex items-start gap-2">
               <i class="fa-solid fa-location-crosshairs text-sky-400 text-sm mt-0.5"></i>
               <div class="text-xs text-slate-200 leading-relaxed">
-                <strong class="text-sky-400">CİVAR SOKAK BİLGİSİ:</strong> Girdiğiniz <strong>"${userDetail}"</strong> adresi doğrudan listede yok ancak <strong>hemen civarınızdaki sokaklarda</strong> kesinleşmiş kesinti mevcuttur.
+                <strong class="text-sky-400">CİVAR SOKAK BİLGİSİ:</strong> Girdiğiniz <strong>"${safeUserDetail}"</strong> adresi doğrudan listede yok ancak <strong>hemen civarınızdaki sokaklarda</strong> kesinleşmiş kesinti mevcuttur.
               </div>
             </div>
           `;
@@ -1511,15 +1704,19 @@
       }
 
       const highlightedOfficialText = highlightUserDetailInText(k.aciklama || "", userDetail);
+      const sourceMeta = getOfficialSourceMeta(k.kurum);
+      const detailId = `proofDetailBox_${idx}_${Date.now()}`;
+      const chevId = `proofChev_${idx}_${Date.now()}`;
+      const checkTime = liveData?.son_guncelleme || updateLiveTimestamp();
 
       return `
         <div class="bg-slate-800/90 border ${isSu ? "border-sky-500/50" : "border-amber-500/50"} rounded-2xl p-4 space-y-3 shadow-md">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold ${isSu ? "text-sky-400" : "text-amber-400"} flex items-center gap-1.5">
-              <i class="fa-solid ${isSu ? "fa-droplet" : "fa-bolt"}"></i> ${k.kurum} Kesinleşmiş Kesinti Kaydı
+              <i class="fa-solid ${isSu ? "fa-droplet" : "fa-bolt"}"></i> Kesinleşmiş Kesinti Kaydı
             </span>
             <span class="text-[11px] font-bold text-white bg-slate-900 px-2.5 py-0.5 rounded-lg border border-slate-700">
-              ${k.tarih} • ${k.baslangic} - ${k.bitis}
+              ${escapeHtml(k.tarih)} • ${escapeHtml(k.baslangic)} - ${escapeHtml(k.bitis)}
             </span>
           </div>
 
@@ -1534,14 +1731,46 @@
             </div>
           </div>
 
-          <p class="text-xs text-slate-200 font-medium"><strong class="text-slate-400">Resmi Neden:</strong> ${k.neden}</p>
+          <p class="text-xs text-slate-200 font-medium"><strong class="text-slate-400">Kesinti Nedeni:</strong> ${escapeHtml(k.neden)}</p>
 
-          <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 space-y-1">
-            <div class="flex items-center justify-between text-[10px] text-emerald-400 font-bold uppercase">
-              <span><i class="fa-solid fa-shield-halved mr-1"></i> Resmi Kurum Duyuru Kanıtı</span>
-              <span>Doğrulanmış Veri</span>
+          <!-- EN ALT KISIM: DETAY (BİLGİNİN NEREDEN ALINDIĞINI KANITLAYAN AÇILIR BÖLÜM) -->
+          <div class="pt-2 border-t border-slate-700/70">
+            <button type="button" onclick="toggleProofDetail('${detailId}', '${chevId}')" class="w-full py-2 px-3 rounded-xl bg-slate-900 hover:opacity-90 border border-slate-700 flex items-center justify-between text-xs font-bold text-amber-400 transition">
+              <span class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved"></i>
+                Detay (Bilginin Alındığı Resmi Kaynağı Gör)
+              </span>
+              <i id="${chevId}" class="fa-solid fa-chevron-down text-[11px] transition-transform"></i>
+            </button>
+
+            <div id="${detailId}" class="hidden mt-2.5 bg-slate-900/95 border border-emerald-500/40 rounded-xl p-3.5 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-certificate"></i> Resmi Veri Kaynağı Kanıtı
+                </span>
+                <span class="text-[10px] text-slate-400">Sorgu: ${escapeHtml(checkTime)}</span>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-[11px] text-slate-400">Bilginin Alındığı Kurum:</p>
+                <p class="text-xs font-bold text-white">${sourceMeta.fullName}</p>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-[11px] text-slate-400">Kurumdan Alınan Ham Duyuru Kaydı:</p>
+                <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-[11px] text-slate-200 font-mono leading-relaxed">
+                  ${highlightedOfficialText}
+                </div>
+              </div>
+
+              <div class="pt-1 flex items-center justify-between gap-2">
+                <span class="text-[10px] text-slate-400">Resmi Web Adresi: <strong>${sourceMeta.domain}</strong></span>
+                <a href="${sourceMeta.officialUrl}" target="_blank" rel="noopener noreferrer" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                  <span>Resmi Sitede Kanıtı Gör</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
             </div>
-            <p class="text-xs text-slate-300 leading-relaxed">${highlightedOfficialText}</p>
           </div>
         </div>
       `;
@@ -1575,7 +1804,7 @@
       const outageList = document.getElementById("outageList");
       outageList.innerHTML = "";
 
-      // TEST MODU SENARYOLARI (Ayarlardan tıklandığında sokak kanıtlı test gösterir)
+      // TEST MODU SENARYOLARI
       if (currentScenario === "test_pre_elec" || currentScenario === "test_now_elec" || currentScenario === "test_water") {
         const isSu = currentScenario === "test_water";
         const testStreets = userDetail
@@ -1602,16 +1831,16 @@
             </span>
             <span class="text-xs text-amber-400 font-semibold">${testRecord.baslangic} - ${testRecord.bitis}</span>
           </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah.</h3>
+          <h3 class="text-base font-bold text-white mt-3">${escapeHtml(active.district)} / ${escapeHtml(mahName)} Mah.</h3>
           <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            Aşağıda etkilenen sokakların tam listesi ve resmi duyuru kanıtı yer almaktadır:
+            Kartın en altındaki <strong>"Detay"</strong> butonuna basarak bilginin alındığı resmi kaynağı görebilirsiniz:
           </p>
         `;
-        outageList.innerHTML = buildVerifiedOutageCardHtml(testRecord, userDetail);
+        outageList.innerHTML = buildVerifiedOutageCardHtml(testRecord, userDetail, 99);
         return;
       }
 
-      // GERÇEK VE KESİN VERİ KONTROLÜ (kesintiler.json içinde kayıt varsa sokak kanıtıyla göster, yoksa uydurma yazı gösterme)
+      // GERÇEK VE KESİN VERİ KONTROLÜ
       const verifiedMatches =
         liveData && Array.isArray(liveData.kesintiler)
           ? liveData.kesintiler.filter(
@@ -1631,14 +1860,14 @@
             </span>
             <span class="text-xs text-amber-400 font-semibold">${verifiedMatches.length} Resmi Kayıt</span>
           </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah.</h3>
+          <h3 class="text-base font-bold text-white mt-3">${escapeHtml(active.district)} / ${escapeHtml(mahName)} Mah.</h3>
           <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            Resmi veri kaynağında semtiniz ve sokaklarınız için doğrulanan kesinti bilgileri aşağıda kanıtlarıyla listelenmiştir:
+            Etkilenen sokaklar aşağıda listelenmiştir. Bilginin nereden alındığını görmek için kartın altındaki <strong>Detay</strong> butonuna dokunun:
           </p>
         `;
 
-        verifiedMatches.forEach(k => {
-          outageList.innerHTML += buildVerifiedOutageCardHtml(k, userDetail);
+        verifiedMatches.forEach((k, idx) => {
+          outageList.innerHTML += buildVerifiedOutageCardHtml(k, userDetail, idx);
         });
 
         if (triggerNotification) {
@@ -1654,7 +1883,7 @@
         return;
       }
 
-      // EĞER RESMİ VERİDE KESİNTİ YOKSA (Kesin bilgi dışında hiçbir yanıltıcı kesinti yazısı gösterilmez)
+      // EĞER RESMİ VERİDE KESİNTİ YOKSA
       statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
       statusCard.innerHTML = `
         <div class="flex items-center gap-3.5">
@@ -1665,7 +1894,7 @@
             <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Resmi Kayıt Sorgulandı</span>
             <h3 class="text-base font-bold text-white mt-0.5">Kayıtlı Kesinti Bulunmuyor</h3>
             <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              <strong>${active.district} / ${mahName} Mah.${userDetail ? " (" + userDetail + ")" : ""}</strong> ve civar sokakları için resmi elektrik ve su kesinti listesinde aktif veya planlanmış bir kesinti kaydı yoktur.
+              <strong>${escapeHtml(active.district)} / ${escapeHtml(mahName)} Mah.${userDetail ? " (" + escapeHtml(userDetail) + ")" : ""}</strong> ve civar sokakları için resmi elektrik ve su kesinti listesinde aktif veya planlanmış bir kesinti kaydı yoktur.
             </p>
           </div>
         </div>
