@@ -7,7 +7,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2983/2983973.png" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
   <title>Kesinti Habercisi: İstanbul</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -56,11 +57,11 @@
       </div>
     </div>
 
-    <!-- Üst Başlık -->
+    <!-- Üst Başlık (Özel Logolu) -->
     <header class="px-5 pt-5 pb-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between sticky top-0 z-20 backdrop-blur">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
-          <i class="fa-solid fa-bolt-lightning text-white text-lg"></i>
+        <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-amber-500/20 border border-slate-700/80 shrink-0">
+          <img src="logo.png" alt="Logo" class="w-full h-full object-cover" />
         </div>
         <div>
           <h1 class="text-base font-bold text-white tracking-tight">Kesinti Habercisi</h1>
@@ -83,10 +84,9 @@
     <!-- Ana İçerik -->
     <main class="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-24">
 
-      <!-- SEKME 1: KESİNTİLER (ANA ARAYÜZ) -->
+      <!-- SEKME 1: KESİNTİLER -->
       <section id="tab-kesintiler" class="space-y-4">
 
-        <!-- EĞER ADRES KAYITLI DEĞİLSE GÖSTERİLECEK İLK ARAYÜZ (EV / İŞ SEÇİMİ) -->
         <div id="emptyAddressState" class="hidden space-y-4">
           <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 space-y-4">
             <div class="flex items-center gap-3">
@@ -95,11 +95,10 @@
               </div>
               <div>
                 <h2 class="text-sm font-bold text-white">Adres Ekle ve Kesintileri Sorgula</h2>
-                <p class="text-xs text-slate-400 mt-0.5">BEDAŞ, AYEDAŞ ve İSKİ kesintilerini görmek için önce adres tipinizi seçin:</p>
+                <p class="text-xs text-slate-400 mt-0.5">BEDAŞ, AYEDAŞ ve İSKİ kesintilerini görmek için adres tipinizi seçin:</p>
               </div>
             </div>
 
-            <!-- Adım 1: Ev / İş Butonları -->
             <div class="grid grid-cols-3 gap-2.5 pt-1">
               <button onclick="selectQuickType('Evim')" id="btnType-Evim" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
                 <i class="fa-solid fa-house text-amber-400 text-lg"></i>
@@ -115,7 +114,6 @@
               </button>
             </div>
 
-            <!-- Adım 2: Butona Tıklanınca Açılan İlçe / Mahalle / Sokak Formu -->
             <div id="quickAddressForm" class="hidden pt-3 border-t border-slate-700/70 space-y-3">
               <div class="flex items-center justify-between">
                 <span id="selectedTypeBadge" class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
@@ -153,7 +151,6 @@
           </div>
         </div>
 
-        <!-- EĞER ADRES SEÇİLDİYSE GÖSTERİLECEK AKTİF KESİNTİ EKRANI -->
         <div id="activeAddressView" class="hidden space-y-4">
           <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
             <div class="flex items-center justify-between">
@@ -178,14 +175,10 @@
             </div>
           </div>
 
-          <!-- Ana Durum Kartı -->
           <div id="statusCard" class="rounded-2xl p-5 border transition-all"></div>
-
-          <!-- Kesinti Listesi -->
           <div id="outageList" class="space-y-3"></div>
         </div>
 
-        <!-- Paylaş ve Alo 186 / 185 Kısayolları -->
         <div class="pt-1 space-y-2.5">
           <button onclick="shareApp()" class="w-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-semibold text-xs py-3 rounded-2xl flex items-center justify-center gap-2 transition">
             <i class="fa-brands fa-whatsapp text-base"></i> Uygulamayı Paylaş
@@ -214,7 +207,7 @@
         </div>
       </section>
 
-      <!-- SEKME 2: GEÇMİŞ KESİNTİLER (1 AY, 3 AY, 6 AY, 1 YIL) -->
+      <!-- SEKME 2: GEÇMİŞ KESİNTİLER -->
       <section id="tab-gecmis" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
           <div class="flex items-center justify-between">
@@ -226,27 +219,16 @@
             </div>
           </div>
 
-          <!-- Zaman Aralığı Filtre Butonları -->
           <div class="grid grid-cols-4 gap-1.5 pt-1">
-            <button onclick="setHistoryRange(1)" id="histBtn-1" class="py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">
-              Son 1 Ay
-            </button>
-            <button onclick="setHistoryRange(3)" id="histBtn-3" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">
-              3 Ay
-            </button>
-            <button onclick="setHistoryRange(6)" id="histBtn-6" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">
-              6 Ay
-            </button>
-            <button onclick="setHistoryRange(12)" id="histBtn-12" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">
-              1 Yıl
-            </button>
+            <button onclick="setHistoryRange(1)" id="histBtn-1" class="py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">Son 1 Ay</button>
+            <button onclick="setHistoryRange(3)" id="histBtn-3" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">3 Ay</button>
+            <button onclick="setHistoryRange(6)" id="histBtn-6" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">6 Ay</button>
+            <button onclick="setHistoryRange(12)" id="histBtn-12" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">1 Yıl</button>
           </div>
 
-          <!-- Özet İstatistik Barı -->
           <div id="historyStatsBar" class="grid grid-cols-2 gap-2 pt-1"></div>
         </div>
 
-        <!-- Dakikası Dakikasına Geçmiş Kesinti Listesi -->
         <div id="historyListContainer" class="space-y-2.5"></div>
       </section>
 
@@ -329,7 +311,7 @@
 
     </main>
 
-    <!-- Alt Menü (4 Sekme: Kesintiler, Geçmiş, Adreslerim, Ayarlar) -->
+    <!-- Alt Menü -->
     <nav class="bg-slate-900/95 backdrop-blur border-t border-slate-800 px-4 py-2.5 flex items-center justify-around fixed bottom-0 w-full max-w-md z-30">
       <button onclick="switchTab('kesintiler')" id="nav-kesintiler" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-bolt text-lg"></i>
@@ -489,7 +471,6 @@
       if (sel.value === "__custom__") inp.focus();
     }
 
-    // İlk Arayüzde Ev / İş / Diğer Seçimi
     function selectQuickType(type) {
       selectedQuickLabel = type;
       document.getElementById("quickAddressForm").classList.remove("hidden");
@@ -582,7 +563,6 @@
       if (tabName === "gecmis") renderHistorySection();
     }
 
-    // GEÇMİŞ KESİNTİLER MOTORU (1 Ay, 3 Ay, 6 Ay, 1 Yıl - Saat ve Dakika Detaylı)
     function setHistoryRange(months) {
       selectedHistoryMonths = months;
       [1, 3, 6, 12].forEach(m => {
@@ -600,83 +580,13 @@
       const info = getDistrictInfo(addr.district);
       const mah = formatMah(addr.neighborhood);
       return [
-        {
-          monthsAgo: 0.3,
-          date: "04.11.2026",
-          start: "09:14",
-          end: "12:48",
-          duration: "3 saat 34 dakika",
-          kurum: info.kurum,
-          type: "Elektrik",
-          reason: "Alçak Gerilim (AG) Şebeke Bakım ve Trafo Yenileme",
-          streetMatch: addr.street
-        },
-        {
-          monthsAgo: 0.8,
-          date: "21.10.2026",
-          start: "14:05",
-          end: "16:22",
-          duration: "2 saat 17 dakika",
-          kurum: "İSKİ",
-          type: "Su",
-          reason: "Ana İsale Hattı Vana Değişimi",
-          streetMatch: `${mah} Mah. ${addr.street}`
-        },
-        {
-          monthsAgo: 2.1,
-          date: "12.09.2026",
-          start: "10:00",
-          end: "15:45",
-          duration: "5 saat 45 dakika",
-          kurum: info.kurum,
-          type: "Elektrik",
-          reason: "Yatırım / Ekonomik Ömrünü Tamamlamış Kablo Yenileme",
-          streetMatch: addr.street
-        },
-        {
-          monthsAgo: 4.4,
-          date: "03.07.2026",
-          start: "01:18",
-          end: "03:52",
-          duration: "2 saat 34 dakika",
-          kurum: info.kurum,
-          type: "Elektrik",
-          reason: "Gece Periyodik Trafo Koruma ve Emniyet Testi",
-          streetMatch: addr.street
-        },
-        {
-          monthsAgo: 5.6,
-          date: "28.05.2026",
-          start: "11:30",
-          end: "14:12",
-          duration: "2 saat 42 dakika",
-          kurum: info.kurum,
-          type: "Elektrik",
-          reason: "Abone Bağlantısı ve Pano Bakım Çalışması",
-          streetMatch: addr.street
-        },
-        {
-          monthsAgo: 8.5,
-          date: "02.03.2026",
-          start: "09:00",
-          end: "16:15",
-          duration: "7 saat 15 dakika",
-          kurum: info.kurum,
-          type: "Elektrik",
-          reason: "Kapsamlı Havai Hat ve Direk Deplase Çalışması",
-          streetMatch: addr.street
-        },
-        {
-          monthsAgo: 11.2,
-          date: "09.12.2025",
-          start: "13:20",
-          end: "15:08",
-          duration: "1 saat 48 dakika",
-          kurum: info.kurum,
-          type: "Elektrik",
-          reason: "Kış Şebeke Yükü Dengeleme ve Sigorta Değişimi",
-          streetMatch: addr.street
-        }
+        { monthsAgo: 0.3, date: "04.11.2026", start: "09:14", end: "12:48", duration: "3 saat 34 dakika", kurum: info.kurum, type: "Elektrik", reason: "Alçak Gerilim (AG) Şebeke Bakım ve Trafo Yenileme", streetMatch: addr.street },
+        { monthsAgo: 0.8, date: "21.10.2026", start: "14:05", end: "16:22", duration: "2 saat 17 dakika", kurum: "İSKİ", type: "Su", reason: "Ana İsale Hattı Vana Değişimi", streetMatch: `${mah} Mah. ${addr.street}` },
+        { monthsAgo: 2.1, date: "12.09.2026", start: "10:00", end: "15:45", duration: "5 saat 45 dakika", kurum: info.kurum, type: "Elektrik", reason: "Yatırım / Ekonomik Ömrünü Tamamlamış Kablo Yenileme", streetMatch: addr.street },
+        { monthsAgo: 4.4, date: "03.07.2026", start: "01:18", end: "03:52", duration: "2 saat 34 dakika", kurum: info.kurum, type: "Elektrik", reason: "Gece Periyodik Trafo Koruma ve Emniyet Testi", streetMatch: addr.street },
+        { monthsAgo: 5.6, date: "28.05.2026", start: "11:30", end: "14:12", duration: "2 saat 42 dakika", kurum: info.kurum, type: "Elektrik", reason: "Abone Bağlantısı ve Pano Bakım Çalışması", streetMatch: addr.street },
+        { monthsAgo: 8.5, date: "02.03.2026", start: "09:00", end: "16:15", duration: "7 saat 15 dakika", kurum: info.kurum, type: "Elektrik", reason: "Kapsamlı Havai Hat ve Direk Deplase Çalışması", streetMatch: addr.street },
+        { monthsAgo: 11.2, date: "09.12.2025", start: "13:20", end: "15:08", duration: "1 saat 48 dakika", kurum: info.kurum, type: "Elektrik", reason: "Kış Şebeke Yükü Dengeleme ve Sigorta Değişimi", streetMatch: addr.street }
       ];
     }
 
@@ -691,10 +601,8 @@
         statsBar.innerHTML = "";
         listContainer.innerHTML = `
           <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 text-center space-y-3">
-            <p class="text-xs text-slate-300">Henüz kayıtlı bir adresiniz bulunmuyor.</p>
-            <button onclick="switchTab('kesintiler')" class="bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl">
-              Adres Ekle
-            </button>
+            <p class="text-xs text-slate-300">Henüz kayıtlı adresiniz bulunmuyor.</p>
+            <button onclick="switchTab('kesintiler')" class="bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl">Adres Ekle</button>
           </div>
         `;
         return;
@@ -734,11 +642,11 @@
 
             <div class="grid grid-cols-2 gap-2 bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 text-xs">
               <div>
-                <span class="text-[10px] text-slate-400 block">Saat Aralığı (Dakika Detaylı)</span>
+                <span class="text-[10px] text-slate-400 block">Saat Aralığı</span>
                 <span class="font-bold text-amber-300">${item.start} — ${item.end}</span>
               </div>
               <div>
-                <span class="text-[10px] text-slate-400 block">Toplam Kesinti Süresi</span>
+                <span class="text-[10px] text-slate-400 block">Toplam Süre</span>
                 <span class="font-bold text-white">${item.duration}</span>
               </div>
             </div>
@@ -786,7 +694,7 @@
       if ("Notification" in window && Notification.permission === "granted") {
         new Notification(title, {
           body: body,
-          icon: "https://cdn-icons-png.flaticon.com/512/2983/2983973.png"
+          icon: "logo.png"
         });
       }
     }
@@ -916,7 +824,6 @@
       const emptyState = document.getElementById("emptyAddressState");
       const activeView = document.getElementById("activeAddressView");
 
-      // Adres yoksa doğrudan Ev / İş seçim ekranını göster
       if (!active) {
         emptyState.classList.remove("hidden");
         activeView.classList.add("hidden");
@@ -931,7 +838,7 @@
 
       document.getElementById("activeProviderBadge").textContent = `${info.yaka} Yakası • ${info.kurum} & İSKİ`;
       document.getElementById("activeAddressTitle").textContent = `${active.label} (${active.district} / ${mahName} Mah.)`;
-      document.getElementById("activeStreetText").textContent = active.street;
+      document.getElementById("activeStreetText").textContent = `${active.district} / ${mahName} Mah. (${active.street}) adresinizde aktif elektrik veya su kesintisi bulunmuyor.`;
 
       const statusCard = document.getElementById("statusCard");
       const outageList = document.getElementById("outageList");
@@ -941,30 +848,22 @@
         statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
         statusCard.innerHTML = `
           <div class="flex items-center justify-between">
-            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
-              Kesinti Var
-            </span>
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">Kesinti Var</span>
             <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>09:00 - 17:00</span>
           </div>
           <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. ${active.street}</h3>
-          <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            Sokağınızda kesinti olduğunda ekranınız bu şekilde görünür.
-          </p>
+          <p class="text-xs text-slate-300 mt-1 leading-relaxed">Sokağınızda kesinti olduğunda ekranınız bu şekilde görünür.</p>
         `;
 
         outageList.innerHTML = `
           <div class="bg-slate-800/90 border border-amber-500/40 rounded-2xl p-4 space-y-2.5">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                <i class="fa-solid fa-bolt"></i> ${info.kurum} Planlı Elektrik Kesintisi
-              </span>
+              <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-bolt"></i> ${info.kurum} Planlı Elektrik Kesintisi</span>
               <span class="text-[11px] text-slate-400">Bugün • 09:00 - 17:00</span>
             </div>
             <p class="text-xs text-slate-200 font-medium">Neden: Şebeke Bakım ve Yenileme Çalışması</p>
             <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
-              İSTANBUL ${active.district.toUpperCase()} ilçe MERKEZ-${mahName.toUpperCase()} Mah. 
-              <mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">${active.street}</mark> 
-              ve çevresinde planlı elektrik kesintisi uygulanmaktadır.
+              İSTANBUL ${active.district.toUpperCase()} ilçe MERKEZ-${mahName.toUpperCase()} Mah. <mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">${active.street}</mark> ve çevresinde planlı elektrik kesintisi uygulanmaktadır.
             </div>
           </div>
         `;
@@ -987,15 +886,11 @@
           statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
           statusCard.innerHTML = `
             <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
-                Kesinti Var
-              </span>
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">Kesinti Var</span>
               <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>${ilk.baslangic} - ${ilk.bitis}</span>
             </div>
             <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. (${active.street})</h3>
-            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              Sokağınız için aktif <strong>${ilk.kurum}</strong> kesinti kaydı bulundu.
-            </p>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">Sokağınız için aktif <strong>${ilk.kurum}</strong> kesinti kaydı bulundu.</p>
           `;
 
           sokakKesintileri.forEach(k => {
@@ -1004,30 +899,18 @@
             outageList.innerHTML += `
               <div class="bg-slate-800/90 border ${isSu ? 'border-sky-500/40' : 'border-amber-500/40'} rounded-2xl p-4 space-y-2.5">
                 <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold ${isSu ? 'text-sky-400' : 'text-amber-400'} flex items-center gap-1.5">
-                    <i class="fa-solid ${isSu ? 'fa-droplet' : 'fa-bolt'}"></i> ${k.kurum} Kesinti Duyurusu
-                  </span>
+                  <span class="text-xs font-bold ${isSu ? 'text-sky-400' : 'text-amber-400'} flex items-center gap-1.5"><i class="fa-solid ${isSu ? 'fa-droplet' : 'fa-bolt'}"></i> ${k.kurum} Kesinti Duyurusu</span>
                   <span class="text-[11px] text-slate-400">${k.tarih} • ${k.baslangic} - ${k.bitis}</span>
                 </div>
                 <p class="text-xs text-slate-200 font-medium">Neden: ${k.neden}</p>
-                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
-                  ${kisaAciklama}
-                </div>
+                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">${kisaAciklama}</div>
               </div>
             `;
           });
-
-          if (triggerNotification) {
-            sendSystemNotification(
-              `${active.district} / ${mahName} Mah. Kesinti!`,
-              `${active.street} adresinizde ${ilk.baslangic} - ${ilk.bitis} arası ${ilk.kurum} kesintisi var.`
-            );
-          }
           return;
         }
       }
 
-      // Kesinti Yoksa
       statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
       statusCard.innerHTML = `
         <div class="flex items-center gap-3.5">
@@ -1037,9 +920,7 @@
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Her Şey Normal</span>
             <h3 class="text-base font-bold text-white mt-0.5">Kesinti Yok</h3>
-            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              <strong>${active.district} / ${mahName} Mah. (${active.street})</strong> adresinizde aktif elektrik veya su kesintisi bulunmuyor.
-            </p>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed"><strong>${active.district} / ${mahName} Mah. (${active.street})</strong> adresinizde aktif elektrik veya su kesintisi bulunmuyor.</p>
           </div>
         </div>
       `;
