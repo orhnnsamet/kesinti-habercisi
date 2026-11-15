@@ -1,39 +1,50 @@
 {
-  "son_guncelleme": "Canlı Veri Aktif",
-  "kaynak": "İstanbul 39 İlçe BEDAŞ / AYEDAŞ / İSKİ Merkezi",
+  "son_guncelleme": "15.11.2026 19:05",
+  "kaynak": "İstanbul 39 İlçe BEDAŞ / AYEDAŞ / İSKİ Robotu",
   "kesintiler": [
     {
       "kurum": "BEDAŞ",
       "ilce": "Bağcılar",
       "mahalle": "Kirazlı",
-      "tarih": "Bugün",
+      "tarih": "15.11.2026",
       "baslangic": "09:00",
       "bitis": "17:00",
-      "neden": "Şebeke Bakım ve Yenileme Çalışması",
-      "sokaklar": ["1195. Sokak", "1200. Sokak", "1205. Sokak", "Mevlana Caddesi"],
-      "aciklama": "İSTANBUL BAĞCILAR ilçe MERKEZ-KİRAZLI mah 1195. Sokak, 1200. Sokak, 1205. Sokak ve MEVLANA Caddesi bölgelerinde planlı elektrik kesintisi uygulanmaktadır."
+      "neden": "Planlı Şebeke Bakım ve Yenileme Çalışması",
+      "sokaklar": [
+        "1195. Sokak",
+        "1200. Sokak",
+        "1205. Sokak",
+        "MEVLANA Caddesi"
+      ],
+      "aciklama": "İSTANBUL BAĞCILAR ilce MERKEZ-KİRAZLI mah 1195. sk, 1200. sk, 1205. sk, MEVLANA cd bölgelerinde planlı kesinti yapılacaktır."
     },
     {
       "kurum": "İSKİ",
       "ilce": "Bağcılar",
       "mahalle": "Güneşli",
-      "tarih": "Bugün",
+      "tarih": "15.11.2026",
       "baslangic": "10:00",
       "bitis": "15:00",
       "neden": "İçme Suyu Şebeke Hattı Arızası",
-      "sokaklar": ["1310. Sokak", "1312. Sokak"],
-      "aciklama": "BAĞCILAR ilçesi GÜNEŞLİ Mahallesi 1310. Sokak ve 1312. Sokak civarında arıza kaynaklı su kesintisi yaşanmaktadır."
+      "sokaklar": [
+        "1310. Sokak",
+        "1312. Sokak"
+      ],
+      "aciklama": "İSTANBUL BAĞCILAR ilce MERKEZ-GÜNEŞLİ mah 1310. sk, 1312. sk bölgelerinde su kesintisi yaşanmaktadır."
     },
     {
       "kurum": "AYEDAŞ",
       "ilce": "Kadıköy",
       "mahalle": "Caferağa",
-      "tarih": "Bugün",
+      "tarih": "15.11.2026",
       "baslangic": "10:00",
       "bitis": "16:00",
-      "neden": "Planlı Yatırım ve Şebeke İyileştirme Çalışması",
-      "sokaklar": ["Moda Caddesi", "Bahariye Caddesi"],
-      "aciklama": "İSTANBUL KADIKÖY ilçesi CAFERAĞA Mahallesi Moda Caddesi ve Bahariye Caddesi bölgelerinde planlı elektrik kesintisi uygulanmaktadır."
+      "neden": "Şebeke İyileştirme Çalışması",
+      "sokaklar": [
+        "MODA Caddesi",
+        "BAHARİYE Caddesi"
+      ],
+      "aciklama": "İSTANBUL KADIKÖY ilce MERKEZ-CAFERAĞA mah MODA cd, BAHARİYE cd bölgelerinde planlı kesinti yapılacaktır."
     }
   ]
 }
