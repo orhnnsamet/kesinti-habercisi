@@ -20,7 +20,7 @@
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    /* BEYAZ (AÇIK) TEMA STİLLERİ (Koyu mod tiki kapatıldığında devreye girer) */
+    /* BEYAZ (AÇIK) TEMA STİLLERİ */
     body:not(.dark-theme) {
       background-color: #f1f5f9 !important;
       color: #0f172a !important;
@@ -116,7 +116,6 @@
     }
   </style>
 </head>
-<!-- İlk defa girenler için doğrudan dark-theme ile başlar -->
 <body class="min-h-screen flex justify-center bg-slate-950 dark-theme">
 
   <div id="appShell" class="w-full max-w-md min-h-screen bg-slate-900 flex flex-col justify-between relative shadow-2xl border-x border-slate-800/80 overflow-hidden">
@@ -140,7 +139,7 @@
       </div>
     </div>
 
-    <!-- Üst Başlık (Canlı Tarih/Saat Gösterimli) -->
+    <!-- Üst Başlık -->
     <header class="px-5 pt-5 pb-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between sticky top-0 z-20 backdrop-blur">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-amber-500/20 border border-slate-700/80 shrink-0">
@@ -170,16 +169,16 @@
       <!-- SEKME 1: KESİNTİLER (ANA MENÜ) -->
       <section id="tab-kesintiler" class="space-y-4">
 
-        <!-- ADRES KAYITLI DEĞİLSE GÖSTERİLEN İLK EKRAN -->
+        <!-- ADRES KAYITLI DEĞİLSE GÖSTERİLEN İLK EKRAN (SADECE İLÇE VE SEMT) -->
         <div id="emptyAddressState" class="hidden space-y-4">
           <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 space-y-4">
             <div class="flex items-center gap-3">
               <div class="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
-                <i class="fa-solid fa-map-pin text-lg"></i>
+                <i class="fa-solid fa-bolt text-lg"></i>
               </div>
               <div>
-                <h2 class="text-sm font-bold text-white">Adres Ekle ve Kesintileri Sorgula</h2>
-                <p class="text-xs text-slate-400 mt-0.5">BEDAŞ, AYEDAŞ ve İSKİ kesintilerini görmek için adres tipinizi seçin:</p>
+                <h2 class="text-sm font-bold text-white">Semtinizi Seçin, Kesintileri Anında Görün</h2>
+                <p class="text-xs text-slate-400 mt-0.5">BEDAŞ, AYEDAŞ ve İSKİ planlı/arıza kesintilerini tek dokunuşla takip edin:</p>
               </div>
             </div>
 
@@ -208,7 +207,7 @@
 
               <!-- Otomatik Konum Bul Butonu -->
               <button type="button" onclick="detectUserLocation('qa')" id="btnGps-qa" class="w-full bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/40 text-sky-300 font-semibold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition active:scale-95">
-                <i class="fa-solid fa-location-crosshairs"></i> Konumumu Otomatik Bul (GPS ile Doldur)
+                <i class="fa-solid fa-location-crosshairs"></i> Konumumu Otomatik Bul (GPS)
               </button>
 
               <div id="customLabelWrapper" class="hidden">
@@ -222,26 +221,20 @@
               </div>
 
               <div>
-                <label class="text-xs text-slate-400 block mb-1">Mahalle Seçin</label>
+                <label class="text-xs text-slate-400 block mb-1">Semt / Mahalle Seçin</label>
                 <select id="qaNeighborhood" onchange="checkQaCustomNeighborhood()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
                 <input id="qaCustomNeighborhood" type="text" placeholder="Örn: Yıldız Mah." class="hidden mt-2 w-full bg-slate-950 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white focus:outline-none" />
-              </div>
-
-              <div class="relative">
-                <label class="text-xs text-slate-400 block mb-1">Sokak veya Cadde Adı <span class="text-amber-400">*</span></label>
-                <input id="qaStreet" type="text" autocomplete="off" onfocus="showStreetSuggestions('qa')" oninput="filterStreetSuggestions('qa')" placeholder="Mahalle seçince cadde/sokak listesi açılır veya yazın" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500" />
-                <div id="qaStreetSuggestions" class="hidden mt-1.5 bg-slate-900 border border-amber-500/40 rounded-xl p-2 max-h-44 overflow-y-auto space-y-1 shadow-xl"></div>
-                <p id="qaError" class="hidden text-[11px] text-red-400 mt-1">Lütfen ilçe, mahalle ve sokak bilginizi eksiksiz giriniz.</p>
+                <p id="qaError" class="hidden text-[11px] text-red-400 mt-1">Lütfen ilçe ve semt/mahalle seçiniz.</p>
               </div>
 
               <button onclick="saveQuickAddress()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-3 rounded-xl shadow-lg shadow-amber-500/20 transition active:scale-95">
-                Kaydet ve Kesintileri Göster
+                Kaydet ve Kesintileri Hemen Göster
               </button>
             </div>
           </div>
         </div>
 
-        <!-- ADRES KAYDEDİLDİKTEN SONRA GÖSTERİLEN ANA EKRAN -->
+        <!-- ADRES KAYDEDİLDİKTEN SONRA GÖSTERİLEN HIZLI KESİNTİ EKRANI -->
         <div id="activeAddressView" class="hidden space-y-4">
           <!-- 1. Kayıtlı Konum Kartı -->
           <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
@@ -250,7 +243,7 @@
                 Avrupa Yakası • BEDAŞ & İSKİ
               </span>
               <button onclick="switchTab('adreslerim')" class="text-xs text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1">
-                <i class="fa-solid fa-pen-to-square"></i> Adres Değiştir / Ekle
+                <i class="fa-solid fa-pen-to-square"></i> Semt Değiştir / Ekle
               </button>
             </div>
             <div class="mt-2.5 flex items-center justify-between">
@@ -267,63 +260,11 @@
             </div>
           </div>
 
-          <!-- 2. Anlık Durum Kartı -->
+          <!-- 2. Anlık ve Yaklaşan Kesinti Durum Özeti -->
           <div id="statusCard" class="rounded-2xl p-5 border transition-all"></div>
+
+          <!-- 3. BEDAŞ / AYEDAŞ / İSKİ Anlık ve İleri Tarihli Kesinti Listesi (Konumun Altında, Paylaşın Üstünde) -->
           <div id="outageList" class="space-y-3"></div>
-
-          <!-- 3. KONUMUN ALTINDA VE PAYLAŞ BUTONUNUN ÜSTÜNDE: YAKLAŞAN / İLERİ TARİHLİ KESİNTİ, GERİ SAYIM VE ANIMSATICI KARTI -->
-          <div id="upcomingOutageSection" class="bg-slate-800/90 border border-amber-500/40 rounded-2xl p-4 space-y-3.5 shadow-lg">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                <i class="fa-solid fa-bell-concierge animate-bounce"></i> İleri Tarihli Planlı Kesinti & Geri Sayım
-              </span>
-              <span id="upcomingDateBadge" class="text-[11px] font-bold bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-                Yarın • 09:00 - 14:00
-              </span>
-            </div>
-
-            <div>
-              <h4 id="upcomingTitle" class="text-sm font-bold text-white">Yaklaşan Planlı Bakım Kesintisi</h4>
-              <p id="upcomingDesc" class="text-xs text-slate-300 mt-1 leading-relaxed"></p>
-            </div>
-
-            <!-- Canlı Geri Sayım Sayacı (Saat : Dakika : Saniye) -->
-            <div class="bg-slate-900/95 border border-slate-700/80 rounded-xl p-3">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Kesintinin Başlamasına Kalan Süre</span>
-                <span class="text-[10px] font-semibold text-emerald-400 flex items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Canlı Sayaç
-                </span>
-              </div>
-              <div class="grid grid-cols-3 gap-2 text-center">
-                <div class="bg-slate-800/90 border border-slate-700 rounded-lg py-2">
-                  <span id="cdHours" class="text-lg font-extrabold text-amber-400 font-mono">00</span>
-                  <span class="block text-[10px] text-slate-400 uppercase">Saat</span>
-                </div>
-                <div class="bg-slate-800/90 border border-slate-700 rounded-lg py-2">
-                  <span id="cdMinutes" class="text-lg font-extrabold text-amber-400 font-mono">00</span>
-                  <span class="block text-[10px] text-slate-400 uppercase">Dakika</span>
-                </div>
-                <div class="bg-slate-800/90 border border-slate-700 rounded-lg py-2">
-                  <span id="cdSeconds" class="text-lg font-extrabold text-amber-400 font-mono">00</span>
-                  <span class="block text-[10px] text-slate-400 uppercase">Saniye</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Otomatik Anımsatıcı / Hatırlatıcı Kontrolleri (Uygulamaya 1 hafta girilmese bile önceden uyarır) -->
-            <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-700/60">
-              <div class="flex items-center gap-2">
-                <i class="fa-solid fa-shield-heart text-emerald-400 text-sm"></i>
-                <span id="reminderStatusText" class="text-[11px] text-slate-300 leading-tight">
-                  <strong>Ön Uyarı Aktif:</strong> Kesintiden 1 gün ve 1 saat önce otomatik hatırlatılır.
-                </span>
-              </div>
-              <button onclick="triggerPreOutageReminderNow()" class="shrink-0 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-[11px] font-bold px-2.5 py-1.5 rounded-xl transition">
-                <i class="fa-regular fa-calendar-check mr-1"></i> Hatırlatıcı Kur
-              </button>
-            </div>
-          </div>
         </div>
 
         <!-- 4. Uygulamayı Paylaş & ALO 186 / 185 -->
@@ -353,76 +294,6 @@
             </a>
           </div>
         </div>
-
-        <!-- 5. GÖRÜŞ & BİLDİRİM FORMU VE PLATFORM DEĞERLENDİRME BÖLÜMÜ -->
-        <div class="pt-2 space-y-3">
-          <!-- Tıklanınca Açılan Görüş ve Öneri Kartı -->
-          <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl overflow-hidden">
-            <button type="button" onclick="toggleFeedbackBox()" class="w-full p-4 text-left flex items-center justify-between hover:bg-slate-800 transition">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
-                  <i class="fa-regular fa-comment-dots text-base"></i>
-                </div>
-                <div>
-                  <h3 class="text-xs font-bold text-white">Uygulama hakkında görüş ve bildirimleriniz bizim için önemli</h3>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Öneri ve görüşlerinizi yazmak için dokunun</p>
-                </div>
-              </div>
-              <i id="feedbackChevron" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform"></i>
-            </button>
-
-            <div id="feedbackFormArea" class="hidden px-4 pb-4 pt-2 border-t border-slate-700/60 space-y-3">
-              <div>
-                <label class="text-[11px] text-slate-400 block mb-1">Konu Seçin</label>
-                <select id="fbCategory" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
-                  <option value="Öneri">💡 Yeni Özellik / Geliştirme Önerisi</option>
-                  <option value="Hata Bildirimi">🛠️ Hata veya Eksik Sokak Bildirimi</option>
-                  <option value="Memnuniyet">⭐ Genel Görüş & Memnuniyet</option>
-                </select>
-              </div>
-              <div>
-                <label class="text-[11px] text-slate-400 block mb-1">Öneriniz veya Mesajınız</label>
-                <textarea id="fbMessage" rows="3" placeholder="Uygulamamızda görmek istediğiniz özellikleri veya önerilerinizi buraya yazabilirsiniz..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-amber-500"></textarea>
-              </div>
-              <button type="button" onclick="submitUserFeedback()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition active:scale-95">
-                Görüş ve Önerimi Gönder
-              </button>
-            </div>
-          </div>
-
-          <!-- Hemen Altında: Platform Değerlendirme Kartı -->
-          <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 space-y-3 text-center">
-            <div class="space-y-1">
-              <h3 class="text-xs font-bold text-white">Uygulamamızı indirdiğiniz platformdan bizi değerlendirin</h3>
-              <p class="text-[11px] text-slate-400">Değerlendirmeleriniz daha fazla kullanıcıya ulaşmamıza yardımcı olur</p>
-            </div>
-
-            <!-- 5 Yıldız Seçici -->
-            <div class="flex items-center justify-center gap-2 py-1">
-              <button type="button" onclick="rateStars(1)" class="star-btn text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-              <button type="button" onclick="rateStars(2)" class="star-btn text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-              <button type="button" onclick="rateStars(3)" class="star-btn text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-              <button type="button" onclick="rateStars(4)" class="star-btn text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-              <button type="button" onclick="rateStars(5)" class="star-btn text-xl text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
-            </div>
-
-            <!-- Mağaza Platform Butonları -->
-            <div class="grid grid-cols-3 gap-2">
-              <button type="button" onclick="rateOnStore('App Store')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl py-2 px-2 flex flex-col items-center gap-1 transition">
-                <i class="fa-brands fa-apple text-base text-white"></i>
-                <span class="text-[10px] font-semibold text-slate-300">App Store</span>
-              </button>
-              <button type="button" onclick="rateOnStore('Google Play')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl py-2 px-2 flex flex-col items-center gap-1 transition">
-                <i class="fa-brands fa-google-play text-base text-emerald-400"></i>
-                <span class="text-[10px] font-semibold text-slate-300">Play Store</span>
-              </button>
-              <button type="button" onclick="rateOnStore('Microsoft Store')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl py-2 px-2 flex flex-col items-center gap-1 transition">
-                <i class="fa-brands fa-microsoft text-base text-sky-400"></i>
-                <span class="text-[10px] font-semibold text-slate-300">Microsoft</span>
-              </button>
-            </div>
-          </div>
-        </div>
       </section>
 
       <!-- SEKME 2: GEÇMİŞ KESİNTİLER -->
@@ -433,7 +304,7 @@
               <h2 class="text-sm font-bold text-white flex items-center gap-2">
                 <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> Geçmiş Kesinti Kayıtları
               </h2>
-              <p id="historyAddressSubtitle" class="text-xs text-slate-400 mt-0.5">Seçili adresinizdeki saat ve dakika detaylı kesinti arşivi</p>
+              <p id="historyAddressSubtitle" class="text-xs text-slate-400 mt-0.5">Seçili semtinizdeki saat ve dakika detaylı kesinti arşivi</p>
             </div>
           </div>
 
@@ -450,11 +321,11 @@
         <div id="historyListContainer" class="space-y-2.5"></div>
       </section>
 
-      <!-- SEKME 3: ADRESLERİM -->
+      <!-- SEKME 3: ADRESLERİM (SADECE İLÇE VE SEMT) -->
       <section id="tab-adreslerim" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
-          <h2 class="text-sm font-bold text-white mb-1">Kayıtlı Adreslerim</h2>
-          <p class="text-xs text-slate-400 mb-3">Sorgulamak istediğiniz adrese dokunun veya aşağıdan yeni adres ekleyin.</p>
+          <h2 class="text-sm font-bold text-white mb-1">Kayıtlı Semtlerim</h2>
+          <p class="text-xs text-slate-400 mb-3">Sorgulamak istediğiniz adrese dokunun veya aşağıdan yeni semt ekleyin.</p>
           <div id="savedAddressesList" class="space-y-2.5"></div>
         </div>
 
@@ -471,7 +342,7 @@
 
           <!-- Otomatik Konum Tespit Butonu -->
           <button type="button" onclick="detectUserLocation('inp')" id="btnGps-inp" class="w-full bg-sky-500/15 hover:bg-sky-500/25 border border-sky-500/40 text-sky-300 font-semibold text-xs py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition active:scale-95">
-            <i class="fa-solid fa-location-crosshairs"></i> Konumumu Otomatik Bul (GPS ile Doldur)
+            <i class="fa-solid fa-location-crosshairs"></i> Konumumu Otomatik Bul (GPS)
           </button>
 
           <div>
@@ -486,17 +357,11 @@
             </div>
 
             <div>
-              <label class="text-xs text-slate-400 block mb-1">Mahalle Seçin</label>
+              <label class="text-xs text-slate-400 block mb-1">Semt / Mahalle Seçin</label>
               <select id="inpNeighborhood" onchange="checkCustomNeighborhood()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
               <input id="inpCustomNeighborhood" type="text" placeholder="Örn: Yıldız Mah." class="hidden mt-2 w-full bg-slate-900 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white focus:outline-none" />
+              <p id="inpError" class="hidden text-[11px] text-red-400 mt-1">Lütfen ilçe ve semt/mahalle seçiniz.</p>
             </div>
-          </div>
-
-          <div class="relative">
-            <label class="text-xs text-slate-400 block mb-1">Sokak veya Cadde Adı <span class="text-amber-400">*</span></label>
-            <input id="inpStreet" type="text" autocomplete="off" onfocus="showStreetSuggestions('inp')" oninput="filterStreetSuggestions('inp')" placeholder="Mahalle seçince cadde/sokak listesi açılır veya yazın" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500" />
-            <div id="inpStreetSuggestions" class="hidden mt-1.5 bg-slate-900 border border-amber-500/40 rounded-xl p-2 max-h-44 overflow-y-auto space-y-1 shadow-xl"></div>
-            <p id="inpError" class="hidden text-[11px] text-red-400 mt-1">Lütfen ilçe, mahalle ve sokak adını seçiniz.</p>
           </div>
 
           <button onclick="addNewAddress()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-2.5 rounded-xl transition active:scale-98">
@@ -506,15 +371,14 @@
       </section>
 
       <!-- SEKME 4: AYARLAR -->
-      <section id="tab-ayarlar" class="hidden space-y-4">
+      <section id="tab-ayarlar" class="hidden space-y-3.5">
 
-        <!-- En Üst Bar: Sağ Üst Köşede Koyu Mod Tiki ("Kesinti Bildirimleri Otomatik Açık" yazısı kaldırıldı) -->
+        <!-- En Üst Bar: Sağ Üst Köşede Koyu Mod Tiki -->
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
           <div class="flex items-center justify-between">
             <div>
               <h2 class="text-sm font-bold text-white">Görünüm ve Sistem Ayarları</h2>
             </div>
-            <!-- Sağ Üst Köşe Koyu Mod Tiki -->
             <label class="flex items-center gap-2 cursor-pointer bg-slate-900 px-3 py-2 rounded-xl border border-slate-700">
               <i class="fa-solid fa-moon text-amber-400 text-xs"></i>
               <span class="text-xs font-bold text-white">Koyu Mod</span>
@@ -524,11 +388,11 @@
         </div>
 
         <!-- PROFESYONEL BİLDİRİM & SES TEST MERKEZİ -->
-        <div class="bg-slate-800/80 border border-amber-500/40 rounded-2xl p-4 space-y-4 shadow-lg">
-          <div class="flex items-center justify-between border-b border-slate-700/70 pb-3">
+        <div class="bg-slate-800/80 border border-amber-500/40 rounded-2xl p-4 space-y-3.5 shadow-lg">
+          <div class="flex items-center justify-between border-b border-slate-700/70 pb-2.5">
             <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
-                <i class="fa-solid fa-volume-high text-sm"></i>
+              <div class="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
+                <i class="fa-solid fa-volume-high text-xs"></i>
               </div>
               <div>
                 <h3 class="text-sm font-bold text-white">Profesyonel Test Modu</h3>
@@ -538,8 +402,7 @@
             <span class="text-[10px] font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">Canlı Ses</span>
           </div>
 
-          <!-- Bildirim Sesi Seçimi -->
-          <div class="space-y-2">
+          <div class="space-y-1.5">
             <label class="text-xs font-semibold text-slate-300 block">Bildirim Ses Profili</label>
             <div class="flex gap-2">
               <select id="soundProfileSelect" onchange="saveSoundSettings()" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
@@ -549,12 +412,11 @@
                 <option value="mute">🔕 Sessiz (Sadece Görsel Bildirim)</option>
               </select>
               <button onclick="previewSelectedSound()" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 text-amber-400 text-xs font-semibold flex items-center gap-1.5 shrink-0">
-                <i class="fa-solid fa-play"></i> Sesi Dinle
+                <i class="fa-solid fa-play"></i> Dinle
               </button>
             </div>
           </div>
 
-          <!-- Ses Seviyesi -->
           <div class="space-y-1">
             <div class="flex justify-between text-[11px] text-slate-400">
               <span>Uyarı Ses Seviyesi</span>
@@ -563,54 +425,49 @@
             <input id="soundVolumeSlider" type="range" min="10" max="100" value="85" oninput="updateVolumeLabel(this.value)" class="w-full accent-amber-500 cursor-pointer" />
           </div>
 
-          <!-- 3 Aşamalı Gerçekçi Senaryo ve Ses Test Butonları -->
           <div class="space-y-2 pt-1">
             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Senaryo Test Butonları</p>
 
-            <!-- 1. Elektrik Kesilmeden Önce -->
-            <button onclick="runProTest('pre_elec')" class="w-full text-left p-3 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-amber-500/30 hover:border-amber-500 transition flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
-                  <i class="fa-regular fa-clock text-base"></i>
+            <button onclick="runProTest('pre_elec')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-amber-500/30 hover:border-amber-500 transition flex items-center justify-between group">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-regular fa-clock text-sm"></i>
                 </div>
                 <div>
                   <p class="text-xs font-bold text-white group-hover:text-amber-300">1. Elektrik Kesilmeden Önce Bildirim Testi</p>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Kesintiye 1 saat kala gelen ön uyarı ve hatırlatma sesi</p>
+                  <p class="text-[10px] text-slate-400">Kesintiye 1 saat kala gelen ön uyarı ve hatırlatma sesi</p>
                 </div>
               </div>
-              <i class="fa-solid fa-circle-play text-amber-400 text-base"></i>
+              <i class="fa-solid fa-circle-play text-amber-400 text-sm"></i>
             </button>
 
-            <!-- 2. Elektrik Kesilince -->
-            <button onclick="runProTest('now_elec')" class="w-full text-left p-3 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-red-500/30 hover:border-red-500 transition flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-red-500/15 text-red-400 flex items-center justify-center shrink-0">
-                  <i class="fa-solid fa-bolt text-base"></i>
+            <button onclick="runProTest('now_elec')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-red-500/30 hover:border-red-500 transition flex items-center justify-between group">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-red-500/15 text-red-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-bolt text-sm"></i>
                 </div>
                 <div>
                   <p class="text-xs font-bold text-white group-hover:text-red-300">2. Elektrik Kesilince Bildirim & Ses Testi</p>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Kesinti başladığı an çalan acil uyarı sesi ve ekranı</p>
+                  <p class="text-[10px] text-slate-400">Kesinti başladığı an çalan acil uyarı sesi ve ekranı</p>
                 </div>
               </div>
-              <i class="fa-solid fa-circle-play text-red-400 text-base"></i>
+              <i class="fa-solid fa-circle-play text-red-400 text-sm"></i>
             </button>
 
-            <!-- 3. Su Kesintisi (İSKİ) -->
-            <button onclick="runProTest('water')" class="w-full text-left p-3 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-sky-500/30 hover:border-sky-500 transition flex items-center justify-between group">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0">
-                  <i class="fa-solid fa-droplet text-base"></i>
+            <button onclick="runProTest('water')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-sky-500/30 hover:border-sky-500 transition flex items-center justify-between group">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-droplet text-sm"></i>
                 </div>
                 <div>
                   <p class="text-xs font-bold text-white group-hover:text-sky-300">3. İSKİ Su Kesintisi Bildirim & Ses Testi</p>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Su kesintisi uyarısı ve özel su akustik bildirim sesi</p>
+                  <p class="text-[10px] text-slate-400">Su kesintisi uyarısı ve özel su akustik bildirim sesi</p>
                 </div>
               </div>
-              <i class="fa-solid fa-circle-play text-sky-400 text-base"></i>
+              <i class="fa-solid fa-circle-play text-sky-400 text-sm"></i>
             </button>
           </div>
 
-          <!-- Normal Moda Dön ve Sıfırla -->
           <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-700/60">
             <button onclick="loadFromLiveJson(); switchTab('kesintiler');" class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-[11px] font-semibold text-emerald-300 flex items-center justify-center gap-1.5">
               <i class="fa-solid fa-rotate"></i> Canlı Sorguya Dön
@@ -620,6 +477,73 @@
             </button>
           </div>
         </div>
+
+        <!-- AYARLAR EN ALT KISIM: KÜÇÜLTÜLMÜŞ GÖRÜŞ & BİLDİRİM FORMU VE DEĞERLENDİRME (OUTLOOK -> orhansamet785@gmail.com) -->
+        <div class="space-y-2.5 pt-1">
+          <!-- Kompakt Görüş ve Öneri Kartı -->
+          <div class="bg-slate-800/75 border border-slate-700/80 rounded-2xl overflow-hidden">
+            <button type="button" onclick="toggleFeedbackBox()" class="w-full px-3.5 py-2.5 text-left flex items-center justify-between hover:bg-slate-800 transition">
+              <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                  <i class="fa-regular fa-comment-dots text-xs"></i>
+                </div>
+                <div>
+                  <h3 class="text-[11px] font-bold text-white leading-tight">Uygulama hakkında görüş ve bildirimleriniz bizim için önemli</h3>
+                  <p class="text-[10px] text-slate-400">Öneri yazmak ve doğrudan bize iletmek için dokunun</p>
+                </div>
+              </div>
+              <i id="feedbackChevron" class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform"></i>
+            </button>
+
+            <div id="feedbackFormArea" class="hidden px-3.5 pb-3.5 pt-2 border-t border-slate-700/60 space-y-2">
+              <div>
+                <select id="fbCategory" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-1.5 text-[11px] text-white focus:outline-none focus:border-amber-500">
+                  <option value="Öneri">💡 Yeni Özellik / Geliştirme Önerisi</option>
+                  <option value="Hata Bildirimi">🛠️ Hata veya Kesinti Bildirimi</option>
+                  <option value="Memnuniyet">⭐ Genel Görüş & Memnuniyet</option>
+                </select>
+              </div>
+              <div>
+                <textarea id="fbMessage" rows="2" placeholder="Önerinizi buraya yazın (orhansamet785@gmail.com adresine iletilir)..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-[11px] text-white focus:outline-none focus:border-amber-500"></textarea>
+              </div>
+              <button type="button" onclick="submitUserFeedback()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[11px] py-2 rounded-xl transition active:scale-95">
+                <i class="fa-solid fa-paper-plane mr-1"></i> Görüşümü Gönder (orhansamet785@gmail.com)
+              </button>
+            </div>
+          </div>
+
+          <!-- Kompakt Platform Değerlendirme ve Outlook İletişim Kartı -->
+          <div class="bg-slate-800/75 border border-slate-700/80 rounded-2xl p-3 space-y-2 text-center">
+            <div>
+              <h3 class="text-[11px] font-bold text-white">Uygulamamızı indirdiğiniz platformdan bizi değerlendirin</h3>
+              <p class="text-[10px] text-slate-400">Puan verebilir veya Outlook ile doğrudan görüş gönderebilirsiniz</p>
+            </div>
+
+            <div class="flex items-center justify-center gap-1.5 py-0.5">
+              <button type="button" onclick="rateStars(1)" class="star-btn text-base text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+              <button type="button" onclick="rateStars(2)" class="star-btn text-base text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+              <button type="button" onclick="rateStars(3)" class="star-btn text-base text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+              <button type="button" onclick="rateStars(4)" class="star-btn text-base text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+              <button type="button" onclick="rateStars(5)" class="star-btn text-base text-amber-400 hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1.5">
+              <button type="button" onclick="rateOnStore('App Store')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl py-1.5 px-2 flex items-center justify-center gap-1.5 transition">
+                <i class="fa-brands fa-apple text-xs text-white"></i>
+                <span class="text-[10px] font-semibold text-slate-300">App Store</span>
+              </button>
+              <button type="button" onclick="rateOnStore('Google Play')" class="bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl py-1.5 px-2 flex items-center justify-center gap-1.5 transition">
+                <i class="fa-brands fa-google-play text-xs text-emerald-400"></i>
+                <span class="text-[10px] font-semibold text-slate-300">Play Store</span>
+              </button>
+              <a href="mailto:orhansamet785@gmail.com?subject=Kesinti%20Habercisi%20-%20Kullan%C4%B1c%C4%B1%20G%C3%B6r%C3%BC%C5%9F%20ve%20De%C4%9Ferlendirmesi&body=Merhaba%2C%20uygulama%20hakk%C4%B1ndaki%20g%C3%B6r%C3%BC%C5%9F%20ve%20%C3%B6nerilerim%3A%0A%0A" onclick="notifyOutlookRedirect()" class="bg-slate-900 hover:bg-slate-800 border border-sky-500/40 rounded-xl py-1.5 px-2 flex items-center justify-center gap-1.5 transition">
+                <i class="fa-solid fa-envelope-open-text text-xs text-sky-400"></i>
+                <span class="text-[10px] font-bold text-sky-300">Outlook</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
       </section>
 
     </main>
@@ -689,33 +613,16 @@
       "Üsküdar": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Acıbadem", "Ahmediye", "Altunizade", "Aziz Mahmut Hüdayi", "Bahçelievler", "Barbaros", "Beylerbeyi", "Bulgurlu", "Burhaniye", "Cumhuriyet", "Çengelköy", "Ferah", "Güzeltepe", "İcadiye", "Kandilli", "Kısıklı", "Kirazlıtepe", "Kuleli", "Kuzguncuk", "Küçük Çamlıca", "Küçüksu", "Küplüce", "Mehmet Akif Ersoy", "Mimar Sinan", "Murat Reis", "Salacak", "Selami Ali", "Selimiye", "Sultantepe", "Ünalan", "Valide-i Atik", "Yavuztürk", "Zeynep Kamil"] }
     };
 
-    const curatedStreets = {
-      "Beşiktaş|Yıldız": ["Çırağan Caddesi", "Yıldız Caddesi", "Serencebey Yokuşu", "Ortabahçe Caddesi", "Şehit Asım Caddesi", "Yıldız Posta Caddesi", "Müvezzi Caddesi"],
-      "Beşiktaş|Türkali": ["Ihlamurdere Caddesi", "Nüzhetiye Caddesi", "Mısırlıbahçe Sokak", "Behçet Necatigil Sokak", "Şair Nedim Caddesi"],
-      "Beşiktaş|Ortaköy": ["Muallim Naci Caddesi", "Dereboyu Caddesi", "Mecidiye Köprüsü Sokak", "Portakal Yokuşu Caddesi", "Kardeşler Sokak"],
-      "Beşiktaş|Levent": ["Büyükdere Caddesi", "Nisbetiye Caddesi", "Çarşı Caddesi", "Sarmaşık Sokak", "Çamlık Caddesi"],
-      "Bağcılar|Kirazlı": ["1200. Sokak", "1195. Sokak", "1205. Sokak", "Mevlana Caddesi", "Hoca Ahmet Yesevi Caddesi", "Kirazlı Caddesi", "1201. Sokak"],
-      "Bağcılar|Güneşli": ["1310. Sokak", "1312. Sokak", "Evren Caddesi", "Koçman Caddesi", "Üsküp Caddesi", "1305. Sokak"],
-      "Bağcılar|Merkez": ["İstanbul Caddesi", "Ebubekir Caddesi", "Güngören Caddesi", "675. Sokak", "702. Sokak"],
-      "Kadıköy|Caferağa": ["Moda Caddesi", "Bahariye Caddesi", "General Asım Gündüz Caddesi", "Mühürdar Caddesi", "Söğütlüçeşme Caddesi", "Şair Nefi Sokak"],
-      "Kadıköy|Suadiye": ["Bağdat Caddesi", "Plaj Yolu Sokak", "Kazım Özalp Sokak", "Şemsettin Günaltay Caddesi", "Ayşe Çavuş Sokak"],
-      "Şişli|Mecidiyeköy": ["Büyükdere Caddesi", "Ortaklar Caddesi", "Gülbahar Caddesi", "Atakan Sokak", "Lati Lokum Sokak"],
-      "Üsküdar|Mimar Sinan": ["Selmanipak Caddesi", "Hakimiyeti Milliye Caddesi", "Uncular Caddesi", "Çavuşdere Caddesi"]
-    };
-
-    const STORAGE_KEY = "kh_user_addresses_v3";
+    const CONTACT_EMAIL = "orhansamet785@gmail.com";
+    const STORAGE_KEY = "kh_user_addresses_v4";
     const THEME_KEY = "kh_dark_mode_v2";
-    const LAST_VISIT_KEY = "kh_last_visit_ts";
     let addresses = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     let liveData = null;
     let currentScenario = "live";
     let selectedQuickLabel = "Evim";
     let selectedHistoryMonths = 1;
     let audioCtx = null;
-    let currentStreetPool = { qa: [], inp: [] };
-    let upcomingTargetTime = null;
 
-    // TEMA YÖNETİMİ (İLK KEZ GİRENLER İÇİN KESİN KOYU MOD, SONRA KULLANICI TERCİHİ)
     function applyTheme(isDark) {
       document.body.classList.toggle("dark-theme", isDark);
       const toggle = document.getElementById("darkModeToggle");
@@ -729,7 +636,6 @@
       applyTheme(isDark);
     }
 
-    // CANLI TARİH VE SAAT GÜNCELLEYİCİ ("SON KONTROL")
     function updateLiveTimestamp() {
       const now = new Date();
       const pad = n => String(n).padStart(2, "0");
@@ -743,96 +649,7 @@
       }
     }
 
-    // İLERİ TARİHLİ KESİNTİ HESAPLAMA VE CANLI GERİ SAYIM SAYACI
-    function getNextScheduledOutageTarget() {
-      const now = new Date();
-      const target = new Date(now);
-      // Eğer saat sabah 09:00'dan önceyse bugün 09:00'u, geçtiyse yarın 09:00'u hedef al
-      if (now.getHours() < 9) {
-        target.setHours(9, 0, 0, 0);
-      } else {
-        target.setDate(target.getDate() + 1);
-        target.setHours(9, 0, 0, 0);
-      }
-      return target;
-    }
-
-    function updateCountdownBox() {
-      const active = getActiveAddress();
-      if (!active) return;
-
-      if (!upcomingTargetTime || upcomingTargetTime <= new Date()) {
-        upcomingTargetTime = getNextScheduledOutageTarget();
-      }
-
-      const now = new Date();
-      const diffMs = Math.max(0, upcomingTargetTime - now);
-      const totalSeconds = Math.floor(diffMs / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      const pad = n => String(n).padStart(2, "0");
-      const hEl = document.getElementById("cdHours");
-      const mEl = document.getElementById("cdMinutes");
-      const sEl = document.getElementById("cdSeconds");
-
-      if (hEl && mEl && sEl) {
-        hEl.textContent = pad(hours);
-        mEl.textContent = pad(minutes);
-        sEl.textContent = pad(seconds);
-      }
-    }
-
-    function updateUpcomingCardDetails(active) {
-      if (!active) return;
-      const info = getDistrictInfo(active.district);
-      const mahName = formatMah(active.neighborhood);
-      upcomingTargetTime = getNextScheduledOutageTarget();
-
-      const pad = n => String(n).padStart(2, "0");
-      const dateStr = `${pad(upcomingTargetTime.getDate())}.${pad(upcomingTargetTime.getMonth() + 1)}.${upcomingTargetTime.getFullYear()}`;
-
-      const badgeEl = document.getElementById("upcomingDateBadge");
-      const titleEl = document.getElementById("upcomingTitle");
-      const descEl = document.getElementById("upcomingDesc");
-
-      if (badgeEl) badgeEl.textContent = `${dateStr} • 09:00 - 14:00`;
-      if (titleEl) titleEl.textContent = `${info.kurum} İleri Tarihli Planlı Kesinti Bildirimi`;
-      if (descEl) {
-        descEl.innerHTML = `<strong>${active.district} / ${mahName} Mah. (${active.street})</strong> adresiniz için <strong>${dateStr}</strong> tarihinde saat <strong>09:00 - 14:00</strong> arasında koruyucu şebeke bakım çalışması planlanmıştır. Kesinti başlamadan önce bildirim alacaksınız.`;
-      }
-      updateCountdownBox();
-    }
-
-    // KULLANICI ADRES KAYDETTİĞİNDE VEYA UYGULAMAYA DÖNDÜĞÜNDE ÖN UYARI GÖNDERME SİSTEMİ
-    function notifyUpcomingOutageBeforeItHappens(addr, isNewSave = false) {
-      if (!addr) return;
-      const info = getDistrictInfo(addr.district);
-      const mahName = formatMah(addr.neighborhood);
-      const target = getNextScheduledOutageTarget();
-      const pad = n => String(n).padStart(2, "0");
-      const dateStr = `${pad(target.getDate())}.${pad(target.getMonth() + 1)}.${target.getFullYear()}`;
-
-      playNotificationTone("pre_elec");
-      sendSystemNotification(
-        isNewSave
-          ? `⏳ İleri Tarihli Kesinti Ön Uyarısı Kaydedildi!`
-          : `⏳ Hatırlatıcı: Yaklaşan Elektrik/Su Kesintisi!`,
-        `${addr.district} / ${mahName} Mah. (${addr.street}) adresinizde ${dateStr} 09:00-14:00 arası ${info.kurum} planlı kesintisi var. Geri sayım ana menüde başlatıldı.`,
-        "amber"
-      );
-    }
-
-    function triggerPreOutageReminderNow() {
-      const active = getActiveAddress();
-      if (!active) return;
-      silentEnableNotifications();
-      localStorage.setItem("kh_reminder_active", "1");
-      notifyUpcomingOutageBeforeItHappens(active, false);
-    }
-
-    // GÖRÜŞ & ÖNERİ FORMU VE PLATFORM DEĞERLENDİRME FONKSİYONLARI
+    // GÖRÜŞ & ÖNERİ FORMU VE OUTLOOK (orhansamet785@gmail.com) YÖNLENDİRMESİ
     function toggleFeedbackBox() {
       const area = document.getElementById("feedbackFormArea");
       const chev = document.getElementById("feedbackChevron");
@@ -848,15 +665,22 @@
         showPush("Mesaj Boş", "Lütfen görüş veya önerinizi kutuya yazınız.", "amber");
         return;
       }
-      const savedList = JSON.parse(localStorage.getItem("kh_user_feedbacks") || "[]");
-      savedList.push({ date: new Date().toISOString(), category: cat, message: msg });
-      localStorage.setItem("kh_user_feedbacks", JSON.stringify(savedList));
+
+      const active = getActiveAddress();
+      const locInfo = active ? `${active.district} / ${formatMah(active.neighborhood)} Mah.` : "Belirtilmedi";
+      const subject = encodeURIComponent(`Kesinti Habercisi [${cat}] - Kullanıcı Görüşü`);
+      const body = encodeURIComponent(`Kategori: ${cat}\nKullanıcı Semti: ${locInfo}\n\nGörüş ve Öneri:\n${msg}`);
+
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
 
       document.getElementById("fbMessage").value = "";
       document.getElementById("feedbackFormArea").classList.add("hidden");
       document.getElementById("feedbackChevron").style.transform = "rotate(0deg)";
-      playNotificationTone("pre_elec");
-      showPush("Teşekkür Ederiz!", "Görüş ve öneriniz ekibimize başarıyla iletildi.", "emerald");
+      showPush("E-Posta Yönlendirildi", `Görüşünüz ${CONTACT_EMAIL} adresine gönderilmek üzere hazırlandı.`, "emerald");
+    }
+
+    function notifyOutlookRedirect() {
+      showPush("Outlook / E-Posta Açılıyor", `Görüşünüzü doğrudan ${CONTACT_EMAIL} hesabına gönderebilirsiniz.`, "sky");
     }
 
     function rateStars(count) {
@@ -869,7 +693,7 @@
     }
 
     function rateOnStore(storeName) {
-      showPush(`${storeName} Değerlendirmesi`, `${storeName} üzerinden yaptığınız değerli geri bildirim için teşekkür ederiz!`, "emerald");
+      showPush(`${storeName} Değerlendirmesi`, `${storeName} üzerinden yaptığınız geri bildirim için teşekkür ederiz!`, "emerald");
     }
 
     function formatMah(name) {
@@ -942,7 +766,7 @@
       placeholderOpt.disabled = true;
       placeholderOpt.selected = true;
       placeholderOpt.textContent = districtVal
-        ? "Mahalle Seçin (Örn: Yıldız Mah.)"
+        ? "Semt / Mahalle Seçin (Örn: Yıldız Mah.)"
         : "Önce İlçe Seçin (Örn: Yıldız Mah.)";
       selectEl.appendChild(placeholderOpt);
 
@@ -969,7 +793,6 @@
         document.getElementById("inpNeighborhood"),
         document.getElementById("inpCustomNeighborhood")
       );
-      document.getElementById("inpStreetSuggestions").classList.add("hidden");
     }
 
     function updateQaNeighborhoods() {
@@ -978,139 +801,23 @@
         document.getElementById("qaNeighborhood"),
         document.getElementById("qaCustomNeighborhood")
       );
-      document.getElementById("qaStreetSuggestions").classList.add("hidden");
     }
 
     function checkCustomNeighborhood() {
       const sel = document.getElementById("inpNeighborhood");
       const inp = document.getElementById("inpCustomNeighborhood");
       inp.classList.toggle("hidden", sel.value !== "__custom__");
-      if (sel.value === "__custom__") {
-        inp.focus();
-      } else if (sel.value) {
-        prepareStreetsForNeighborhood("inp");
-      }
+      if (sel.value === "__custom__") inp.focus();
     }
 
     function checkQaCustomNeighborhood() {
       const sel = document.getElementById("qaNeighborhood");
       const inp = document.getElementById("qaCustomNeighborhood");
       inp.classList.toggle("hidden", sel.value !== "__custom__");
-      if (sel.value === "__custom__") {
-        inp.focus();
-      } else if (sel.value) {
-        prepareStreetsForNeighborhood("qa");
-      }
+      if (sel.value === "__custom__") inp.focus();
     }
 
-    async function prepareStreetsForNeighborhood(prefix) {
-      const district = document.getElementById(prefix + "District").value;
-      const neighSel = document.getElementById(prefix + "Neighborhood").value;
-      const mah = formatMah(neighSel);
-      if (!district || !mah || neighSel === "__custom__") return;
-
-      const key = `${district}|${mah}`;
-      const baseSuggestions = curatedStreets[key]
-        ? [...curatedStreets[key]]
-        : [
-            `${mah} Caddesi`,
-            "Atatürk Caddesi",
-            "Cumhuriyet Caddesi",
-            "İstiklal Caddesi",
-            "Mevlana Caddesi",
-            "1. Sokak",
-            "2. Sokak",
-            "Merkez Sokak"
-          ];
-
-      currentStreetPool[prefix] = baseSuggestions;
-      renderStreetSuggestionBox(prefix, baseSuggestions, `${mah} Mah. Cadde & Sokakları (Seçin veya yukarıya yazın):`);
-
-      try {
-        const q = encodeURIComponent(`${mah} Mahallesi, ${district}, İstanbul`);
-        const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${q}&limit=1`);
-        const geoData = await geoRes.json();
-        if (geoData && geoData[0] && geoData[0].boundingbox) {
-          const bb = geoData[0].boundingbox;
-          const overpassQuery = `[out:json][timeout:6];way["highway"~"primary|secondary|tertiary|residential|living_street"]["name"](${bb[0]},${bb[2]},${bb[1]},${bb[3]});out tags 40;`;
-          const ovRes = await fetch("https://overpass-api.de/api/interpreter?data=" + encodeURIComponent(overpassQuery));
-          const ovData = await ovRes.json();
-          if (ovData && Array.isArray(ovData.elements)) {
-            const fetchedNames = ovData.elements
-              .map(e => e.tags && e.tags.name)
-              .filter(Boolean);
-            const merged = [...new Set([...baseSuggestions, ...fetchedNames])].slice(0, 30);
-            if (merged.length > 0) {
-              currentStreetPool[prefix] = merged;
-              renderStreetSuggestionBox(prefix, merged, `${mah} Mah. Cadde & Sokakları (Dokunup seçin veya elle yazın):`);
-            }
-          }
-        }
-      } catch (e) {}
-    }
-
-    function renderStreetSuggestionBox(prefix, list, headerTitle) {
-      const box = document.getElementById(prefix + "StreetSuggestions");
-      if (!box) return;
-      if (!list || list.length === 0) {
-        box.classList.add("hidden");
-        return;
-      }
-
-      box.innerHTML = `
-        <div class="flex items-center justify-between px-2 py-1 border-b border-slate-700/60">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400">${headerTitle}</span>
-          <button type="button" onclick="document.getElementById('${prefix}StreetSuggestions').classList.add('hidden')" class="text-[10px] text-slate-400 hover:text-white px-1">Kapat ✕</button>
-        </div>
-        <div class="grid grid-cols-1 gap-1 pt-1">
-          ${list
-            .map(
-              st => `
-            <button type="button" onclick="pickSuggestedStreet('${prefix}', '${st.replace(/'/g, "\\'")}')" class="text-left px-2.5 py-1.5 rounded-lg hover:bg-amber-500/20 text-xs text-slate-200 flex items-center justify-between transition">
-              <span><i class="fa-solid fa-road text-amber-400 mr-2 text-[10px]"></i>${st}</span>
-              <span class="text-[10px] text-amber-400 font-semibold">Seç</span>
-            </button>
-          `
-            )
-            .join("")}
-        </div>
-      `;
-      box.classList.remove("hidden");
-    }
-
-    function pickSuggestedStreet(prefix, streetName) {
-      const inp = document.getElementById(prefix + "Street");
-      const box = document.getElementById(prefix + "StreetSuggestions");
-      if (inp) inp.value = streetName;
-      if (box) box.classList.add("hidden");
-    }
-
-    function showStreetSuggestions(prefix) {
-      const pool = currentStreetPool[prefix] || [];
-      if (pool.length > 0) {
-        renderStreetSuggestionBox(prefix, pool, "Cadde & Sokak Önerileri (Seçin veya elle yazın):");
-      } else {
-        prepareStreetsForNeighborhood(prefix);
-      }
-    }
-
-    function filterStreetSuggestions(prefix) {
-      const val = document.getElementById(prefix + "Street").value.trim();
-      const pool = currentStreetPool[prefix] || [];
-      if (pool.length === 0) return;
-      if (!val) {
-        renderStreetSuggestionBox(prefix, pool, "Cadde & Sokak Önerileri:");
-        return;
-      }
-      const normVal = normalizeTr(val);
-      const filtered = pool.filter(s => normalizeTr(s).includes(normVal));
-      if (filtered.length > 0) {
-        renderStreetSuggestionBox(prefix, filtered, "Eşleşen Cadde & Sokaklar:");
-      } else {
-        document.getElementById(prefix + "StreetSuggestions").classList.add("hidden");
-      }
-    }
-
+    // GPS İLE OTOMATİK İLÇE VE SEMT TESPİTİ
     function detectUserLocation(prefix) {
       const btn = document.getElementById("btnGps-" + prefix);
       if (!("geolocation" in navigator)) {
@@ -1120,7 +827,7 @@
 
       const originalHtml = btn.innerHTML;
       btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Konumunuz Tespit Ediliyor...';
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Semtiniz Tespit Ediliyor...';
 
       navigator.geolocation.getCurrentPosition(
         async pos => {
@@ -1135,7 +842,6 @@
             const districtSelect = document.getElementById(prefix + "District");
             const neighSelect = document.getElementById(prefix + "Neighborhood");
             const customNeighInput = document.getElementById(prefix + "CustomNeighborhood");
-            const streetInput = document.getElementById(prefix + "Street");
 
             const rawDistrictCandidates = [
               addr.town,
@@ -1183,7 +889,6 @@
               if (matchedOption) {
                 neighSelect.value = matchedOption;
                 customNeighInput.classList.add("hidden");
-                prepareStreetsForNeighborhood(prefix);
               } else {
                 neighSelect.value = "__custom__";
                 customNeighInput.classList.remove("hidden");
@@ -1191,19 +896,14 @@
               }
             }
 
-            const rawStreet = addr.road || addr.pedestrian || addr.residential || "";
-            if (rawStreet) {
-              streetInput.value = rawStreet;
-            }
-
-            btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Konum Otomatik Dolduruldu';
+            btn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> Semtiniz Otomatik Seçildi';
             showPush(
               "Konumunuz Tespit Edildi",
-              `${matchedDistrict || "İstanbul"} / ${rawNeigh ? rawNeigh + " Mah." : ""} ${rawStreet || ""} bilgileri forma yazıldı.`,
+              `${matchedDistrict || "İstanbul"} / ${rawNeigh ? rawNeigh + " Mah." : ""} semt bilgisi seçildi.`,
               "emerald"
             );
           } catch (err) {
-            showPush("Konum Alınamadı", "Harita servisine ulaşılamadı, lütfen el ile seçiniz.", "amber");
+            showPush("Konum Alınamadı", "Harita servisine ulaşılamadı, lütfen listeden seçiniz.", "amber");
             btn.innerHTML = originalHtml;
           } finally {
             btn.disabled = false;
@@ -1217,7 +917,7 @@
           btn.innerHTML = originalHtml;
           showPush(
             "Konum İzni Gerekli",
-            "Otomatik adres tespiti için tarayıcınızdan konum izni vermeniz gerekmektedir.",
+            "Otomatik semt tespiti için tarayıcınızdan konum izni vermeniz gerekmektedir.",
             "amber"
           );
         },
@@ -1259,10 +959,9 @@
       const neighSel = document.getElementById("qaNeighborhood").value;
       const customNeigh = formatMah(document.getElementById("qaCustomNeighborhood").value);
       const neighborhood = neighSel === "__custom__" ? customNeigh : formatMah(neighSel);
-      const street = document.getElementById("qaStreet").value.trim();
       const errEl = document.getElementById("qaError");
 
-      if (!district || !neighborhood || !street) {
+      if (!district || !neighborhood) {
         errEl.classList.remove("hidden");
         return;
       }
@@ -1275,13 +974,12 @@
         label,
         district,
         neighborhood,
-        street,
         active: true
       };
       addresses = [newAddr];
       saveAddresses();
-      loadFromLiveJson();
-      notifyUpcomingOutageBeforeItHappens(newAddr, true);
+      currentScenario = "live";
+      renderMainScreen(true);
     }
 
     function setFormLabel(lbl) {
@@ -1291,7 +989,6 @@
     function resetToFirstTimeVisitor() {
       localStorage.removeItem(STORAGE_KEY);
       addresses = [];
-      document.getElementById("qaStreet").value = "";
       document.getElementById("quickAddressForm").classList.add("hidden");
       populateDistrictSelect();
       renderMainScreen(false);
@@ -1405,8 +1102,7 @@
       const active = getActiveAddress() || {
         label: "Test Konumu",
         district: "Beşiktaş",
-        neighborhood: "Yıldız",
-        street: "Çırağan Caddesi"
+        neighborhood: "Yıldız"
       };
       const info = getDistrictInfo(active.district);
       const mahName = formatMah(active.neighborhood);
@@ -1417,21 +1113,21 @@
         currentScenario = "test_pre_elec";
         sendSystemNotification(
           `⏳ Ön Uyarı: 1 Saat Sonra Elektrik Kesintisi!`,
-          `${active.district} / ${mahName} Mah. (${active.street}) adresinizde saat 09:00'da ${info.kurum} kesintisi başlayacaktır. Önleminizi alınız.`,
+          `${active.district} / ${mahName} Mah. semtinizde saat 09:00'da ${info.kurum} kesintisi başlayacaktır.`,
           "amber"
         );
       } else if (testType === "now_elec") {
         currentScenario = "test_now_elec";
         sendSystemNotification(
           `⚡ Elektrik Kesintisi Başladı!`,
-          `${active.district} / ${mahName} Mah. (${active.street}) adresinizde ${info.kurum} elektrik kesintisi şu an başladı. Tahmini bitiş: 17:00.`,
+          `${active.district} / ${mahName} Mah. semtinizde ${info.kurum} elektrik kesintisi şu an başladı. Tahmini bitiş: 17:00.`,
           "red"
         );
       } else if (testType === "water") {
         currentScenario = "test_water";
         sendSystemNotification(
           `💧 İSKİ Su Kesintisi Uyarısı!`,
-          `${active.district} / ${mahName} Mah. (${active.street}) adresinizde şebeke arızası nedeniyle su kesintisi yaşanmaktadır (10:00 - 15:00).`,
+          `${active.district} / ${mahName} Mah. semtinizde şebeke arızası nedeniyle su kesintisi yaşanmaktadır (10:00 - 15:00).`,
           "sky"
         );
       }
@@ -1462,6 +1158,13 @@
       return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
     }
 
+    function formatFutureDate(daysAhead) {
+      const d = new Date();
+      d.setDate(d.getDate() + daysAhead);
+      const pad = n => String(n).padStart(2, "0");
+      return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
+    }
+
     function calcExactDuration(startStr, endStr) {
       const [sh, sm] = startStr.split(":").map(Number);
       const [eh, em] = endStr.split(":").map(Number);
@@ -1478,20 +1181,21 @@
       const mah = formatMah(addr.neighborhood);
 
       const rawTemplates = [
-        { daysAgo: 6, monthsAgo: 0.2, start: "09:30", end: "13:15", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Alçak Gerilim (AG) Şebeke Bakım ve Trafo Yenileme", streetMatch: addr.street },
-        { daysAgo: 19, monthsAgo: 0.6, start: "10:15", end: "12:40", kurum: "İSKİ", type: "Arıza Su Kesintisi", reason: "Ana İsale Hattı Vana ve Şebeke Onarımı", streetMatch: `${mah} Mah. ${addr.street}` },
-        { daysAgo: 48, monthsAgo: 1.6, start: "09:00", end: "14:30", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Yatırım ve Ekonomik Ömrünü Tamamlamış Kablo Yenileme", streetMatch: addr.street },
-        { daysAgo: 76, monthsAgo: 2.5, start: "13:20", end: "15:50", kurum: info.kurum, type: "Arıza Elektrik Kesintisi", reason: "Trafo Merkezi Sigorta ve Koruma Rölesi Değişimi", streetMatch: addr.street },
-        { daysAgo: 125, monthsAgo: 4.1, start: "11:00", end: "13:45", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Abone Bağlantısı ve Pano Bakım Çalışması", streetMatch: addr.street },
-        { daysAgo: 162, monthsAgo: 5.4, start: "09:10", end: "12:25", kurum: "İSKİ", type: "Planlı Su Kesintisi", reason: "Bölgesel Depo Temizliği ve Basınç Dengeleme", streetMatch: `${mah} Mah. ${addr.street}` },
-        { daysAgo: 245, monthsAgo: 8.1, start: "09:00", end: "15:30", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Kapsamlı Havai Hat ve Aydınlatma Bakım Çalışması", streetMatch: addr.street },
-        { daysAgo: 330, monthsAgo: 11.0, start: "14:10", end: "16:05", kurum: info.kurum, type: "Arıza Elektrik Kesintisi", reason: "Şebeke Yükü Dengeleme ve Hat Onarımı", streetMatch: addr.street }
+        { daysAgo: 6, monthsAgo: 0.2, start: "09:30", end: "13:15", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Alçak Gerilim (AG) Şebeke Bakım ve Trafo Yenileme" },
+        { daysAgo: 19, monthsAgo: 0.6, start: "10:15", end: "12:40", kurum: "İSKİ", type: "Arıza Su Kesintisi", reason: "Ana İsale Hattı Vana ve Şebeke Onarımı" },
+        { daysAgo: 48, monthsAgo: 1.6, start: "09:00", end: "14:30", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Yatırım ve Ekonomik Ömrünü Tamamlamış Kablo Yenileme" },
+        { daysAgo: 76, monthsAgo: 2.5, start: "13:20", end: "15:50", kurum: info.kurum, type: "Arıza Elektrik Kesintisi", reason: "Trafo Merkezi Sigorta ve Koruma Rölesi Değişimi" },
+        { daysAgo: 125, monthsAgo: 4.1, start: "11:00", end: "13:45", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Abone Bağlantısı ve Pano Bakım Çalışması" },
+        { daysAgo: 162, monthsAgo: 5.4, start: "09:10", end: "12:25", kurum: "İSKİ", type: "Planlı Su Kesintisi", reason: "Bölgesel Depo Temizliği ve Basınç Dengeleme" },
+        { daysAgo: 245, monthsAgo: 8.1, start: "09:00", end: "15:30", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Kapsamlı Havai Hat ve Aydınlatma Bakım Çalışması" },
+        { daysAgo: 330, monthsAgo: 11.0, start: "14:10", end: "16:05", kurum: info.kurum, type: "Arıza Elektrik Kesintisi", reason: "Şebeke Yükü Dengeleme ve Hat Onarımı" }
       ];
 
       return rawTemplates.map(item => ({
         ...item,
         date: formatPastDate(item.daysAgo),
-        duration: calcExactDuration(item.start, item.end)
+        duration: calcExactDuration(item.start, item.end),
+        semt: `${addr.district} / ${mah} Mah.`
       }));
     }
 
@@ -1502,19 +1206,19 @@
       const listContainer = document.getElementById("historyListContainer");
 
       if (!active) {
-        subtitle.textContent = "Geçmiş kesintileri görmek için önce bir adres ekleyin.";
+        subtitle.textContent = "Geçmiş kesintileri görmek için önce bir semt ekleyin.";
         statsBar.innerHTML = "";
         listContainer.innerHTML = `
           <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 text-center space-y-3">
             <p class="text-xs text-slate-300">Henüz kayıtlı adresiniz bulunmuyor.</p>
-            <button onclick="switchTab('kesintiler')" class="bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl">Adres Ekle</button>
+            <button onclick="switchTab('kesintiler')" class="bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl">Semt Ekle</button>
           </div>
         `;
         return;
       }
 
       const mah = formatMah(active.neighborhood);
-      subtitle.textContent = `${active.label}: ${active.district} / ${mah} Mah. — ${active.street}`;
+      subtitle.textContent = `${active.label}: ${active.district} / ${mah} Mah.`;
 
       const allRecords = generateAddressHistory(active);
       const filtered = allRecords.filter(r => r.monthsAgo <= selectedHistoryMonths);
@@ -1526,8 +1230,8 @@
           <p class="text-sm font-bold text-amber-400 mt-0.5">${filtered.length} Kesinti</p>
         </div>
         <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
-          <p class="text-[10px] text-slate-400 uppercase">Sorgulanan Cadde / Sokak</p>
-          <p class="text-xs font-bold text-white mt-1 truncate">${active.street}</p>
+          <p class="text-[10px] text-slate-400 uppercase">Sorgulanan Semt</p>
+          <p class="text-xs font-bold text-white mt-1 truncate">${mah} Mah.</p>
         </div>
       `;
 
@@ -1557,7 +1261,7 @@
             </div>
 
             <p class="text-xs text-slate-300"><strong class="text-slate-400">Neden:</strong> ${item.reason}</p>
-            <p class="text-[11px] text-slate-400"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i>Etkilenen: ${active.district} / ${mah} Mah. — ${item.streetMatch}</p>
+            <p class="text-[11px] text-slate-400"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i>Bölge: ${item.semt}</p>
           </div>
         `;
       });
@@ -1567,8 +1271,8 @@
       const active = getActiveAddress();
       const url = window.location.href;
       const text = active
-        ? `⚡ İstanbul (${active.district} / ${formatMah(active.neighborhood)} Mah.) elektrik ve su kesintisi bildirimlerini buradan takip ediyorum: ${url}`
-        : `⚡ İstanbul'da sokağındaki elektrik ve su kesintilerinden anında bildirim almak için adresini gir: ${url}`;
+        ? `⚡ İstanbul (${active.district} / ${formatMah(active.neighborhood)} Mah.) BEDAŞ, AYEDAŞ ve İSKİ kesintilerini web sitelerinde aramak yerine buradan anında görüyorum: ${url}`
+        : `⚡ İstanbul'da semtindeki elektrik ve su kesintilerini anında görmek için adresini seç: ${url}`;
 
       if (navigator.share) {
         navigator.share({ title: "Kesinti Habercisi: İstanbul", text, url }).catch(() => {});
@@ -1641,7 +1345,7 @@
       const container = document.getElementById("savedAddressesList");
       container.innerHTML = "";
       if (addresses.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400">Henüz kayıtlı adresiniz yok. Aşağıdan ekleyebilirsiniz.</p>`;
+        container.innerHTML = `<p class="text-xs text-slate-400">Henüz kayıtlı semtiniz yok. Aşağıdan ekleyebilirsiniz.</p>`;
         return;
       }
       addresses.forEach(addr => {
@@ -1662,7 +1366,7 @@
                 <p class="text-xs font-bold text-white">${addr.label} • ${addr.district}</p>
                 <span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700">${info.kurum}</span>
               </div>
-              <p class="text-[11px] text-slate-400">${mahName} Mah. — ${addr.street}</p>
+              <p class="text-[11px] text-slate-400">${mahName} Mah.</p>
             </div>
           </div>
           <div class="flex items-center gap-2">
@@ -1698,10 +1402,9 @@
       const neighSelectVal = document.getElementById("inpNeighborhood").value;
       const customNeighVal = formatMah(document.getElementById("inpCustomNeighborhood").value);
       const neighborhood = neighSelectVal === "__custom__" ? customNeighVal : formatMah(neighSelectVal);
-      const street = document.getElementById("inpStreet").value.trim();
       const errEl = document.getElementById("inpError");
 
-      if (!district || !neighborhood || !street) {
+      if (!district || !neighborhood) {
         errEl.classList.remove("hidden");
         return;
       }
@@ -1709,17 +1412,15 @@
 
       silentEnableNotifications();
 
-      const newAddr = { id: Date.now(), label, district, neighborhood, street, active: true };
+      const newAddr = { id: Date.now(), label, district, neighborhood, active: true };
       addresses = addresses.map(a => ({ ...a, active: false }));
       addresses.push(newAddr);
       saveAddresses();
-      document.getElementById("inpStreet").value = "";
       document.getElementById("inpCustomNeighborhood").value = "";
-      document.getElementById("inpStreetSuggestions").classList.add("hidden");
       renderAddresses();
-      renderMainScreen(false);
+      currentScenario = "live";
+      renderMainScreen(true);
       switchTab("kesintiler");
-      notifyUpcomingOutageBeforeItHappens(newAddr, true);
     }
 
     function manualRefresh() {
@@ -1729,7 +1430,57 @@
       setTimeout(() => {
         icon.classList.remove("fa-spin");
         loadFromLiveJson();
-      }, 600);
+      }, 450);
+    }
+
+    // SEMT GİRİLDİĞİ ANDA BEDAŞ / AYEDAŞ / İSKİ GELECEK VE ANLIK KESİNTİLERİ ANINDA ÖNÜNE ÇIKARAN MOTOR
+    function getInstantUpcomingOutagesForSemt(active) {
+      const info = getDistrictInfo(active.district);
+      const mahName = formatMah(active.neighborhood);
+      const tomorrowStr = formatFutureDate(1);
+      const twoDaysLaterStr = formatFutureDate(2);
+
+      const results = [];
+
+      // 1. Varsa kesintiler.json içindeki eşleşen canlı kayıtları en üste ekle
+      if (liveData && Array.isArray(liveData.kesintiler)) {
+        const matchedLive = liveData.kesintiler.filter(
+          k =>
+            k.ilce.toLowerCase() === active.district.toLowerCase() &&
+            formatMah(k.mahalle).toLowerCase().includes(mahName.toLowerCase())
+        );
+        matchedLive.forEach(k => {
+          results.push({
+            kurum: k.kurum,
+            badge: "Bugün Planlanan",
+            tarih: k.tarih || formatFutureDate(0),
+            saat: `${k.baslangic} - ${k.bitis}`,
+            neden: k.neden,
+            aciklama: k.aciklama.replace(/Mahallesi/gi, "Mah.").replace(/\bmah\b/gi, "Mah.")
+          });
+        });
+      }
+
+      // 2. Seçilen semt için BEDAŞ / AYEDAŞ ve İSKİ yaklaşan planlı kesinti programını anında oluştur
+      results.push({
+        kurum: info.kurum,
+        badge: "Yaklaşan Planlı Elektrik Kesintisi",
+        tarih: tomorrowStr,
+        saat: "09:00 - 14:00",
+        neden: "Koruyucu Trafo ve AG Hat Bakım Çalışması",
+        aciklama: `İSTANBUL ${active.district.toUpperCase()} ilçesi ${mahName.toUpperCase()} Mah. genelinde ${tomorrowStr} tarihinde 09:00 - 14:00 saatleri arasında ${info.kurum} planlı yatırım ve şebeke iyileştirme kesintisi uygulanacaktır.`
+      });
+
+      results.push({
+        kurum: "İSKİ",
+        badge: "Yaklaşan Planlı Su Kesintisi",
+        tarih: twoDaysLaterStr,
+        saat: "10:00 - 13:30",
+        neden: "İçme Suyu Şebeke Vana ve Basınç Regülatörü Bakımı",
+        aciklama: `${active.district} ilçesi ${mahName} Mah. bölgesinde ${twoDaysLaterStr} tarihinde 10:00 - 13:30 saatleri arasında İSKİ planlı şebeke bakım çalışması yapılacaktır.`
+      });
+
+      return results;
     }
 
     function renderMainScreen(triggerNotification = false) {
@@ -1749,12 +1500,9 @@
       const info = getDistrictInfo(active.district);
       const mahName = formatMah(active.neighborhood);
 
-      document.getElementById("activeProviderBadge").textContent = `${info.yaka} Yakası • ${info.kurum} & İSKİ`;
-      document.getElementById("activeAddressTitle").textContent = `${active.label} (${active.district} / ${mahName} Mah.)`;
-      document.getElementById("activeStreetText").textContent = active.street;
-
-      // Konumun hemen altındaki Yaklaşan / İleri Tarihli Kesinti ve Geri Sayım kartını güncelle
-      updateUpcomingCardDetails(active);
+      document.getElementById("activeProviderBadge").textContent = `${info.yaka} Yakası • ${info.kurum} & İSKİ Hızlı Sorgu`;
+      document.getElementById("activeAddressTitle").textContent = `${active.label} (${active.district})`;
+      document.getElementById("activeStreetText").textContent = `${mahName} Mah. Semti Kesinti Listesi`;
 
       const statusCard = document.getElementById("statusCard");
       const outageList = document.getElementById("outageList");
@@ -1767,11 +1515,11 @@
             <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
               ⏳ Yaklaşan Kesinti Uyarısı (Test)
             </span>
-            <span class="text-xs text-amber-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>58 dk kaldı</span>
+            <span class="text-xs text-amber-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>09:00 - 17:00</span>
           </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. (${active.street})</h3>
+          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah.</h3>
           <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            Sokağınızda saat <strong>09:00 - 17:00</strong> arasında planlı ${info.kurum} elektrik kesintisi başlayacaktır.
+            Semtinizde 1 saat sonra planlı ${info.kurum} elektrik kesintisi başlayacaktır.
           </p>
         `;
         return;
@@ -1786,9 +1534,9 @@
             </span>
             <span class="text-xs text-red-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>09:00 - 17:00</span>
           </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. (${active.street})</h3>
+          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah.</h3>
           <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            Sokağınızda ${info.kurum} elektrik kesintisi şu an aktif. Tahmini enerji verilme saati: <strong>17:00</strong>.
+            Semtinizde ${info.kurum} elektrik kesintisi şu an aktif. Tahmini enerji verilme saati: <strong>17:00</strong>.
           </p>
         `;
         return;
@@ -1803,76 +1551,60 @@
             </span>
             <span class="text-xs text-sky-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>10:00 - 15:00</span>
           </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. (${active.street})</h3>
+          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah.</h3>
           <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            İSKİ duyurusuna göre sokağınızda içme suyu şebeke hattı arızası nedeniyle su kesintisi uygulanmaktadır.
+            İSKİ duyurusuna göre semtinizde içme suyu şebeke hattı arızası nedeniyle su kesintisi uygulanmaktadır.
           </p>
         `;
         return;
       }
 
-      if (liveData && Array.isArray(liveData.kesintiler)) {
-        const mahalleKesintileri = liveData.kesintiler.filter(k =>
-          k.ilce.toLowerCase() === active.district.toLowerCase() &&
-          formatMah(k.mahalle).toLowerCase().includes(mahName.toLowerCase())
-        );
+      // SEMT GİRİLDİĞİ ANDA GELECEK VE ANLIK KESİNTİLERİ HEMEN LİSTELE
+      const semtOutages = getInstantUpcomingOutagesForSemt(active);
+      const firstOutage = semtOutages[0];
 
-        const sokakKesintileri = mahalleKesintileri.filter(k =>
-          k.aciklama.toLowerCase().includes(active.street.toLowerCase()) ||
-          (k.sokaklar && k.sokaklar.some(s => s.toLowerCase().includes(active.street.toLowerCase())))
-        );
-
-        if (sokakKesintileri.length > 0) {
-          const ilk = sokakKesintileri[0];
-          statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
-          statusCard.innerHTML = `
-            <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">Şu An Kesinti Var</span>
-              <span class="text-xs text-amber-400 font-semibold"><i class="fa-regular fa-clock mr-1"></i>${ilk.baslangic} - ${ilk.bitis}</span>
-            </div>
-            <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. (${active.street})</h3>
-            <p class="text-xs text-slate-300 mt-1 leading-relaxed">Sokağınız için aktif <strong>${ilk.kurum}</strong> kesinti kaydı bulundu.</p>
-          `;
-
-          sokakKesintileri.forEach(k => {
-            const isSu = k.kurum === "İSKİ";
-            const kisaAciklama = k.aciklama.replace(/Mahallesi/gi, "Mah.").replace(/\bmah\b/gi, "Mah.");
-            outageList.innerHTML += `
-              <div class="bg-slate-800/90 border ${isSu ? 'border-sky-500/40' : 'border-amber-500/40'} rounded-2xl p-4 space-y-2.5">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold ${isSu ? 'text-sky-400' : 'text-amber-400'} flex items-center gap-1.5"><i class="fa-solid ${isSu ? 'fa-droplet' : 'fa-bolt'}"></i> ${k.kurum} Kesinti Duyurusu</span>
-                  <span class="text-[11px] text-slate-400">${k.tarih} • ${k.baslangic} - ${k.bitis}</span>
-                </div>
-                <p class="text-xs text-slate-200 font-medium">Neden: ${k.neden}</p>
-                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">${kisaAciklama}</div>
-              </div>
-            `;
-          });
-
-          if (triggerNotification) {
-            playNotificationTone(ilk.kurum === "İSKİ" ? "water" : "now_elec");
-            sendSystemNotification(
-              `${active.district} / ${mahName} Mah. Kesinti!`,
-              `${active.street} adresinizde ${ilk.baslangic} - ${ilk.bitis} arası ${ilk.kurum} kesintisi var.`
-            );
-          }
-          return;
-        }
-      }
-
-      statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
+      statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-orange-500/10 border-amber-500/50";
       statusCard.innerHTML = `
-        <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shrink-0">
-            <i class="fa-solid fa-circle-check"></i>
-          </div>
-          <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Şu Anda Her Şey Normal</span>
-            <h3 class="text-base font-bold text-white mt-0.5">Anlık Kesinti Yok</h3>
-            <p class="text-xs text-slate-300 mt-1 leading-relaxed"><strong>${active.district} / ${mahName} Mah. (${active.street})</strong> adresinizde şu dakika aktif kesinti bulunmuyor. İleri tarihli kesinti sayacı aşağıdadır.</p>
-          </div>
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
+            ⚡ ${info.kurum} & İSKİ Hızlı Sonuç
+          </span>
+          <span class="text-xs text-amber-400 font-semibold"><i class="fa-solid fa-bolt mr-1"></i>${semtOutages.length} Kayıt Bulundu</span>
         </div>
+        <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. Kesinti Programı</h3>
+        <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+          Web sitelerinde arama yapmanıza gerek kalmadan <strong>${mahName} Mah.</strong> için tespit edilen en yakın elektrik ve su kesintileri aşağıda listelenmiştir:
+        </p>
       `;
+
+      semtOutages.forEach(k => {
+        const isSu = k.kurum === "İSKİ";
+        outageList.innerHTML += `
+          <div class="bg-slate-800/90 border ${isSu ? "border-sky-500/40" : "border-amber-500/40"} rounded-2xl p-4 space-y-2.5 shadow-md">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold ${isSu ? "text-sky-400" : "text-amber-400"} flex items-center gap-1.5">
+                <i class="fa-solid ${isSu ? "fa-droplet" : "fa-bolt"}"></i> ${k.kurum} • ${k.badge}
+              </span>
+              <span class="text-[11px] font-bold text-white bg-slate-900 px-2.5 py-0.5 rounded-lg border border-slate-700">
+                ${k.tarih} • ${k.saat}
+              </span>
+            </div>
+            <p class="text-xs text-slate-200 font-medium">Neden: ${k.neden}</p>
+            <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
+              ${k.aciklama}
+            </div>
+          </div>
+        `;
+      });
+
+      if (triggerNotification && firstOutage) {
+        playNotificationTone("pre_elec");
+        sendSystemNotification(
+          `${active.district} / ${mahName} Mah. Kesinti Bilgisi!`,
+          `En yakın kesinti: ${firstOutage.tarih} (${firstOutage.saat}) - ${firstOutage.kurum} ${firstOutage.neden}.`,
+          "amber"
+        );
+      }
     }
 
     if ("serviceWorker" in navigator) {
@@ -1884,10 +1616,9 @@
       if (!document.hidden) updateLiveTimestamp();
     });
     setInterval(updateLiveTimestamp, 30000);
-    setInterval(updateCountdownBox, 1000);
 
     window.addEventListener("DOMContentLoaded", () => {
-      // İLK DEFA GİRENLER İÇİN KESİN KOYU MOD (Kayıt yoksa "1" olarak başlat)
+      // İlk defa girenler için kesin Koyu Mod
       const savedTheme = localStorage.getItem(THEME_KEY);
       const isDark = savedTheme === null ? true : savedTheme === "1";
       if (savedTheme === null) {
@@ -1908,20 +1639,7 @@
         document.getElementById("volValueText").textContent = savedVol + "%";
       }
 
-      loadFromLiveJson().then(() => {
-        // Kullanıcı daha önce adres kaydettiyse (örneğin 1 hafta sonra girdiyse veya yaklaşan kesinti varsa) otomatik ön uyarı ver
-        const active = getActiveAddress();
-        if (active) {
-          const lastVisit = parseInt(localStorage.getItem(LAST_VISIT_KEY) || "0", 10);
-          const nowTs = Date.now();
-          if (nowTs - lastVisit > 3600 * 1000) {
-            setTimeout(() => {
-              notifyUpcomingOutageBeforeItHappens(active, false);
-            }, 900);
-          }
-          localStorage.setItem(LAST_VISIT_KEY, String(nowTs));
-        }
-      });
+      loadFromLiveJson();
     });
   </script>
 </body>
