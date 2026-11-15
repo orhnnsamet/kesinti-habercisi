@@ -64,7 +64,7 @@
           <div>
             <label class="text-xs text-slate-400 block mb-1">Mahalleniz</label>
             <select id="obNeighborhood" onchange="checkObCustomNeighborhood()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
-            <input id="obCustomNeighborhood" type="text" placeholder="Mahalle adını yazın..." class="hidden mt-2 w-full bg-slate-950 border border-amber-500/60 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none" />
+            <input id="obCustomNeighborhood" type="text" placeholder="Mah. adını yazın..." class="hidden mt-2 w-full bg-slate-950 border border-amber-500/60 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none" />
           </div>
 
           <div>
@@ -213,7 +213,7 @@
             <div>
               <label class="text-xs text-slate-400 block mb-1">Mahalle Seçin</label>
               <select id="inpNeighborhood" onchange="checkCustomNeighborhood()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
-              <input id="inpCustomNeighborhood" type="text" placeholder="Mahalle adını yazın..." class="hidden mt-2 w-full bg-slate-900 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white focus:outline-none" />
+              <input id="inpCustomNeighborhood" type="text" placeholder="Mah. adını yazın..." class="hidden mt-2 w-full bg-slate-900 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white focus:outline-none" />
             </div>
           </div>
 
@@ -325,6 +325,10 @@
     let liveData = null;
     let currentScenario = "live";
 
+    function formatMah(name) {
+      return name ? name.replace(/\s*Mahallesi\b/gi, "").replace(/\s*Mah\.?\b/gi, "").trim() : "";
+    }
+
     function buildDistrictGroups(selectEl) {
       selectEl.innerHTML = "";
       const avrupaGroup = document.createElement("optgroup");
@@ -360,9 +364,10 @@
       customInputEl.classList.add("hidden");
       const list = istanbulData[districtVal]?.mahalleler || [];
       list.forEach(mah => {
+        const cleanMah = formatMah(mah);
         const opt = document.createElement("option");
-        opt.value = mah;
-        opt.textContent = mah + " Mahallesi";
+        opt.value = cleanMah;
+        opt.textContent = cleanMah + " Mah.";
         selectEl.appendChild(opt);
       });
       const customOpt = document.createElement("option");
@@ -405,8 +410,8 @@
       const label = document.getElementById("obLabel").value.trim() || "Evim";
       const district = document.getElementById("obDistrict").value;
       const neighSel = document.getElementById("obNeighborhood").value;
-      const customNeigh = document.getElementById("obCustomNeighborhood").value.trim();
-      const neighborhood = neighSel === "__custom__" ? (customNeigh || "Merkez") : neighSel;
+      const customNeigh = formatMah(document.getElementById("obCustomNeighborhood").value);
+      const neighborhood = neighSel === "__custom__" ? (customNeigh || "Merkez") : formatMah(neighSel);
       const street = document.getElementById("obStreet").value.trim();
       const errEl = document.getElementById("obError");
 
@@ -476,7 +481,7 @@
       const active = getActiveAddress();
       const url = window.location.href;
       const text = active
-        ? `⚡ İstanbul (${active.district} / ${active.neighborhood} Mah.) elektrik ve su kesintisi bildirimlerini buradan takip ediyorum, sen de kendi sokağını girip kontrol et: ${url}`
+        ? `⚡ İstanbul (${active.district} / ${formatMah(active.neighborhood)} Mah.) elektrik ve su kesintisi bildirimlerini buradan takip ediyorum, sen de kendi sokağını girip kontrol et: ${url}`
         : `⚡ İstanbul'da sokağındaki elektrik ve su kesintilerinden anında bildirim almak için adresini gir: ${url}`;
 
       if (navigator.share) {
@@ -550,6 +555,7 @@
       container.innerHTML = "";
       addresses.forEach(addr => {
         const info = getDistrictInfo(addr.district);
+        const mahName = formatMah(addr.neighborhood);
         const div = document.createElement("div");
         div.className = `p-3 rounded-xl border flex items-center justify-between cursor-pointer transition ${
           addr.active ? "bg-amber-500/10 border-amber-500/50" : "bg-slate-900 border-slate-700/80"
@@ -565,7 +571,7 @@
                 <p class="text-xs font-bold text-white">${addr.label} • ${addr.district}</p>
                 <span class="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700">${info.kurum}</span>
               </div>
-              <p class="text-[11px] text-slate-400">${addr.neighborhood} Mah. — ${addr.street}</p>
+              <p class="text-[11px] text-slate-400">${mahName} Mah. — ${addr.street}</p>
             </div>
           </div>
           <div class="flex items-center gap-2">
@@ -599,8 +605,8 @@
       const label = document.getElementById("inpLabel").value.trim() || "Konumum";
       const district = document.getElementById("inpDistrict").value;
       const neighSelectVal = document.getElementById("inpNeighborhood").value;
-      const customNeighVal = document.getElementById("inpCustomNeighborhood").value.trim();
-      const neighborhood = neighSelectVal === "__custom__" ? (customNeighVal || "Merkez") : neighSelectVal;
+      const customNeighVal = formatMah(document.getElementById("inpCustomNeighborhood").value);
+      const neighborhood = neighSelectVal === "__custom__" ? (customNeighVal || "Merkez") : formatMah(neighSelectVal);
       const street = document.getElementById("inpStreet").value.trim() || "Merkez Sokak";
 
       addresses = addresses.map(a => ({ ...a, active: false }));
@@ -634,15 +640,17 @@
       if (!active) return;
 
       const info = getDistrictInfo(active.district);
+      const mahName = formatMah(active.neighborhood);
+
       document.getElementById("activeProviderBadge").textContent = `${info.yaka} Yakası • ${info.kurum} & İSKİ`;
-      document.getElementById("activeAddressTitle").textContent = `${active.label} (${active.district} / ${active.neighborhood} Mah.)`;
+      document.getElementById("activeAddressTitle").textContent = `${active.label} (${active.district} / ${mahName} Mah.)`;
       document.getElementById("activeStreetText").textContent = active.street;
 
       const statusCard = document.getElementById("statusCard");
       const outageList = document.getElementById("outageList");
       outageList.innerHTML = "";
 
-      // Test Simülasyonu Modu (Ayarlardan seçildiğinde)
+      // Test Simülasyonu Modu
       if (currentScenario === "both") {
         statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
         statusCard.innerHTML = `
@@ -652,7 +660,7 @@
             </span>
             <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>09:00 - 17:00</span>
           </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${active.neighborhood} Mah. ${active.street}</h3>
+          <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. ${active.street}</h3>
           <p class="text-xs text-slate-300 mt-1 leading-relaxed">
             Sokağınızda kesinti olduğunda ekranınız ve bildirimleriniz tam olarak bu şekilde görünür.
           </p>
@@ -668,7 +676,7 @@
             </div>
             <p class="text-xs text-slate-200 font-medium">Neden: Şebeke Bakım ve Yenileme Çalışması</p>
             <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
-              İSTANBUL ${active.district.toUpperCase()} ilçe MERKEZ-${active.neighborhood.toUpperCase()} mah 
+              İSTANBUL ${active.district.toUpperCase()} ilçe MERKEZ-${mahName.toUpperCase()} Mah. 
               <mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">${active.street}</mark> 
               ve çevresinde planlı elektrik kesintisi uygulanmaktadır.
             </div>
@@ -681,7 +689,7 @@
       if (liveData && Array.isArray(liveData.kesintiler)) {
         const mahalleKesintileri = liveData.kesintiler.filter(k =>
           k.ilce.toLowerCase() === active.district.toLowerCase() &&
-          k.mahalle.toLowerCase().includes(active.neighborhood.toLowerCase())
+          k.mahalle.toLowerCase().includes(mahName.toLowerCase())
         );
 
         const sokakKesintileri = mahalleKesintileri.filter(k =>
@@ -689,7 +697,6 @@
           (k.sokaklar && k.sokaklar.some(s => s.toLowerCase().includes(active.street.toLowerCase())))
         );
 
-        // 1. Kullanıcının kendi sokağında kesinti varsa:
         if (sokakKesintileri.length > 0) {
           const ilk = sokakKesintileri[0];
           statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
@@ -700,7 +707,7 @@
               </span>
               <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>${ilk.baslangic} - ${ilk.bitis}</span>
             </div>
-            <h3 class="text-base font-bold text-white mt-3">${active.district} / ${active.neighborhood} Mah. (${active.street})</h3>
+            <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. (${active.street})</h3>
             <p class="text-xs text-slate-300 mt-1 leading-relaxed">
               Canlı veri sisteminde sokağınız için <strong>${ilk.kurum}</strong> kesinti kaydı bulundu.
             </p>
@@ -708,6 +715,7 @@
 
           sokakKesintileri.forEach(k => {
             const isSu = k.kurum === "İSKİ";
+            const kisaAciklama = k.aciklama.replace(/Mahallesi/gi, "Mah.").replace(/\bmah\b/gi, "Mah.");
             outageList.innerHTML += `
               <div class="bg-slate-800/90 border ${isSu ? 'border-sky-500/40' : 'border-amber-500/40'} rounded-2xl p-4 space-y-2.5">
                 <div class="flex items-center justify-between">
@@ -718,7 +726,7 @@
                 </div>
                 <p class="text-xs text-slate-200 font-medium">Neden: ${k.neden}</p>
                 <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
-                  ${k.aciklama}
+                  ${kisaAciklama}
                 </div>
               </div>
             `;
@@ -726,14 +734,13 @@
 
           if (triggerNotification) {
             sendSystemNotification(
-              `${active.district} / ${active.neighborhood} Mah. Kesinti!`,
+              `${active.district} / ${mahName} Mah. Kesinti!`,
               `${active.street} adresinizde ${ilk.baslangic} - ${ilk.bitis} arası ${ilk.kurum} kesintisi var.`
             );
           }
           return;
         }
 
-        // 2. Mahallede kesinti var ama kullanıcının sokağı listede yoksa:
         if (mahalleKesintileri.length > 0) {
           statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
           statusCard.innerHTML = `
@@ -745,18 +752,19 @@
             </div>
             <h3 class="text-base font-bold text-white mt-3">${active.street} İçin Kesinti Yok</h3>
             <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              <strong>${active.neighborhood} Mahallesi</strong> genelinde ${mahalleKesintileri.length} çalışma var ancak sokağınız bu listede yer almıyor.
+              <strong>${mahName} Mah.</strong> genelinde ${mahalleKesintileri.length} çalışma var ancak sokağınız bu listede yer almıyor.
             </p>
           `;
 
           mahalleKesintileri.forEach(k => {
+            const kisaAciklama = k.aciklama.replace(/Mahallesi/gi, "Mah.").replace(/\bmah\b/gi, "Mah.");
             outageList.innerHTML += `
               <div class="bg-slate-800/50 border border-slate-700/80 rounded-2xl p-4 space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-xs font-semibold text-slate-300">${k.kurum} • Mahalledeki Diğer Sokaklar</span>
                   <span class="text-[11px] text-slate-400">${k.baslangic} - ${k.bitis}</span>
                 </div>
-                <p class="text-xs text-slate-400 leading-relaxed">${k.aciklama}</p>
+                <p class="text-xs text-slate-400 leading-relaxed">${kisaAciklama}</p>
               </div>
             `;
           });
@@ -764,7 +772,7 @@
         }
       }
 
-      // 3. Hiçbir kesinti yoksa (Varsayılan Gerçekçi Durum):
+      // Hiçbir kesinti yoksa
       statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
       statusCard.innerHTML = `
         <div class="flex items-center gap-3.5">
@@ -775,7 +783,7 @@
             <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Her Şey Normal</span>
             <h3 class="text-base font-bold text-white mt-0.5">Aktif Kesinti Bulunmuyor</h3>
             <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              <strong>${active.district} / ${active.neighborhood} Mah. (${active.street})</strong> adresiniz için ${info.kurum} ve İSKİ sisteminde kayıtlı bir kesinti yok.
+              <strong>${active.district} / ${mahName} Mah. (${active.street})</strong> adresiniz için ${info.kurum} ve İSKİ sisteminde kayıtlı bir kesinti yok.
             </p>
           </div>
         </div>
