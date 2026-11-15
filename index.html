@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#0f172a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2983/2983973.png" />
   <title>Kesinti Habercisi: İstanbul</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -22,7 +24,7 @@
     }
     .notif-hidden {
       transform: translateY(-140%);
-      opacity: 0;
+      opacity 0;
       pointer-events: none;
     }
     .notif-visible {
@@ -33,10 +35,9 @@
 </head>
 <body class="min-h-screen flex justify-center bg-slate-950">
 
-  <!-- Mobil Uygulama Çerçevesi -->
   <div class="w-full max-w-md min-h-screen bg-slate-900 flex flex-col justify-between relative shadow-2xl border-x border-slate-800/80 overflow-hidden">
 
-    <!-- Üst Bildirim (Push Notification Simülasyonu) -->
+    <!-- Uygulama İçi Bildirim Banner -->
     <div id="pushBanner" class="notif-slide notif-hidden absolute top-3 left-3 right-3 z-50 bg-slate-800/95 backdrop-blur-md border border-amber-500/40 rounded-2xl p-3.5 shadow-2xl">
       <div class="flex items-start gap-3">
         <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
@@ -55,7 +56,7 @@
       </div>
     </div>
 
-    <!-- Üst Başlık (Header) -->
+    <!-- Üst Başlık -->
     <header class="px-5 pt-5 pb-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between sticky top-0 z-20 backdrop-blur">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
@@ -63,9 +64,9 @@
         </div>
         <div>
           <h1 class="text-base font-bold text-white tracking-tight">Kesinti Habercisi</h1>
-          <p class="text-[11px] text-slate-400 flex items-center gap-1.5">
+          <p id="lastUpdateText" class="text-[11px] text-slate-400 flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            BEDAŞ & İSKİ Canlı Takip
+            Canlı Veri Bağlantısı Aktif
           </p>
         </div>
       </div>
@@ -74,13 +75,11 @@
       </button>
     </header>
 
-    <!-- Ana İçerik Alanı -->
+    <!-- Ana İçerik -->
     <main class="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-24">
 
-      <!-- SEKME 1: KESİNTİLER (ANA EKRAN) -->
+      <!-- SEKME 1: KESİNTİLER -->
       <section id="tab-kesintiler" class="space-y-4">
-        
-        <!-- Aktif Konum Kartı -->
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
           <div class="flex items-center justify-between">
             <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Takip Edilen Konum</span>
@@ -97,16 +96,8 @@
           </div>
         </div>
 
-        <!-- Durum Özeti Kartı -->
-        <div id="statusCard" class="rounded-2xl p-5 border transition-all">
-          <!-- JS ile doldurulur -->
-        </div>
-
-        <!-- Detaylı Kesinti Kartları Listesi -->
-        <div id="outageList" class="space-y-3">
-          <!-- JS ile doldurulur -->
-        </div>
-
+        <div id="statusCard" class="rounded-2xl p-5 border transition-all"></div>
+        <div id="outageList" class="space-y-3"></div>
       </section>
 
       <!-- SEKME 2: ADRESLERİM -->
@@ -117,7 +108,6 @@
           <div id="savedAddressesList" class="space-y-2.5"></div>
         </div>
 
-        <!-- Yeni Adres Ekleme Formu -->
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-plus-circle text-amber-400"></i> Yeni Konum Kaydet
@@ -154,15 +144,23 @@
 
       <!-- SEKME 3: AYARLAR -->
       <section id="tab-ayarlar" class="hidden space-y-4">
+        <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+          <h2 class="text-sm font-bold text-white">Gerçek Cihaz Bildirimleri</h2>
+          <p class="text-xs text-slate-400">Sokağınızda kesinti olduğunda telefonunuza ve bilgisayarınıza sistem bildirimi gönderilmesi için izin verin.</p>
+          <button id="btnNotifPerm" onclick="requestRealNotificationPermission()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-bell"></i> Cihaz Bildirimlerine İzin Ver
+          </button>
+        </div>
+
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-4">
-          <h2 class="text-sm font-bold text-white">Bildirim Tercihleri</h2>
+          <h2 class="text-sm font-bold text-white">Filtre Tercihleri</h2>
 
           <label class="flex items-center justify-between cursor-pointer">
             <div>
               <p class="text-sm font-medium text-white">Elektrik Kesintisi Bildirimleri</p>
               <p class="text-xs text-slate-400">BEDAŞ planlı ve arıza kesintilerini bildir</p>
             </div>
-            <input type="checkbox" checked onchange="toggleSetting()" class="w-5 h-5 accent-amber-500 rounded" />
+            <input type="checkbox" checked class="w-5 h-5 accent-amber-500 rounded" />
           </label>
 
           <label class="flex items-center justify-between cursor-pointer border-t border-slate-700/60 pt-3">
@@ -170,50 +168,32 @@
               <p class="text-sm font-medium text-white">Su Kesintisi Bildirimleri</p>
               <p class="text-xs text-slate-400">İSKİ arıza ve bakım kesintilerini bildir</p>
             </div>
-            <input type="checkbox" checked onchange="toggleSetting()" class="w-5 h-5 accent-amber-500 rounded" />
-          </label>
-
-          <label class="flex items-center justify-between cursor-pointer border-t border-slate-700/60 pt-3">
-            <div>
-              <p class="text-sm font-medium text-white">Sadece Sokağım Eşleşirse Bildir</p>
-              <p class="text-xs text-slate-400">Mahalledeki diğer sokakları sessize al</p>
-            </div>
-            <input type="checkbox" checked onchange="toggleSetting()" class="w-5 h-5 accent-amber-500 rounded" />
+            <input type="checkbox" checked class="w-5 h-5 accent-amber-500 rounded" />
           </label>
         </div>
 
-        <!-- Canlı Senaryo Test Seçici -->
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-2.5">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Kesinti Durumu Simülasyonu</h3>
-          <p class="text-xs text-slate-400">Farklı kesinti durumlarında uygulamanın nasıl tepki verdiğini test edin:</p>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Veri Kaynağı Modu</h3>
           <div class="grid grid-cols-1 gap-2 pt-1">
-            <button onclick="setScenario('street_elec')" class="text-left px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-medium text-amber-400 flex items-center justify-between">
-              <span>⚡ Sokağımda Elektrik Kesintisi Var</span>
-              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <button onclick="loadFromLiveJson()" class="text-left px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-emerald-500/40 text-xs font-medium text-emerald-400 flex items-center justify-between">
+              <span>📡 Canlı kesintiler.json Verisini Oku</span>
+              <i class="fa-solid fa-rotate text-[10px]"></i>
             </button>
             <button onclick="setScenario('both')" class="text-left px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-medium text-sky-400 flex items-center justify-between">
-              <span>⚡💧 Elektrik + İSKİ Su Kesintisi Birlikte</span>
+              <span>⚡💧 Test: Elektrik + Su Kesintisi Simülasyonu</span>
               <i class="fa-solid fa-chevron-right text-[10px]"></i>
             </button>
-            <button onclick="setScenario('neighbor_only')" class="text-left px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-medium text-slate-300 flex items-center justify-between">
-              <span>🛡️ Mahallede Kesinti Var Ama Sokağım Temiz</span>
-              <i class="fa-solid fa-chevron-right text-[10px]"></i>
-            </button>
-            <button onclick="setScenario('clear')" class="text-left px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-medium text-emerald-400 flex items-center justify-between">
-              <span>✅ Hiçbir Kesinti Yok (Her Şey Normal)</span>
+            <button onclick="setScenario('clear')" class="text-left px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-medium text-slate-300 flex items-center justify-between">
+              <span>✅ Test: Kesinti Yok Simülasyonu</span>
               <i class="fa-solid fa-chevron-right text-[10px]"></i>
             </button>
           </div>
-        </div>
-
-        <div class="text-center text-[11px] text-slate-500 pt-2">
-          Bu uygulama kamuya açık BEDAŞ ve İSKİ duyurularını kullanan bağımsız bir bilgilendirme aracıdır.
         </div>
       </section>
 
     </main>
 
-    <!-- Alt Menü (3 Sekmeli Sade Navigasyon) -->
+    <!-- Alt Menü -->
     <nav class="bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2.5 flex items-center justify-around fixed bottom-0 w-full max-w-md z-30">
       <button onclick="switchTab('kesintiler')" id="nav-kesintiler" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-bolt text-lg"></i>
@@ -232,14 +212,14 @@
   </div>
 
   <script>
-    // Varsayılan Adres Listesi (LocalStorage destekli)
     const defaultAddresses = [
       { id: 1, label: "Evim", district: "Bağcılar", neighborhood: "Kirazlı", street: "1200. Sokak", active: true },
       { id: 2, label: "İş Yerim", district: "Bağcılar", neighborhood: "Güneşli", street: "1310. Sokak", active: false }
     ];
 
     let addresses = JSON.parse(localStorage.getItem("kh_addresses")) || defaultAddresses;
-    let currentScenario = "street_elec";
+    let liveData = null;
+    let currentScenario = "live";
 
     function saveAddresses() {
       localStorage.setItem("kh_addresses", JSON.stringify(addresses));
@@ -264,6 +244,33 @@
       if (tabName === "adreslerim") renderAddresses();
     }
 
+    function requestRealNotificationPermission() {
+      if (!("Notification" in window)) {
+        showPush("Bilgi", "Tarayıcınız masaüstü/mobil bildirimleri desteklemiyor.");
+        return;
+      }
+      Notification.requestPermission().then(permission => {
+        const btn = document.getElementById("btnNotifPerm");
+        if (permission === "granted") {
+          btn.innerHTML = '<i class="fa-solid fa-check"></i> Cihaz Bildirimleri Aktif';
+          btn.className = "w-full bg-emerald-500 text-slate-950 font-bold text-xs py-2.5 rounded-xl";
+          sendSystemNotification("Kesinti Habercisi Aktif!", "Sokağınızda kesinti tespit edildiğinde anında bildirim alacaksınız.");
+        } else {
+          showPush("Bildirim İzni", "Bildirim izni reddedildi. Tarayıcı ayarlarından açabilirsiniz.");
+        }
+      });
+    }
+
+    function sendSystemNotification(title, body) {
+      showPush(title, body);
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification(title, {
+          body: body,
+          icon: "https://cdn-icons-png.flaticon.com/512/2983/2983973.png"
+        });
+      }
+    }
+
     function showPush(title, body) {
       document.getElementById("pushTitle").textContent = title;
       document.getElementById("pushBody").textContent = body;
@@ -277,6 +284,24 @@
       const banner = document.getElementById("pushBanner");
       banner.classList.remove("notif-visible");
       banner.classList.add("notif-hidden");
+    }
+
+    async function loadFromLiveJson() {
+      currentScenario = "live";
+      try {
+        const res = await fetch("kesintiler.json?t=" + Date.now());
+        if (res.ok) {
+          liveData = await res.json();
+          document.getElementById("lastUpdateText").innerHTML = `
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Son Kontrol: ${liveData.son_guncelleme}
+          `;
+        }
+      } catch (e) {
+        console.log("Yerel veri kullanılıyor.");
+      }
+      renderMainScreen(true);
+      switchTab("kesintiler");
     }
 
     function renderAddresses() {
@@ -311,7 +336,7 @@
       addresses = addresses.map(a => ({ ...a, active: a.id === id }));
       saveAddresses();
       renderAddresses();
-      renderMainScreen();
+      renderMainScreen(true);
       switchTab("kesintiler");
     }
 
@@ -332,19 +357,12 @@
       const street = document.getElementById("inpStreet").value.trim() || "1200. Sokak";
 
       addresses = addresses.map(a => ({ ...a, active: false }));
-      addresses.push({
-        id: Date.now(),
-        label,
-        district,
-        neighborhood,
-        street,
-        active: true
-      });
+      addresses.push({ id: Date.now(), label, district, neighborhood, street, active: true });
       saveAddresses();
       document.getElementById("inpLabel").value = "";
       document.getElementById("inpStreet").value = "";
       renderAddresses();
-      renderMainScreen();
+      renderMainScreen(true);
       switchTab("kesintiler");
     }
 
@@ -359,7 +377,7 @@
       icon.classList.add("fa-spin");
       setTimeout(() => {
         icon.classList.remove("fa-spin");
-        renderMainScreen(true);
+        loadFromLiveJson();
       }, 600);
     }
 
@@ -372,89 +390,63 @@
       const outageList = document.getElementById("outageList");
       outageList.innerHTML = "";
 
-      if (currentScenario === "street_elec" || currentScenario === "both") {
-        statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
-        statusCard.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
-              Sokağınızda Kesinti Var
-            </span>
-            <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>09:00 - 17:00</span>
-          </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.neighborhood} Mah. ${active.street} Etkileniyor</h3>
-          <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            BEDAŞ duyurusunda sokağınızın adı doğrudan yer alıyor. Tahmini enerji verilme saatine <strong>3 saat 45 dakika</strong> kaldı.
-          </p>
-        `;
+      // Canlı JSON verisi varsa eşleştir
+      if (currentScenario === "live" && liveData && Array.isArray(liveData.kesintiler)) {
+        const mahalleKesintileri = liveData.kesintiler.filter(k =>
+          k.ilce.toLowerCase() === active.district.toLowerCase() &&
+          k.mahalle.toLowerCase().includes(active.neighborhood.toLowerCase())
+        );
 
-        outageList.innerHTML += `
-          <div class="bg-slate-800/90 border border-amber-500/40 rounded-2xl p-4 space-y-2.5">
+        const sokakKesintileri = mahalleKesintileri.filter(k =>
+          k.aciklama.toLowerCase().includes(active.street.toLowerCase()) ||
+          (k.sokaklar && k.sokaklar.some(s => s.toLowerCase().includes(active.street.toLowerCase())))
+        );
+
+        if (sokakKesintileri.length > 0) {
+          const ilk = sokakKesintileri[0];
+          statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
+          statusCard.innerHTML = `
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                <i class="fa-solid fa-bolt"></i> BEDAŞ Planlı Elektrik Kesintisi
+              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
+                Sokağınızda Kesinti Var
               </span>
-              <span class="text-[11px] text-slate-400">Bugün • 09:00 - 17:00</span>
+              <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>${ilk.baslangic} - ${ilk.bitis}</span>
             </div>
-            <p class="text-xs text-slate-200 font-medium">Neden: Şebeke Bakım ve Yenileme Çalışması</p>
-            <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
-              İSTANBUL ${active.district.toUpperCase()} ilçe MERKEZ-${active.neighborhood.toUpperCase()} mah 1195. Sokak, 
-              <mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">${active.street}</mark>, 
-              1205. Sokak ve MEVLANA Caddesi bölgelerinde planlı kesinti uygulanmaktadır.
-            </div>
-          </div>
-        `;
-
-        if (currentScenario === "both") {
-          outageList.innerHTML += `
-            <div class="bg-slate-800/90 border border-sky-500/40 rounded-2xl p-4 space-y-2.5">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
-                  <i class="fa-solid fa-droplet"></i> İSKİ Su Kesintisi
-                </span>
-                <span class="text-[11px] text-slate-400">Bugün • 10:00 - 15:00</span>
-              </div>
-              <p class="text-xs text-slate-200 font-medium">Neden: İçme Suyu Şebeke Hattı Arızası</p>
-              <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
-                Etkilenen Bölge: ${active.district} / <mark class="bg-sky-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">${active.neighborhood} Mahallesi (${active.street})</mark> civarı.
-              </div>
-            </div>
-          `;
-        }
-
-        if (triggerNotification) {
-          showPush(
-            `${active.neighborhood} Mah. Kesinti Uyarısı!`,
-            `${active.street} adresinizde bugün 09:00 - 17:00 arası BEDAŞ kesintisi var.`
-          );
-        }
-
-      } else if (currentScenario === "neighbor_only") {
-        statusCard.className = "rounded-2xl p-5 border bg-slate-800/80 border-emerald-500/40";
-        statusCard.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 uppercase tracking-wide">
-              Sokağınız Güvende
-            </span>
-            <span class="text-xs text-slate-400">Sokağınız Eşleşmedi</span>
-          </div>
-          <h3 class="text-base font-bold text-white mt-3">${active.street} İçin Kesinti Yok</h3>
-          <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            ${active.neighborhood} Mahallesi genelinde 1 kesinti duyurusu var ancak <strong>${active.street}</strong> bu listede yer almıyor.
-          </p>
-        `;
-
-        outageList.innerHTML = `
-          <div class="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-semibold text-slate-400">Mahalledeki Diğer Sokaklar (Sizi Etkilemez)</span>
-              <span class="text-[11px] text-slate-500">10:00 - 14:00</span>
-            </div>
-            <p class="text-xs text-slate-400">
-              ${active.neighborhood} Mah. 1180. Sokak, 1182. Sokak bölgelerinde bakım çalışması.
+            <h3 class="text-base font-bold text-white mt-3">${active.neighborhood} Mah. ${active.street} Etkileniyor</h3>
+            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+              Canlı veri sisteminde sokağınız için <strong>${ilk.kurum}</strong> kesinti kaydı bulundu.
             </p>
-          </div>
-        `;
-      } else {
+          `;
+
+          sokakKesintileri.forEach(k => {
+            const isSu = k.kurum === "İSKİ";
+            outageList.innerHTML += `
+              <div class="bg-slate-800/90 border ${isSu ? 'border-sky-500/40' : 'border-amber-500/40'} rounded-2xl p-4 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold ${isSu ? 'text-sky-400' : 'text-amber-400'} flex items-center gap-1.5">
+                    <i class="fa-solid ${isSu ? 'fa-droplet' : 'fa-bolt'}"></i> ${k.kurum} Kesinti Duyurusu
+                  </span>
+                  <span class="text-[11px] text-slate-400">${k.tarih} • ${k.baslangic} - ${k.bitis}</span>
+                </div>
+                <p class="text-xs text-slate-200 font-medium">Neden: ${k.neden}</p>
+                <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
+                  ${k.aciklama}
+                </div>
+              </div>
+            `;
+          });
+
+          if (triggerNotification) {
+            sendSystemNotification(
+              `${active.neighborhood} Mah. Kesinti Uyarısı!`,
+              `${active.street} adresinizde ${ilk.baslangic} - ${ilk.bitis} arası ${ilk.kurum} kesintisi var.`
+            );
+          }
+          return;
+        }
+      }
+
+      if (currentScenario === "clear") {
         statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
         statusCard.innerHTML = `
           <div class="flex items-center gap-3">
@@ -463,20 +455,48 @@
             </div>
             <div>
               <h3 class="text-base font-bold text-white">Kesinti Bulunmuyor</h3>
-              <p class="text-xs text-slate-300 mt-0.5">${active.neighborhood} Mah. ${active.street} için BEDAŞ ve İSKİ'de aktif kesinti yok.</p>
+              <p class="text-xs text-slate-300 mt-0.5">${active.neighborhood} Mah. ${active.street} için aktif kesinti yok.</p>
             </div>
           </div>
         `;
+        return;
       }
+
+      // Varsayılan / Simülasyon Görünümü
+      statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
+      statusCard.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
+            Sokağınızda Kesinti Var
+          </span>
+          <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>09:00 - 17:00</span>
+        </div>
+        <h3 class="text-base font-bold text-white mt-3">${active.neighborhood} Mah. ${active.street} Etkileniyor</h3>
+        <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+          BEDAŞ duyurusunda sokağınızın adı doğrudan yer alıyor.
+        </p>
+      `;
+
+      outageList.innerHTML = `
+        <div class="bg-slate-800/90 border border-amber-500/40 rounded-2xl p-4 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-bolt"></i> BEDAŞ Planlı Elektrik Kesintisi
+            </span>
+            <span class="text-[11px] text-slate-400">Bugün • 09:00 - 17:00</span>
+          </div>
+          <p class="text-xs text-slate-200 font-medium">Neden: Şebeke Bakım ve Yenileme Çalışması</p>
+          <div class="bg-slate-900/90 border border-slate-700 rounded-xl p-3 text-xs text-slate-300 leading-relaxed">
+            İSTANBUL ${active.district.toUpperCase()} ilçe MERKEZ-${active.neighborhood.toUpperCase()} mah 1195. Sokak, 
+            <mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">${active.street}</mark>, 
+            1205. Sokak bölgelerinde planlı kesinti uygulanmaktadır.
+          </div>
+        </div>
+      `;
     }
 
-    function toggleSetting() {
-      // Kullanıcı tercih geri bildirimi
-    }
-
-    // İlk Açılış
     window.addEventListener("DOMContentLoaded", () => {
-      renderMainScreen(true);
+      loadFromLiveJson();
     });
   </script>
 </body>
