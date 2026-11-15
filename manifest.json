@@ -1,1 +1,19 @@
-
+{
+  "name": "Kesinti Habercisi: İstanbul",
+  "short_name": "KesintiHabercisi",
+  "description": "İstanbul BEDAŞ elektrik ve İSKİ su kesintilerini sokak bazlı takip ve bildirim uygulaması.",
+  "start_url": "/kesinti-habercisi/index.html",
+  "scope": "/kesinti-habercisi/",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2983/2983973.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
