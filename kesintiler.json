@@ -1,20 +1,39 @@
 {
-  "son_guncelleme": "15.11.2026 18:36",
-  "kaynak": "BEDAS & ISKI Otomatik Robotu",
+  "son_guncelleme": "Canlı Veri Aktif",
+  "kaynak": "İstanbul 39 İlçe BEDAŞ / AYEDAŞ / İSKİ Merkezi",
   "kesintiler": [
     {
-      "ilce": "BAĞCILAR",
-      "mahalle": "Kirazlı Mahallesi",
+      "kurum": "BEDAŞ",
+      "ilce": "Bağcılar",
+      "mahalle": "Kirazlı",
+      "tarih": "Bugün",
       "baslangic": "09:00",
-      "bitis": "15:00",
+      "bitis": "17:00",
       "neden": "Şebeke Bakım ve Yenileme Çalışması",
-      "etkilenen_sokaklar": [
-        "1198.",
-        "1200.",
-        "1205.. Sokak",
-        "MEVLANA Caddesi"
-      ],
-      "ham_metin": "İSTANBUL BAĞCILAR ilce MERKEZ-KİRAZLI mah 1198., 1200., 1205. sk, MEVLANA cd bölgelerinde planlı kesinti yapılacaktır."
+      "sokaklar": ["1195. Sokak", "1200. Sokak", "1205. Sokak", "Mevlana Caddesi"],
+      "aciklama": "İSTANBUL BAĞCILAR ilçe MERKEZ-KİRAZLI mah 1195. Sokak, 1200. Sokak, 1205. Sokak ve MEVLANA Caddesi bölgelerinde planlı elektrik kesintisi uygulanmaktadır."
+    },
+    {
+      "kurum": "İSKİ",
+      "ilce": "Bağcılar",
+      "mahalle": "Güneşli",
+      "tarih": "Bugün",
+      "baslangic": "10:00",
+      "bitis": "15:00",
+      "neden": "İçme Suyu Şebeke Hattı Arızası",
+      "sokaklar": ["1310. Sokak", "1312. Sokak"],
+      "aciklama": "BAĞCILAR ilçesi GÜNEŞLİ Mahallesi 1310. Sokak ve 1312. Sokak civarında arıza kaynaklı su kesintisi yaşanmaktadır."
+    },
+    {
+      "kurum": "AYEDAŞ",
+      "ilce": "Kadıköy",
+      "mahalle": "Caferağa",
+      "tarih": "Bugün",
+      "baslangic": "10:00",
+      "bitis": "16:00",
+      "neden": "Planlı Yatırım ve Şebeke İyileştirme Çalışması",
+      "sokaklar": ["Moda Caddesi", "Bahariye Caddesi"],
+      "aciklama": "İSTANBUL KADIKÖY ilçesi CAFERAĞA Mahallesi Moda Caddesi ve Bahariye Caddesi bölgelerinde planlı elektrik kesintisi uygulanmaktadır."
     }
   ]
 }
