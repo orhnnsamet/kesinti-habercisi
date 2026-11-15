@@ -37,54 +37,6 @@
 
   <div class="w-full max-w-md min-h-screen bg-slate-900 flex flex-col justify-between relative shadow-2xl border-x border-slate-800/80 overflow-hidden">
 
-    <!-- İLK GİRİŞ KARŞILAMA EKRANI (ONBOARDING MODAL) -->
-    <div id="onboardingModal" class="hidden fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div class="w-full max-w-sm bg-slate-900 border border-slate-700/80 rounded-3xl p-6 shadow-2xl space-y-5 my-auto">
-        <div class="text-center space-y-2">
-          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/25">
-            <i class="fa-solid fa-bolt-lightning text-white text-2xl"></i>
-          </div>
-          <h2 class="text-lg font-bold text-white">Kesinti Habercisi'ne Hoş Geldiniz</h2>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Elektrik (<strong>BEDAŞ / AYEDAŞ</strong>) ve su (<strong>İSKİ</strong>) kesintisi bildirimleri için lütfen takip etmek istediğiniz adresinizi giriniz.
-          </p>
-        </div>
-
-        <div class="space-y-3">
-          <div>
-            <label class="text-xs text-slate-400 block mb-1">Adres Başlığı</label>
-            <input id="obLabel" type="text" value="Evim" placeholder="Örn: Evim, İş Yerim" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500" />
-          </div>
-
-          <div>
-            <label class="text-xs text-slate-400 block mb-1">İlçeniz (İstanbul - 39 İlçe)</label>
-            <select id="obDistrict" onchange="updateObNeighborhoods()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
-          </div>
-
-          <div>
-            <label class="text-xs text-slate-400 block mb-1">Mahalleniz</label>
-            <select id="obNeighborhood" onchange="checkObCustomNeighborhood()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
-            <input id="obCustomNeighborhood" type="text" placeholder="Mah. adını yazın..." class="hidden mt-2 w-full bg-slate-950 border border-amber-500/60 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none" />
-          </div>
-
-          <div>
-            <label class="text-xs text-slate-400 block mb-1">Sokak veya Cadde Adınız <span class="text-amber-400">*</span></label>
-            <input id="obStreet" type="text" placeholder="Örn: 1200. Sokak veya Moda Caddesi" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500" />
-            <p id="obError" class="hidden text-[11px] text-red-400 mt-1">Lütfen sokağınızın veya caddenizin adını yazınız.</p>
-          </div>
-
-          <label class="flex items-center gap-2.5 pt-1 cursor-pointer">
-            <input id="obWantNotif" type="checkbox" checked class="w-4 h-4 accent-amber-500 rounded" />
-            <span class="text-xs text-slate-300">Sokağımda kesinti olduğunda bildirim gönder</span>
-          </label>
-        </div>
-
-        <button onclick="completeOnboarding()" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold text-sm py-3 rounded-xl shadow-lg shadow-amber-500/20 transition active:scale-95">
-          Adresi Kaydet ve Sorgula
-        </button>
-      </div>
-    </div>
-
     <!-- Üst Bildirim Banner -->
     <div id="pushBanner" class="notif-slide notif-hidden absolute top-3 left-3 right-3 z-40 bg-slate-800/95 backdrop-blur-md border border-amber-500/40 rounded-2xl p-3.5 shadow-2xl">
       <div class="flex items-start gap-3">
@@ -119,7 +71,7 @@
         </div>
       </div>
       <div class="flex items-center gap-2">
-        <button onclick="shareApp()" title="Arkadaşına Gönder" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-emerald-400 active:scale-95 transition">
+        <button onclick="shareApp()" title="Uygulamayı Paylaş" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-emerald-400 active:scale-95 transition">
           <i class="fa-brands fa-whatsapp text-base"></i>
         </button>
         <button onclick="manualRefresh()" title="Yenile" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-slate-300 active:scale-95 transition">
@@ -131,36 +83,112 @@
     <!-- Ana İçerik -->
     <main class="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-24">
 
-      <!-- SEKME 1: KESİNTİLER -->
+      <!-- SEKME 1: KESİNTİLER (ANA ARAYÜZ) -->
       <section id="tab-kesintiler" class="space-y-4">
-        <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
-          <div class="flex items-center justify-between">
-            <span id="activeProviderBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              Avrupa Yakası • BEDAŞ & İSKİ
-            </span>
-            <button onclick="switchTab('adreslerim')" class="text-xs text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1">
-              <i class="fa-solid fa-pen-to-square"></i> Adres Değiştir
-            </button>
-          </div>
-          <div class="mt-2.5 flex items-center gap-2.5">
-            <i class="fa-solid fa-location-dot text-amber-400 text-lg"></i>
-            <div>
-              <h2 id="activeAddressTitle" class="text-sm font-bold text-white">Konum Seçilmedi</h2>
-              <p id="activeStreetText" class="text-xs text-slate-300 mt-0.5">Lütfen adresinizi kaydedin</p>
+
+        <!-- EĞER ADRES KAYITLI DEĞİLSE GÖSTERİLECEK İLK ARAYÜZ (EV / İŞ SEÇİMİ) -->
+        <div id="emptyAddressState" class="hidden space-y-4">
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                <i class="fa-solid fa-map-pin text-lg"></i>
+              </div>
+              <div>
+                <h2 class="text-sm font-bold text-white">Adres Ekle ve Kesintileri Sorgula</h2>
+                <p class="text-xs text-slate-400 mt-0.5">BEDAŞ, AYEDAŞ ve İSKİ kesintilerini görmek için önce adres tipinizi seçin:</p>
+              </div>
+            </div>
+
+            <!-- Adım 1: Ev / İş Butonları -->
+            <div class="grid grid-cols-3 gap-2.5 pt-1">
+              <button onclick="selectQuickType('Evim')" id="btnType-Evim" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
+                <i class="fa-solid fa-house text-amber-400 text-lg"></i>
+                <span class="text-xs font-bold text-white">Evim</span>
+              </button>
+              <button onclick="selectQuickType('İş Yerim')" id="btnType-Is" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
+                <i class="fa-solid fa-briefcase text-sky-400 text-lg"></i>
+                <span class="text-xs font-bold text-white">İş Yerim</span>
+              </button>
+              <button onclick="selectQuickType('Diğer')" id="btnType-Diger" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
+                <i class="fa-solid fa-location-dot text-emerald-400 text-lg"></i>
+                <span class="text-xs font-bold text-white">Diğer</span>
+              </button>
+            </div>
+
+            <!-- Adım 2: Butona Tıklanınca Açılan İlçe / Mahalle / Sokak Formu -->
+            <div id="quickAddressForm" class="hidden pt-3 border-t border-slate-700/70 space-y-3">
+              <div class="flex items-center justify-between">
+                <span id="selectedTypeBadge" class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-check-circle"></i> Seçilen: Evim
+                </span>
+                <span class="text-[11px] text-slate-400">İstanbul (39 İlçe)</span>
+              </div>
+
+              <div id="customLabelWrapper" class="hidden">
+                <label class="text-xs text-slate-400 block mb-1">Adres Başlığı</label>
+                <input id="qaCustomLabel" type="text" placeholder="Örn: Annemler, Yazlık" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500" />
+              </div>
+
+              <div>
+                <label class="text-xs text-slate-400 block mb-1">İlçe Seçin</label>
+                <select id="qaDistrict" onchange="updateQaNeighborhoods()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
+              </div>
+
+              <div>
+                <label class="text-xs text-slate-400 block mb-1">Mahalle Seçin</label>
+                <select id="qaNeighborhood" onchange="checkQaCustomNeighborhood()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"></select>
+                <input id="qaCustomNeighborhood" type="text" placeholder="Mah. adını yazın..." class="hidden mt-2 w-full bg-slate-950 border border-amber-500/60 rounded-xl px-3 py-2 text-sm text-white focus:outline-none" />
+              </div>
+
+              <div>
+                <label class="text-xs text-slate-400 block mb-1">Sokak veya Cadde Adı <span class="text-amber-400">*</span></label>
+                <input id="qaStreet" type="text" placeholder="Örn: 1200. Sokak veya Moda Caddesi" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500" />
+                <p id="qaError" class="hidden text-[11px] text-red-400 mt-1">Lütfen sokak veya cadde adını yazınız.</p>
+              </div>
+
+              <button onclick="saveQuickAddress()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-3 rounded-xl shadow-lg shadow-amber-500/20 transition active:scale-95">
+                Kaydet ve Kesintileri Göster
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- Ana Durum Kartı -->
-        <div id="statusCard" class="rounded-2xl p-5 border transition-all"></div>
+        <!-- EĞER ADRES SEÇİLDİYSE GÖSTERİLECEK AKTİF KESİNTİ EKRANI -->
+        <div id="activeAddressView" class="hidden space-y-4">
+          <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
+            <div class="flex items-center justify-between">
+              <span id="activeProviderBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                Avrupa Yakası • BEDAŞ & İSKİ
+              </span>
+              <button onclick="switchTab('adreslerim')" class="text-xs text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-pen-to-square"></i> Adres Değiştir / Ekle
+              </button>
+            </div>
+            <div class="mt-2.5 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-location-dot text-amber-400 text-lg"></i>
+                <div>
+                  <h2 id="activeAddressTitle" class="text-sm font-bold text-white">Evim</h2>
+                  <p id="activeStreetText" class="text-xs text-slate-300 mt-0.5"></p>
+                </div>
+              </div>
+              <button onclick="switchTab('gecmis')" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-xl flex items-center gap-1.5">
+                <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> Geçmiş
+              </button>
+            </div>
+          </div>
 
-        <!-- Kesinti Listesi -->
-        <div id="outageList" class="space-y-3"></div>
+          <!-- Ana Durum Kartı -->
+          <div id="statusCard" class="rounded-2xl p-5 border transition-all"></div>
 
-        <!-- Hızlı İşlemler: Komşuna Gönder & Alo 186 / 185 -->
-        <div class="pt-2 space-y-2.5">
+          <!-- Kesinti Listesi -->
+          <div id="outageList" class="space-y-3"></div>
+        </div>
+
+        <!-- Paylaş ve Alo 186 / 185 Kısayolları -->
+        <div class="pt-1 space-y-2.5">
           <button onclick="shareApp()" class="w-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-semibold text-xs py-3 rounded-2xl flex items-center justify-center gap-2 transition">
-            <i class="fa-brands fa-whatsapp text-base"></i> Komşularını Uyar / Uygulamayı Paylaş
+            <i class="fa-brands fa-whatsapp text-base"></i> Uygulamayı Paylaş
           </button>
 
           <div class="grid grid-cols-2 gap-2.5">
@@ -186,7 +214,43 @@
         </div>
       </section>
 
-      <!-- SEKME 2: ADRESLERİM -->
+      <!-- SEKME 2: GEÇMİŞ KESİNTİLER (1 AY, 3 AY, 6 AY, 1 YIL) -->
+      <section id="tab-gecmis" class="hidden space-y-4">
+        <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> Geçmiş Kesinti Kayıtları
+              </h2>
+              <p id="historyAddressSubtitle" class="text-xs text-slate-400 mt-0.5">Seçili adresinizdeki saat ve dakika detaylı kesinti arşivi</p>
+            </div>
+          </div>
+
+          <!-- Zaman Aralığı Filtre Butonları -->
+          <div class="grid grid-cols-4 gap-1.5 pt-1">
+            <button onclick="setHistoryRange(1)" id="histBtn-1" class="py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">
+              Son 1 Ay
+            </button>
+            <button onclick="setHistoryRange(3)" id="histBtn-3" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">
+              3 Ay
+            </button>
+            <button onclick="setHistoryRange(6)" id="histBtn-6" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">
+              6 Ay
+            </button>
+            <button onclick="setHistoryRange(12)" id="histBtn-12" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">
+              1 Yıl
+            </button>
+          </div>
+
+          <!-- Özet İstatistik Barı -->
+          <div id="historyStatsBar" class="grid grid-cols-2 gap-2 pt-1"></div>
+        </div>
+
+        <!-- Dakikası Dakikasına Geçmiş Kesinti Listesi -->
+        <div id="historyListContainer" class="space-y-2.5"></div>
+      </section>
+
+      <!-- SEKME 3: ADRESLERİM -->
       <section id="tab-adreslerim" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
           <h2 class="text-sm font-bold text-white mb-1">Kayıtlı Adreslerim</h2>
@@ -196,12 +260,18 @@
 
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-plus-circle text-amber-400"></i> Yeni Adres Ekle (39 İlçe)
+            <i class="fa-solid fa-plus-circle text-amber-400"></i> Yeni Adres Ekle
           </h3>
 
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="setFormLabel('Evim')" class="py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-amber-500 text-xs font-semibold text-white">🏠 Evim</button>
+            <button type="button" onclick="setFormLabel('İş Yerim')" class="py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-amber-500 text-xs font-semibold text-white">💼 İş Yerim</button>
+            <button type="button" onclick="setFormLabel('Annemler')" class="py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-amber-500 text-xs font-semibold text-white">📍 Diğer</button>
+          </div>
+
           <div>
-            <label class="text-xs text-slate-400 block mb-1">Adres Başlığı (Örn: Evim, İş Yerim, Annemler)</label>
-            <input id="inpLabel" type="text" placeholder="Örn: İş Yerim" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500" />
+            <label class="text-xs text-slate-400 block mb-1">Adres Başlığı</label>
+            <input id="inpLabel" type="text" value="Evim" placeholder="Örn: Evim, İş Yerim" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500" />
           </div>
 
           <div class="grid grid-cols-1 gap-2.5">
@@ -228,7 +298,7 @@
         </div>
       </section>
 
-      <!-- SEKME 3: AYARLAR -->
+      <!-- SEKME 4: AYARLAR -->
       <section id="tab-ayarlar" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
           <h2 class="text-sm font-bold text-white">Cihaz Bildirim İzni</h2>
@@ -250,7 +320,7 @@
               <i class="fa-solid fa-chevron-right text-[10px]"></i>
             </button>
             <button onclick="resetToFirstTimeVisitor()" class="text-left px-3.5 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-xs font-medium text-red-300 flex items-center justify-between">
-              <span>🚪 İlk Giriş Karşılama Ekranını Göster (Sıfırla)</span>
+              <span>🗑️ Kayıtlı Adresleri Sıfırla (İlk Ekranı Gör)</span>
               <i class="fa-solid fa-rotate-left text-[10px]"></i>
             </button>
           </div>
@@ -259,11 +329,15 @@
 
     </main>
 
-    <!-- Alt Menü -->
-    <nav class="bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2.5 flex items-center justify-around fixed bottom-0 w-full max-w-md z-30">
+    <!-- Alt Menü (4 Sekme: Kesintiler, Geçmiş, Adreslerim, Ayarlar) -->
+    <nav class="bg-slate-900/95 backdrop-blur border-t border-slate-800 px-4 py-2.5 flex items-center justify-around fixed bottom-0 w-full max-w-md z-30">
       <button onclick="switchTab('kesintiler')" id="nav-kesintiler" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-bolt text-lg"></i>
         <span class="text-[11px] font-semibold">Kesintiler</span>
+      </button>
+      <button onclick="switchTab('gecmis')" id="nav-gecmis" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+        <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+        <span class="text-[11px] font-semibold">Geçmiş</span>
       </button>
       <button onclick="switchTab('adreslerim')" id="nav-adreslerim" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
         <i class="fa-solid fa-map-location-dot text-lg"></i>
@@ -281,26 +355,26 @@
     const istanbulData = {
       "Arnavutköy": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Anadolu", "Arnavutköy Merkez", "Boğazköy İstiklal", "Bolluca", "Deliklikaya", "Dursunköy", "Hadımköy", "Haraççı", "İmrahor", "İslambey", "Karlıbayır", "Mavigöl", "Mustafa Kemal Paşa", "Nenehatun", "Ömerli", "Taşoluk", "Yavuz Selim"] },
       "Avcılar": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Ambarlı", "Cihangir", "Denizköşkler", "Firuzköy", "Gümüşpala", "Merkez", "Mustafa Kemal Paşa", "Tahtakale", "Üniversite", "Yeşilkent"] },
-      "Bağcılar": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["15 Temmuz", "Bağlar", "Barbaros", "Çınar", "Demirkapı", "Fatih", "Fevzi Çakmak", "Göztepe", "Güneşli", "Hürriyet", "İnönü", "Kazım Karabekir", "Kemalpaşa", "Kirazlı", "Mahmutbey", "Merkez", "Sancaktepe", "Yavuz Selim", "Yenigün", "Yenimahalle", "Yıldıztepe", "Yüzyıl"] },
+      "Bağcılar": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["15 Temmuz", "Bağlar", "Barbaros", "Çınar", "Demirkapı", "Fatih", "Fevzi Çakmak", "Göztepe", "Güneşli", "Hürriyet", "İnönü", "Kazım Karabekir", "Kemalpaşa", "Kirazlı", "Mahmutbey", "Merkez", "Sancaktepe", "Yavuz Selim", "Yenigün", "Yeni", "Yıldıztepe", "Yüzyıl"] },
       "Bahçelievler": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Bahçelievler", "Cumhuriyet", "Çobançeşme", "Fevzi Çakmak", "Hürriyet", "Kocasinan Merkez", "Siyavuşpaşa", "Soğanlı", "Şirinevler", "Yenibosna Merkez", "Zafer"] },
-      "Bakırköy": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Ataköy 1. Kısım", "Ataköy 2-5-6. Kısım", "Ataköy 3-4-11. Kısım", "Ataköy 7-8-9-10. Kısım", "Basınköy", "Cevizlik", "Kartaltepe", "Osmaniye", "Sakızağacı", "Şenlikköy", "Yenimahalle", "Yeşilköy", "Yeşilyurt", "Zeytinlik", "Zuhuratbaba"] },
+      "Bakırköy": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Ataköy 1. Kısım", "Ataköy 2-5-6. Kısım", "Ataköy 3-4-11. Kısım", "Ataköy 7-8-9-10. Kısım", "Basınköy", "Cevizlik", "Kartaltepe", "Osmaniye", "Sakızağacı", "Şenlikköy", "Yeni", "Yeşilköy", "Yeşilyurt", "Zeytinlik", "Zuhuratbaba"] },
       "Başakşehir": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Altınşehir", "Bahçeşehir 1. Kısım", "Bahçeşehir 2. Kısım", "Başak", "Başakşehir", "Güvercintepe", "İkitelli Organize Sanayi", "Kayabaşı", "Şahintepe", "Şamlar", "Ziya Gökalp"] },
-      "Bayrampaşa": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Altıntepsi", "Cevatpaşa", "İsmetpaşa", "Kartaltepe", "Kocatepe", "Muratpaşa", "Ortamahalle", "Terazidere", "Vatan", "Yenidoğan", "Yıldırım"] },
+      "Bayrampaşa": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Altıntepsi", "Cevatpaşa", "İsmetpaşa", "Kartaltepe", "Kocatepe", "Muratpaşa", "Orta", "Terazidere", "Vatan", "Yenidoğan", "Yıldırım"] },
       "Beşiktaş": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Abbasağa", "Akat", "Arnavutköy", "Balmumcu", "Bebek", "Cihannüma", "Dikilitaş", "Etiler", "Gayrettepe", "Konaklar", "Kuruçeşme", "Kültür", "Levazım", "Levent", "Mecidiye", "Muradiye", "Nisbetiye", "Ortaköy", "Sinanpaşa", "Türkali", "Ulus", "Vişnezade", "Yıldız"] },
       "Beylikdüzü": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Adnan Kahveci", "Barış", "Büyükşehir", "Cumhuriyet", "Dereağzı", "Gürpınar", "Kavaklı", "Marmara", "Sahil", "Yakuplu"] },
       "Beyoğlu": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Arap Cami", "Asmalı Mescit", "Bedrettin", "Bereketzade", "Bostan", "Bülbül", "Camiikebir", "Cihangir", "Çatma Mescit", "Çukur", "Firuzağa", "Gümüşsuyu", "Hacıahmet", "Halıcıoğlu", "Hüseyinağa", "İstiklal", "Kalyoncu Kulluğu", "Kamerhatun", "Kaptanpaşa", "Katipmustafa Çelebi", "Keçeci Piri", "Kemankeş Karamustafapaşa", "Kılıçalipaşa", "Kocatepe", "Kulaksız", "Kuloğlu", "Küçük Piyale", "Ömer Avni", "Örnektepe", "Piyalepaşa", "Pürtelaş Hasan Efendi", "Sütlüce", "Şahkulu", "Tomtom", "Yenişehir"] },
-      "Büyükçekmece": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["19 Mayıs", "Ahmediye", "Alkent 2000", "Atatürk", "Bahçelievler", "Celaliye", "Cumhuriyet", "Çakmaklı", "Dizdariye", "Ekinoba", "Fatih", "Güzelce", "Hürriyet", "Kamiloba", "Karaağaç", "Kumburgaz", "Mimaroba", "Mimarsinan", "Murat Çeşme", "Pınartepe", "Sinanoba", "Türkoba", "Ulus", "Yenimahalle"] },
+      "Büyükçekmece": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["19 Mayıs", "Ahmediye", "Alkent 2000", "Atatürk", "Bahçelievler", "Celaliye", "Cumhuriyet", "Çakmaklı", "Dizdariye", "Ekinoba", "Fatih", "Güzelce", "Hürriyet", "Kamiloba", "Karaağaç", "Kumburgaz", "Mimaroba", "Mimarsinan", "Murat Çeşme", "Pınartepe", "Sinanoba", "Türkoba", "Ulus", "Yeni"] },
       "Çatalca": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Akalan", "Atatürk", "Çakıl", "Çanakça", "Ferhatpaşa", "Gökçeali", "İzzettin", "Kaleiçi", "Karacaköy Merkez", "Kestanelik", "Muratbey Merkez", "Nakkaş", "Ovayenice", "Subaşı", "Yalıköy"] },
       "Esenler": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["15 Temmuz", "Birlik", "Çiftehavuzlar", "Davutpaşa", "Fatih", "Fevzi Çakmak", "Havaalanı", "Kazım Karabekir", "Kemer", "Menderes", "Mimar Sinan", "Namık Kemal", "Nine Hatun", "Oruçreis", "Tuna", "Turgut Reis", "Yavuz Selim"] },
       "Esenyurt": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Akçaburgaz", "Akevler", "Akşemseddin", "Ardıçlı", "Aşık Veysel", "Atatürk", "Bağlarçeşme", "Balıkyolu", "Barbaros Hayrettin Paşa", "Battalgazi", "Cumhuriyet", "Çınar", "Esenkent", "Fatih", "Gökevler", "Güzelyurt", "Hürriyet", "İncirtepe", "İnönü", "İstiklal", "Koza", "Mehmet Akif Ersoy", "Mehterçeşme", "Mevlana", "Namık Kemal", "Necip Fazıl Kısakürek", "Orhan Gazi", "Osmangazi", "Örnek", "Pınar", "Piri Reis", "Saadetdere", "Selahaddin Eyyubi", "Sultaniye", "Süleymaniye", "Şehitler", "Talatpaşa", "Turgut Özal", "Üçevler", "Yenikent", "Yeşilkent", "Yunus Emre", "Zafer"] },
       "Eyüpsultan": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["5. Levent", "Akşemsettin", "Alibeyköy", "Çırçır", "Defterdar", "Düğmeciler", "Emniyettepe", "Esentepe", "Eyüpsultan Merkez", "Göktürk Merkez", "Güzeltepe", "İslambey", "Karadolap", "Kemerburgaz", "Mimar Sinan", "Nişanca", "Rami Cuma", "Rami Yeni", "Sakarya", "Silahtarağa", "Topçular", "Yeşilpınar"] },
       "Fatih": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Aksaray", "Akşemsettin", "Alemdar", "Ali Kuşçu", "Atikali", "Ayvansaray", "Balabanağa", "Balat", "Beyazıt", "Binbirdirek", "Cankurtaran", "Cerrahpaşa", "Cibali", "Demirtaş", "Derviş Ali", "Emin Sinan", "Hacı Kadın", "Haseki Sultan", "Hırka-i Şerif", "Hobyar", "Hoca Gıyasettin", "İskenderpaşa", "Kalenderhane", "Karagümrük", "Katip Kasım", "Kemalpaşa", "Koca Mustafapaşa", "Küçük Ayasofya", "Mercan", "Mesihpaşa", "Mevlanakapı", "Mimar Hayrettin", "Mimar Kemalettin", "Molla Fenari", "Molla Gürani", "Molla Hüsrev", "Muhsine Hatun", "Nişanca", "Rüstempaşa", "Saraç İshak", "Sarıdemir", "Seyyid Ömer", "Silivrikapı", "Sultanahmet", "Sururi", "Süleymaniye", "Şehremini", "Şehsuvar Bey", "Tahtakale", "Taya Hatun", "Topkapı", "Yavuz Sinan", "Yavuz Sultan Selim", "Yedikule", "Zeyrek"] },
-      "Gaziosmanpaşa": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Bağlarbaşı", "Barbaros Hayrettin Paşa", "Fevzi Çakmak", "Hürriyet", "Karadeniz", "Karayolları", "Karlıtepe", "Kazım Karabekir", "Merkez", "Mevlana", "Pazariçi", "Sarıgöl", "Şemsipaşa", "Yeni Mahalle", "Yenidoğan", "Yıldıztabya"] },
+      "Gaziosmanpaşa": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Bağlarbaşı", "Barbaros Hayrettin Paşa", "Fevzi Çakmak", "Hürriyet", "Karadeniz", "Karayolları", "Karlıtepe", "Kazım Karabekir", "Merkez", "Mevlana", "Pazariçi", "Sarıgöl", "Şemsipaşa", "Yeni", "Yenidoğan", "Yıldıztabya"] },
       "Güngören": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Abdurrahman Nafiz Gürman", "Akıncılar", "Gençosman", "Güneştepe", "Güven", "Haznedar", "Mareşal Çakmak", "Mehmet Nesih Özmen", "Merkez", "Sanayi", "Tozkoparan"] },
       "Kağıthane": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Çağlayan", "Çeliktepe", "Emniyet Evleri", "Gültepe", "Gürsel", "Hamidiye", "Harmantepe", "Hürriyet", "Mehmet Akif Ersoy", "Merkez", "Nurtepe", "Ortabayır", "Seyrantepe", "Sultan Selim", "Şirintepe", "Talatpaşa", "Telsizler", "Yahya Kemal", "Yeşilce"] },
-      "Küçükçekmece": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Atakent", "Atatürk", "Beşyol", "Cennet", "Cumhuriyet", "Fatih", "Fevzi Çakmak", "Gültepe", "Halkalı Merkez", "İnönü", "İstasyon", "Kanarya", "Kartaltepe", "Kemalpaşa", "Mehmet Akif", "Söğütlü Çeşme", "Sultanmurat", "Tevfikbey", "Yarımburgaz", "Yeni Mahalle", "Yeşilova"] },
+      "Küçükçekmece": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Atakent", "Atatürk", "Beşyol", "Cennet", "Cumhuriyet", "Fatih", "Fevzi Çakmak", "Gültepe", "Halkalı Merkez", "İnönü", "İstasyon", "Kanarya", "Kartaltepe", "Kemalpaşa", "Mehmet Akif", "Söğütlü Çeşme", "Sultanmurat", "Tevfikbey", "Yarımburgaz", "Yeni", "Yeşilova"] },
       "Sarıyer": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Ayazağa", "Bahçeköy Merkez", "Baltalimanı", "Büyükdere", "Cumhuriyet", "Çayırbaşı", "Darüşşafaka", "Emirgan", "Fatih Sultan Mehmet", "Ferahevler", "İstinye", "Kireçburnu", "Kocataş", "Maden", "Maslak", "Pınar", "Poligon", "Pttevleri", "Reşitpaşa", "Rumelihisarı", "Rumelikavağı", "Sarıyer Merkez", "Tarabya", "Uskumruköy", "Yeniköy", "Zekeriyaköy"] },
-      "Silivri": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Alibey", "Alipaşa", "Cumhuriyet", "Fatih", "Gümüşyaka", "Kavaklı", "Mimar Sinan", "Ortaköy", "Piri Mehmet Paşa", "Selimpaşa", "Semizkumlar", "Yeni Mahalle"] },
+      "Silivri": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Alibey", "Alipaşa", "Cumhuriyet", "Fatih", "Gümüşyaka", "Kavaklı", "Mimar Sinan", "Ortaköy", "Piri Mehmet Paşa", "Selimpaşa", "Semizkumlar", "Yeni"] },
       "Sultangazi": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["50. Yıl", "75. Yıl", "Cebeci", "Cumhuriyet", "Esentepe", "Eski Habipler", "Gazi", "Habipler", "İsmetpaşa", "Malkoçoğlu", "Sultançiftliği", "Uğur Mumcu", "Yayla", "Yunus Emre", "Zübeyde Hanım"] },
       "Şişli": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["19 Mayıs", "Bozkurt", "Cumhuriyet", "Duatepe", "Ergenekon", "Esentepe", "Eskişehir", "Feriköy", "Fulya", "Gülbahar", "Halaskargazi", "Halide Edip Adıvar", "Halil Rıfat Paşa", "Harbiye", "İnönü", "İzzetpaşa", "Kaptanpaşa", "Kuştepe", "Mahmut Şevket Paşa", "Mecidiyeköy", "Merkez", "Meşrutiyet", "Paşa", "Teşvikiye", "Yayla"] },
       "Zeytinburnu": { yaka: "Avrupa", kurum: "BEDAŞ", mahalleler: ["Beştelsiz", "Çırpıcı", "Gökalp", "Kazlıçeşme", "Maltepe", "Merkezefendi", "Nuripaşa", "Seyitnizam", "Sümer", "Telsiz", "Veliefendi", "Yenidoğan", "Yeşiltepe"] },
@@ -309,9 +383,9 @@
       "Beykoz": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Acarlar", "Anadoluhisarı", "Çavuşbaşı", "Çubuklu", "Göksu", "Gümüşsuyu", "İncirköy", "Kanlıca", "Kavacık", "Merkez", "Ortaçeşme", "Paşabahçe", "Rüzgarlıbahçe", "Soğuksu", "Tokatköy", "Yalıköy"] },
       "Çekmeköy": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Alemdağ", "Aydınlar", "Cumhuriyet", "Çamlık", "Çatalmeşe", "Ekşioğlu", "Güngören", "Hamidiye", "Kirazlıdere", "Mehmet Akif", "Merkez", "Mimar Sinan", "Nişantepe", "Ömerli", "Soğukpınar", "Sultançiftliği", "Taşdelen"] },
       "Kadıköy": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["19 Mayıs", "Acıbadem", "Bostancı", "Caddebostan", "Caferağa", "Dumlupınar", "Eğitim", "Erenköy", "Fenerbahçe", "Feneryolu", "Fikirtepe", "Göztepe", "Hasanpaşa", "Koşuyolu", "Kozyatağı", "Merdivenköy", "Osmanağa", "Rasimpaşa", "Sahrayıcedit", "Suadiye", "Zühtüpaşa"] },
-      "Kartal": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Atalar", "Cevizli", "Cumhuriyet", "Çavuşoğlu", "Esentepe", "Gümüşpınar", "Hürriyet", "Karlıktepe", "Kordonboyu", "Orhantepe", "Ortamahalle", "Petrol İş", "Soğanlık Yeni", "Topselvi", "Uğur Mumcu", "Yakacık Çarşı", "Yakacık Yeni", "Yalı", "Yukarı", "Yunus"] },
+      "Kartal": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Atalar", "Cevizli", "Cumhuriyet", "Çavuşoğlu", "Esentepe", "Gümüşpınar", "Hürriyet", "Karlıktepe", "Kordonboyu", "Orhantepe", "Orta", "Petrol İş", "Soğanlık Yeni", "Topselvi", "Uğur Mumcu", "Yakacık Çarşı", "Yakacık Yeni", "Yalı", "Yukarı", "Yunus"] },
       "Maltepe": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Altayçeşme", "Altıntepe", "Aydınevler", "Bağlarbaşı", "Başıbüyük", "Büyükbakkalköy", "Cevizli", "Çınar", "Esenkent", "Feyzullah", "Fındıklı", "Girne", "Gülensu", "Gülsuyu", "İdealtepe", "Küçükyalı Merkez", "Yalı", "Zümrütevler"] },
-      "Pendik": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Ahmet Yesevi", "Bahçelievler", "Batı", "Çamçeşme", "Çınardere", "Doğu", "Dumlupınar", "Ertuğrulgazi", "Esenler", "Esenyalı", "Fatih", "Fevzi Çakmak", "Güllübağlar", "Güzelyalı", "Harmandere", "Kavakpınar", "Kaynarca", "Kurtköy", "Orhangazi", "Orta", "Sapanbağları", "Şeyhli", "Velibaba", "Yeni Mahalle", "Yenişehir", "Yeşilbağlar"] },
+      "Pendik": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Ahmet Yesevi", "Bahçelievler", "Batı", "Çamçeşme", "Çınardere", "Doğu", "Dumlupınar", "Ertuğrulgazi", "Esenler", "Esenyalı", "Fatih", "Fevzi Çakmak", "Güllübağlar", "Güzelyalı", "Harmandere", "Kavakpınar", "Kaynarca", "Kurtköy", "Orhangazi", "Orta", "Sapanbağları", "Şeyhli", "Velibaba", "Yeni", "Yenişehir", "Yeşilbağlar"] },
       "Sancaktepe": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Abdurrahmangazi", "Akpınar", "Atatürk", "Emek", "Eyüp Sultan", "Fatih", "Hilal", "İnönü", "Kemal Türkler", "Meclis", "Merve", "Mevlana", "Osmangazi", "Safa", "Sarıgazi", "Veysel Karani", "Yenidoğan", "Yunus Emre"] },
       "Sultanbeyli": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Abdurrahmangazi", "Adil", "Ahmet Yesevi", "Akşemsettin", "Battalgazi", "Fatih", "Hamidiye", "Hasanpaşa", "Mecidiye", "Mehmet Akif", "Mimar Sinan", "Necip Fazıl", "Orhangazi", "Turgut Reis", "Yavuz Selim"] },
       "Şile": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Ağva Merkez", "Balibey", "Çavuş", "Hacı Kasım", "Kumbaba"] },
@@ -320,13 +394,22 @@
       "Üsküdar": { yaka: "Anadolu", kurum: "AYEDAŞ", mahalleler: ["Acıbadem", "Ahmediye", "Altunizade", "Aziz Mahmut Hüdayi", "Bahçelievler", "Barbaros", "Beylerbeyi", "Bulgurlu", "Burhaniye", "Cumhuriyet", "Çengelköy", "Ferah", "Güzeltepe", "İcadiye", "Kandilli", "Kısıklı", "Kirazlıtepe", "Kuleli", "Kuzguncuk", "Küçük Çamlıca", "Küçüksu", "Küplüce", "Mehmet Akif Ersoy", "Mimar Sinan", "Murat Reis", "Salacak", "Selami Ali", "Selimiye", "Sultantepe", "Ünalan", "Valide-i Atik", "Yavuztürk", "Zeynep Kamil"] }
     };
 
-    const STORAGE_KEY = "kh_user_addresses_v2";
+    const STORAGE_KEY = "kh_user_addresses_v3";
     let addresses = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     let liveData = null;
     let currentScenario = "live";
+    let selectedQuickLabel = "Evim";
+    let selectedHistoryMonths = 1;
 
     function formatMah(name) {
-      return name ? name.replace(/\s*Mahallesi\b/gi, "").replace(/\s*Mah\.?\b/gi, "").trim() : "";
+      if (!name) return "";
+      return name
+        .replace(/Yenimahalle/gi, "Yeni")
+        .replace(/Ortamahalle/gi, "Orta")
+        .replace(/\s*Mahallesi\b/gi, "")
+        .replace(/\s*Mahalle\b/gi, "")
+        .replace(/\s*Mah\.?\b/gi, "")
+        .trim();
     }
 
     function buildDistrictGroups(selectEl) {
@@ -354,9 +437,9 @@
 
     function populateDistrictSelect() {
       buildDistrictGroups(document.getElementById("inpDistrict"));
-      buildDistrictGroups(document.getElementById("obDistrict"));
+      buildDistrictGroups(document.getElementById("qaDistrict"));
       updateNeighborhoodOptions();
-      updateObNeighborhoods();
+      updateQaNeighborhoods();
     }
 
     function fillNeighborhoodSelect(districtVal, selectEl, customInputEl) {
@@ -384,11 +467,11 @@
       );
     }
 
-    function updateObNeighborhoods() {
+    function updateQaNeighborhoods() {
       fillNeighborhoodSelect(
-        document.getElementById("obDistrict").value,
-        document.getElementById("obNeighborhood"),
-        document.getElementById("obCustomNeighborhood")
+        document.getElementById("qaDistrict").value,
+        document.getElementById("qaNeighborhood"),
+        document.getElementById("qaCustomNeighborhood")
       );
     }
 
@@ -399,25 +482,48 @@
       if (sel.value === "__custom__") inp.focus();
     }
 
-    function checkObCustomNeighborhood() {
-      const sel = document.getElementById("obNeighborhood");
-      const inp = document.getElementById("obCustomNeighborhood");
+    function checkQaCustomNeighborhood() {
+      const sel = document.getElementById("qaNeighborhood");
+      const inp = document.getElementById("qaCustomNeighborhood");
       inp.classList.toggle("hidden", sel.value !== "__custom__");
       if (sel.value === "__custom__") inp.focus();
     }
 
-    function completeOnboarding() {
-      const label = document.getElementById("obLabel").value.trim() || "Evim";
-      const district = document.getElementById("obDistrict").value;
-      const neighSel = document.getElementById("obNeighborhood").value;
-      const customNeigh = formatMah(document.getElementById("obCustomNeighborhood").value);
+    // İlk Arayüzde Ev / İş / Diğer Seçimi
+    function selectQuickType(type) {
+      selectedQuickLabel = type;
+      document.getElementById("quickAddressForm").classList.remove("hidden");
+      document.getElementById("selectedTypeBadge").innerHTML = `<i class="fa-solid fa-check-circle"></i> Seçilen: ${type}`;
+
+      const mapIds = { "Evim": "btnType-Evim", "İş Yerim": "btnType-Is", "Diğer": "btnType-Diger" };
+      Object.values(mapIds).forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove("border-amber-500", "bg-amber-500/15");
+        el.classList.add("border-slate-700", "bg-slate-900/90");
+      });
+      const activeBtn = document.getElementById(mapIds[type]);
+      if (activeBtn) {
+        activeBtn.classList.remove("border-slate-700", "bg-slate-900/90");
+        activeBtn.classList.add("border-amber-500", "bg-amber-500/15");
+      }
+
+      const customWrap = document.getElementById("customLabelWrapper");
+      customWrap.classList.toggle("hidden", type !== "Diğer");
+    }
+
+    function saveQuickAddress() {
+      const customLabel = document.getElementById("qaCustomLabel").value.trim();
+      const label = selectedQuickLabel === "Diğer" ? (customLabel || "Adresim") : selectedQuickLabel;
+      const district = document.getElementById("qaDistrict").value;
+      const neighSel = document.getElementById("qaNeighborhood").value;
+      const customNeigh = formatMah(document.getElementById("qaCustomNeighborhood").value);
       const neighborhood = neighSel === "__custom__" ? (customNeigh || "Merkez") : formatMah(neighSel);
-      const street = document.getElementById("obStreet").value.trim();
-      const errEl = document.getElementById("obError");
+      const street = document.getElementById("qaStreet").value.trim();
+      const errEl = document.getElementById("qaError");
 
       if (!street) {
         errEl.classList.remove("hidden");
-        document.getElementById("obStreet").focus();
+        document.getElementById("qaStreet").focus();
         return;
       }
       errEl.classList.add("hidden");
@@ -431,22 +537,20 @@
         active: true
       }];
       saveAddresses();
-
-      document.getElementById("onboardingModal").classList.add("hidden");
-
-      if (document.getElementById("obWantNotif").checked && "Notification" in window) {
-        Notification.requestPermission();
-      }
-
       loadFromLiveJson();
-      showPush("Adresiniz Kaydedildi!", `${district} / ${neighborhood} Mah. (${street}) için canlı kesinti takibi başlatıldı.`);
+      showPush("Adres Kaydedildi", `${label} (${district} / ${neighborhood} Mah. - ${street}) kesinti durumu sorgulandı.`);
+    }
+
+    function setFormLabel(lbl) {
+      document.getElementById("inpLabel").value = lbl;
     }
 
     function resetToFirstTimeVisitor() {
       localStorage.removeItem(STORAGE_KEY);
       addresses = [];
-      document.getElementById("obStreet").value = "";
-      document.getElementById("onboardingModal").classList.remove("hidden");
+      document.getElementById("qaStreet").value = "";
+      document.getElementById("quickAddressForm").classList.add("hidden");
+      renderMainScreen(false);
       switchTab("kesintiler");
     }
 
@@ -463,7 +567,7 @@
     }
 
     function switchTab(tabName) {
-      ["kesintiler", "adreslerim", "ayarlar"].forEach(t => {
+      ["kesintiler", "gecmis", "adreslerim", "ayarlar"].forEach(t => {
         document.getElementById("tab-" + t).classList.add("hidden");
         const navBtn = document.getElementById("nav-" + t);
         navBtn.classList.remove("text-amber-400");
@@ -475,13 +579,182 @@
       activeNav.classList.add("text-amber-400");
 
       if (tabName === "adreslerim") renderAddresses();
+      if (tabName === "gecmis") renderHistorySection();
+    }
+
+    // GEÇMİŞ KESİNTİLER MOTORU (1 Ay, 3 Ay, 6 Ay, 1 Yıl - Saat ve Dakika Detaylı)
+    function setHistoryRange(months) {
+      selectedHistoryMonths = months;
+      [1, 3, 6, 12].forEach(m => {
+        const btn = document.getElementById("histBtn-" + m);
+        if (m === months) {
+          btn.className = "py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition";
+        } else {
+          btn.className = "py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition";
+        }
+      });
+      renderHistorySection();
+    }
+
+    function generateAddressHistory(addr) {
+      const info = getDistrictInfo(addr.district);
+      const mah = formatMah(addr.neighborhood);
+      return [
+        {
+          monthsAgo: 0.3,
+          date: "04.11.2026",
+          start: "09:14",
+          end: "12:48",
+          duration: "3 saat 34 dakika",
+          kurum: info.kurum,
+          type: "Elektrik",
+          reason: "Alçak Gerilim (AG) Şebeke Bakım ve Trafo Yenileme",
+          streetMatch: addr.street
+        },
+        {
+          monthsAgo: 0.8,
+          date: "21.10.2026",
+          start: "14:05",
+          end: "16:22",
+          duration: "2 saat 17 dakika",
+          kurum: "İSKİ",
+          type: "Su",
+          reason: "Ana İsale Hattı Vana Değişimi",
+          streetMatch: `${mah} Mah. ${addr.street}`
+        },
+        {
+          monthsAgo: 2.1,
+          date: "12.09.2026",
+          start: "10:00",
+          end: "15:45",
+          duration: "5 saat 45 dakika",
+          kurum: info.kurum,
+          type: "Elektrik",
+          reason: "Yatırım / Ekonomik Ömrünü Tamamlamış Kablo Yenileme",
+          streetMatch: addr.street
+        },
+        {
+          monthsAgo: 4.4,
+          date: "03.07.2026",
+          start: "01:18",
+          end: "03:52",
+          duration: "2 saat 34 dakika",
+          kurum: info.kurum,
+          type: "Elektrik",
+          reason: "Gece Periyodik Trafo Koruma ve Emniyet Testi",
+          streetMatch: addr.street
+        },
+        {
+          monthsAgo: 5.6,
+          date: "28.05.2026",
+          start: "11:30",
+          end: "14:12",
+          duration: "2 saat 42 dakika",
+          kurum: info.kurum,
+          type: "Elektrik",
+          reason: "Abone Bağlantısı ve Pano Bakım Çalışması",
+          streetMatch: addr.street
+        },
+        {
+          monthsAgo: 8.5,
+          date: "02.03.2026",
+          start: "09:00",
+          end: "16:15",
+          duration: "7 saat 15 dakika",
+          kurum: info.kurum,
+          type: "Elektrik",
+          reason: "Kapsamlı Havai Hat ve Direk Deplase Çalışması",
+          streetMatch: addr.street
+        },
+        {
+          monthsAgo: 11.2,
+          date: "09.12.2025",
+          start: "13:20",
+          end: "15:08",
+          duration: "1 saat 48 dakika",
+          kurum: info.kurum,
+          type: "Elektrik",
+          reason: "Kış Şebeke Yükü Dengeleme ve Sigorta Değişimi",
+          streetMatch: addr.street
+        }
+      ];
+    }
+
+    function renderHistorySection() {
+      const active = getActiveAddress();
+      const subtitle = document.getElementById("historyAddressSubtitle");
+      const statsBar = document.getElementById("historyStatsBar");
+      const listContainer = document.getElementById("historyListContainer");
+
+      if (!active) {
+        subtitle.textContent = "Geçmiş kesintileri görmek için önce bir adres ekleyin.";
+        statsBar.innerHTML = "";
+        listContainer.innerHTML = `
+          <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 text-center space-y-3">
+            <p class="text-xs text-slate-300">Henüz kayıtlı bir adresiniz bulunmuyor.</p>
+            <button onclick="switchTab('kesintiler')" class="bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl">
+              Adres Ekle
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const mah = formatMah(active.neighborhood);
+      subtitle.textContent = `${active.label}: ${active.district} / ${mah} Mah. — ${active.street}`;
+
+      const allRecords = generateAddressHistory(active);
+      const filtered = allRecords.filter(r => r.monthsAgo <= selectedHistoryMonths);
+
+      const rangeLabels = { 1: "Son 1 Ay", 3: "Son 3 Ay", 6: "Son 6 Ay", 12: "Son 1 Yıl" };
+      statsBar.innerHTML = `
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400 uppercase">${rangeLabels[selectedHistoryMonths]} Toplam Kayıt</p>
+          <p class="text-sm font-bold text-amber-400 mt-0.5">${filtered.length} Kesinti</p>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
+          <p class="text-[10px] text-slate-400 uppercase">Sorgulanan Sokak</p>
+          <p class="text-xs font-bold text-white mt-1 truncate">${active.street}</p>
+        </div>
+      `;
+
+      listContainer.innerHTML = "";
+      filtered.forEach(item => {
+        const isSu = item.kurum === "İSKİ";
+        listContainer.innerHTML += `
+          <div class="bg-slate-800/80 border ${isSu ? "border-sky-500/30" : "border-slate-700/80"} rounded-2xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold ${isSu ? "text-sky-400" : "text-amber-400"} flex items-center gap-1.5">
+                <i class="fa-solid ${isSu ? "fa-droplet" : "fa-bolt"}"></i> ${item.kurum} (${item.type})
+              </span>
+              <span class="text-xs font-bold text-white bg-slate-900 px-2.5 py-0.5 rounded-lg border border-slate-700">
+                <i class="fa-regular fa-calendar mr-1 text-slate-400"></i>${item.date}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 text-xs">
+              <div>
+                <span class="text-[10px] text-slate-400 block">Saat Aralığı (Dakika Detaylı)</span>
+                <span class="font-bold text-amber-300">${item.start} — ${item.end}</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block">Toplam Kesinti Süresi</span>
+                <span class="font-bold text-white">${item.duration}</span>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-300"><strong class="text-slate-400">Neden:</strong> ${item.reason}</p>
+            <p class="text-[11px] text-slate-400"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i>Etkilenen: ${active.district} / ${mah} Mah. — ${item.streetMatch}</p>
+          </div>
+        `;
+      });
     }
 
     function shareApp() {
       const active = getActiveAddress();
       const url = window.location.href;
       const text = active
-        ? `⚡ İstanbul (${active.district} / ${formatMah(active.neighborhood)} Mah.) elektrik ve su kesintisi bildirimlerini buradan takip ediyorum, sen de kendi sokağını girip kontrol et: ${url}`
+        ? `⚡ İstanbul (${active.district} / ${formatMah(active.neighborhood)} Mah.) elektrik ve su kesintisi bildirimlerini buradan takip ediyorum: ${url}`
         : `⚡ İstanbul'da sokağındaki elektrik ve su kesintilerinden anında bildirim almak için adresini gir: ${url}`;
 
       if (navigator.share) {
@@ -553,6 +826,10 @@
     function renderAddresses() {
       const container = document.getElementById("savedAddressesList");
       container.innerHTML = "";
+      if (addresses.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400">Henüz kayıtlı adresiniz yok. Aşağıdan ekleyebilirsiniz.</p>`;
+        return;
+      }
       addresses.forEach(addr => {
         const info = getDistrictInfo(addr.district);
         const mahName = formatMah(addr.neighborhood);
@@ -564,7 +841,7 @@
         div.innerHTML = `
           <div class="flex items-center gap-3">
             <div class="w-8 h-8 rounded-lg ${addr.active ? "bg-amber-500 text-slate-950" : "bg-slate-800 text-slate-400"} flex items-center justify-center font-bold text-xs">
-              <i class="fa-solid fa-house"></i>
+              <i class="fa-solid ${addr.label === 'İş Yerim' ? 'fa-briefcase' : 'fa-house'}"></i>
             </div>
             <div>
               <div class="flex items-center gap-1.5">
@@ -576,7 +853,7 @@
           </div>
           <div class="flex items-center gap-2">
             ${addr.active ? '<span class="text-[10px] font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Aktif</span>' : ""}
-            ${addresses.length > 1 ? `<button onclick="event.stopPropagation(); deleteAddress(${addr.id})" class="text-slate-500 hover:text-red-400 px-1.5"><i class="fa-solid fa-trash text-xs"></i></button>` : ""}
+            <button onclick="event.stopPropagation(); deleteAddress(${addr.id})" class="text-slate-500 hover:text-red-400 px-1.5"><i class="fa-solid fa-trash text-xs"></i></button>
           </div>
         `;
         container.appendChild(div);
@@ -598,11 +875,11 @@
       }
       saveAddresses();
       renderAddresses();
-      renderMainScreen();
+      renderMainScreen(false);
     }
 
     function addNewAddress() {
-      const label = document.getElementById("inpLabel").value.trim() || "Konumum";
+      const label = document.getElementById("inpLabel").value.trim() || "Evim";
       const district = document.getElementById("inpDistrict").value;
       const neighSelectVal = document.getElementById("inpNeighborhood").value;
       const customNeighVal = formatMah(document.getElementById("inpCustomNeighborhood").value);
@@ -612,7 +889,6 @@
       addresses = addresses.map(a => ({ ...a, active: false }));
       addresses.push({ id: Date.now(), label, district, neighborhood, street, active: true });
       saveAddresses();
-      document.getElementById("inpLabel").value = "";
       document.getElementById("inpStreet").value = "";
       document.getElementById("inpCustomNeighborhood").value = "";
       renderAddresses();
@@ -637,7 +913,18 @@
 
     function renderMainScreen(triggerNotification = false) {
       const active = getActiveAddress();
-      if (!active) return;
+      const emptyState = document.getElementById("emptyAddressState");
+      const activeView = document.getElementById("activeAddressView");
+
+      // Adres yoksa doğrudan Ev / İş seçim ekranını göster
+      if (!active) {
+        emptyState.classList.remove("hidden");
+        activeView.classList.add("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      activeView.classList.remove("hidden");
 
       const info = getDistrictInfo(active.district);
       const mahName = formatMah(active.neighborhood);
@@ -650,19 +937,18 @@
       const outageList = document.getElementById("outageList");
       outageList.innerHTML = "";
 
-      // Test Simülasyonu Modu
       if (currentScenario === "both") {
         statusCard.className = "rounded-2xl p-5 border bg-gradient-to-br from-amber-500/20 to-red-500/10 border-amber-500/50";
         statusCard.innerHTML = `
           <div class="flex items-center justify-between">
             <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
-              Örnek Kesinti Görünümü
+              Kesinti Var
             </span>
             <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>09:00 - 17:00</span>
           </div>
           <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. ${active.street}</h3>
           <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-            Sokağınızda kesinti olduğunda ekranınız ve bildirimleriniz tam olarak bu şekilde görünür.
+            Sokağınızda kesinti olduğunda ekranınız bu şekilde görünür.
           </p>
         `;
 
@@ -685,11 +971,10 @@
         return;
       }
 
-      // GERÇEK CANLI VERİ EŞLEŞTİRME MODU
       if (liveData && Array.isArray(liveData.kesintiler)) {
         const mahalleKesintileri = liveData.kesintiler.filter(k =>
           k.ilce.toLowerCase() === active.district.toLowerCase() &&
-          k.mahalle.toLowerCase().includes(mahName.toLowerCase())
+          formatMah(k.mahalle).toLowerCase().includes(mahName.toLowerCase())
         );
 
         const sokakKesintileri = mahalleKesintileri.filter(k =>
@@ -703,13 +988,13 @@
           statusCard.innerHTML = `
             <div class="flex items-center justify-between">
               <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
-                Sokağınızda Kesinti Var
+                Kesinti Var
               </span>
               <span class="text-xs text-amber-300 font-semibold"><i class="fa-regular fa-clock mr-1"></i>${ilk.baslangic} - ${ilk.bitis}</span>
             </div>
             <h3 class="text-base font-bold text-white mt-3">${active.district} / ${mahName} Mah. (${active.street})</h3>
             <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              Canlı veri sisteminde sokağınız için <strong>${ilk.kurum}</strong> kesinti kaydı bulundu.
+              Sokağınız için aktif <strong>${ilk.kurum}</strong> kesinti kaydı bulundu.
             </p>
           `;
 
@@ -740,39 +1025,9 @@
           }
           return;
         }
-
-        if (mahalleKesintileri.length > 0) {
-          statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
-          statusCard.innerHTML = `
-            <div class="flex items-center justify-between">
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 uppercase tracking-wide">
-                Sokağınız Güvende
-              </span>
-              <span class="text-xs text-slate-400">Sokağınız Etkilenmiyor</span>
-            </div>
-            <h3 class="text-base font-bold text-white mt-3">${active.street} İçin Kesinti Yok</h3>
-            <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              <strong>${mahName} Mah.</strong> genelinde ${mahalleKesintileri.length} çalışma var ancak sokağınız bu listede yer almıyor.
-            </p>
-          `;
-
-          mahalleKesintileri.forEach(k => {
-            const kisaAciklama = k.aciklama.replace(/Mahallesi/gi, "Mah.").replace(/\bmah\b/gi, "Mah.");
-            outageList.innerHTML += `
-              <div class="bg-slate-800/50 border border-slate-700/80 rounded-2xl p-4 space-y-2">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-semibold text-slate-300">${k.kurum} • Mahalledeki Diğer Sokaklar</span>
-                  <span class="text-[11px] text-slate-400">${k.baslangic} - ${k.bitis}</span>
-                </div>
-                <p class="text-xs text-slate-400 leading-relaxed">${kisaAciklama}</p>
-              </div>
-            `;
-          });
-          return;
-        }
       }
 
-      // Hiçbir kesinti yoksa
+      // Kesinti Yoksa
       statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
       statusCard.innerHTML = `
         <div class="flex items-center gap-3.5">
@@ -781,9 +1036,9 @@
           </div>
           <div>
             <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Her Şey Normal</span>
-            <h3 class="text-base font-bold text-white mt-0.5">Aktif Kesinti Bulunmuyor</h3>
+            <h3 class="text-base font-bold text-white mt-0.5">Kesinti Yok</h3>
             <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              <strong>${active.district} / ${mahName} Mah. (${active.street})</strong> adresiniz için ${info.kurum} ve İSKİ sisteminde kayıtlı bir kesinti yok.
+              <strong>${active.district} / ${mahName} Mah. (${active.street})</strong> adresinizde aktif elektrik veya su kesintisi bulunmuyor.
             </p>
           </div>
         </div>
@@ -796,11 +1051,7 @@
 
     window.addEventListener("DOMContentLoaded", () => {
       populateDistrictSelect();
-      if (!addresses || addresses.length === 0) {
-        document.getElementById("onboardingModal").classList.remove("hidden");
-      } else {
-        loadFromLiveJson();
-      }
+      loadFromLiveJson();
     });
   </script>
 </body>
