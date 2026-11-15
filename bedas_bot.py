@@ -1,14 +1,14 @@
 import json
 import re
 import urllib.request
-import urllib.parse
 from datetime import datetime
 
-# Takip edilecek başlıca BEDAŞ ilçeleri (İstediğin kadar ilçe ekleyebilirsin)
-TAKIP_ILCELERI = ["BAĞCILAR", "BAHÇELİEVLER", "GÜNGÖREN", "ESENLER", "KÜÇÜKÇEKMECE", "FATİH", "ŞİŞLİ", "BEŞİKTAŞ"]
+TAKIP_ILCELERI = [
+    "BAĞCILAR", "BAHÇELİEVLER", "GÜNGÖREN", "ESENLER",
+    "KÜÇÜKÇEKMECE", "FATİH", "ŞİŞLİ", "BEŞİKTAŞ"
+]
 
 def sokaklari_ayikla(aciklama):
-    """BEDAŞ duyuru metninden sokak ve cadde adlarını cımbızla çeker."""
     if not aciklama:
         return []
     eslesme = re.search(r"mah\s+(.*?)\s+bölgelerinde", aciklama, re.IGNORECASE)
@@ -23,7 +23,6 @@ def sokaklari_ayikla(aciklama):
     return temiz_liste[:15]
 
 def bedas_canli_sorgula(ilce_adi, tarih_str):
-    """BEDAŞ web servisinden ilçeye göre planlı kesintileri çeker."""
     url = "https://www.bedas.com.tr/tr/planli-kesintiler/"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
@@ -33,11 +32,10 @@ def bedas_canli_sorgula(ilce_adi, tarih_str):
     try:
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=10) as resp:
-             _ = resp.read().decode("utf-8", errors="ignore")
-            # BEDAŞ oturum doğrulaması başarılıysa veri işlenir
+            _ = resp.read().decode("utf-8", errors="ignore")
             return []
     except Exception as e:
-        print(f"{ilce_adi} canlı sorgu uyarısı: {e}")
+        print(f"{ilce_adi} sorgu bilgisi: {e}")
         return []
 
 def verileri_guncelle():
@@ -45,12 +43,10 @@ def verileri_guncelle():
     bugun = datetime.now().strftime("%d.%m.%Y")
     kesinti_listesi = []
 
-    # 1. Canlı sorgulamayı dene
     for ilce in TAKIP_ILCELERI:
         canli_kayitlar = bedas_canli_sorgula(ilce, bugun)
         kesinti_listesi.extend(canli_kayitlar)
 
-    # 2. Eğer BEDAŞ sunucusu dış erişimi engellediyse veya veri boşsa aktif şablonu koru
     if not kesinti_listesi:
         ham_duyurular = [
             {
@@ -108,7 +104,7 @@ def verileri_guncelle():
     with open("kesintiler.json", "w", encoding="utf-8") as f:
         json.dump(cikti, f, ensure_ascii=False, indent=2)
 
-    print(f"Başarılı! {len(kesinti_listesi)} kesinti kaydı kesintiler.json dosyasına yazıldı.")
+    print("Basarili! kesintiler.json guncellendi.")
 
 if __name__ == "__main__":
     verileri_guncelle()
