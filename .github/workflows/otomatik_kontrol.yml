@@ -1,0 +1,19 @@
+name: BEDAS ve ISKI Kesinti Robotu
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+jobs:
+  kontrol-et:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python bedas_bot.py
+      - run: |
+          git config --global user.name "Kesinti Robotu"
+          git config --global user.email "bot@kesintihabercisi.com"
+          git add kesintiler.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Kesintiler guncellendi" && git push)
