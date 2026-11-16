@@ -1,50 +1,7 @@
 {
-  "son_guncelleme": "15.11.2026 23:48",
-  "kaynak": "İstanbul 39 İlçe BEDAŞ / AYEDAŞ / İSKİ Robotu",
-  "kesintiler": [
-    {
-      "kurum": "BEDAŞ",
-      "ilce": "Bağcılar",
-      "mahalle": "Kirazlı",
-      "tarih": "15.11.2026",
-      "baslangic": "09:00",
-      "bitis": "17:00",
-      "neden": "Planlı Şebeke Bakım ve Yenileme Çalışması",
-      "sokaklar": [
-        "1195. Sokak",
-        "1200. Sokak",
-        "1205. Sokak",
-        "MEVLANA Caddesi"
-      ],
-      "aciklama": "İSTANBUL BAĞCILAR ilce MERKEZ-KİRAZLI mah 1195. sk, 1200. sk, 1205. sk, MEVLANA cd bölgelerinde planlı kesinti yapılacaktır."
-    },
-    {
-      "kurum": "İSKİ",
-      "ilce": "Bağcılar",
-      "mahalle": "Güneşli",
-      "tarih": "15.11.2026",
-      "baslangic": "10:00",
-      "bitis": "15:00",
-      "neden": "İçme Suyu Şebeke Hattı Arızası",
-      "sokaklar": [
-        "1310. Sokak",
-        "1312. Sokak"
-      ],
-      "aciklama": "İSTANBUL BAĞCILAR ilce MERKEZ-GÜNEŞLİ mah 1310. sk, 1312. sk bölgelerinde su kesintisi yaşanmaktadır."
-    },
-    {
-      "kurum": "AYEDAŞ",
-      "ilce": "Kadıköy",
-      "mahalle": "Caferağa",
-      "tarih": "15.11.2026",
-      "baslangic": "10:00",
-      "bitis": "16:00",
-      "neden": "Şebeke İyileştirme Çalışması",
-      "sokaklar": [
-        "MODA Caddesi",
-        "BAHARİYE Caddesi"
-      ],
-      "aciklama": "İSTANBUL KADIKÖY ilce MERKEZ-CAFERAĞA mah MODA cd, BAHARİYE cd bölgelerinde planlı kesinti yapılacaktır."
-    }
-  ]
+  "son_guncelleme": "16.11.2026 02:33",
+  "kaynak": "İstanbul 39 İlçe Resmi Kurum Duyuru Sistemi (BEDAŞ / AYEDAŞ / İSKİ)",
+  "taranan_ilce_sayisi": 39,
+  "kesintiler": [],
+  "gecmis_kesintiler": []
 }
