@@ -132,7 +132,6 @@
     <!-- CANLI DESTEK AÇILIR PENCERESİ (MODAL) -->
     <div id="liveSupportModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-3">
       <div id="liveSupportCard" class="w-full max-w-md bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[82vh]">
-        <!-- Canlı Destek Üst Başlık -->
         <div class="px-4 py-3.5 bg-slate-800/90 border-b border-slate-700 flex items-center justify-between">
           <div class="flex items-center gap-2.5">
             <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 relative">
@@ -149,7 +148,6 @@
           </button>
         </div>
 
-        <!-- Mesajlaşma Alanı -->
         <div id="supportChatMessages" class="p-4 space-y-3 overflow-y-auto flex-1 text-xs">
           <div class="bg-slate-800/90 border border-slate-700 rounded-2xl rounded-tl-sm p-3 text-slate-200 leading-relaxed">
             <span class="text-[10px] font-bold text-emerald-400 block mb-1">Destek Asistanı</span>
@@ -157,7 +155,6 @@
           </div>
         </div>
 
-        <!-- Hazır Hızlı Sorular -->
         <div class="px-4 py-2 border-t border-slate-800 flex gap-1.5 overflow-x-auto">
           <button type="button" onclick="sendQuickSupportAsk('Sokağımda kesinti var ama listede görünmüyor')" class="shrink-0 text-[10px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-2.5 py-1.5 rounded-xl">
             ⚡ Kesinti listede yok
@@ -170,7 +167,6 @@
           </button>
         </div>
 
-        <!-- Mesaj Yazma Kutusu -->
         <div class="p-3 bg-slate-800/60 border-t border-slate-700 flex items-center gap-2">
           <input id="supportInput" type="text" onkeydown="if(event.key==='Enter') sendUserSupportMessage()" placeholder="Mesajınızı yazın..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500" />
           <button type="button" onclick="sendUserSupportMessage()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-xl transition">
@@ -229,21 +225,21 @@
                 <i class="fa-solid fa-location-dot text-lg"></i>
               </div>
               <div>
-                <h2 class="text-sm font-bold text-white">Adres Ekle ve Kesintileri Sorgula</h2>
-                <p class="text-xs text-slate-400 mt-0.5">Elektrik ve su kesintilerini kesin kayıtlarla görmek için adres tipinizi seçin:</p>
+                <h2 class="text-sm font-bold text-white">Adres Ekle ve Resmi Kayıtları Sorgula</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Resmi sitelerde yayınlanan elektrik ve su kesintilerini görmek için adres tipinizi seçin:</p>
               </div>
             </div>
 
             <div class="grid grid-cols-3 gap-2.5 pt-1">
-              <button onclick="selectQuickType('Evim')" id="btnType-Evim" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
+              <button type="button" onclick="selectQuickType('Evim')" id="btnType-Evim" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
                 <i class="fa-solid fa-house text-amber-400 text-lg"></i>
                 <span class="text-xs font-bold text-white">Evim</span>
               </button>
-              <button onclick="selectQuickType('İş Yerim')" id="btnType-Is" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
+              <button type="button" onclick="selectQuickType('İş Yerim')" id="btnType-Is" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
                 <i class="fa-solid fa-briefcase text-sky-400 text-lg"></i>
                 <span class="text-xs font-bold text-white">İş Yerim</span>
               </button>
-              <button onclick="selectQuickType('Diğer')" id="btnType-Diger" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
+              <button type="button" onclick="selectQuickType('Diğer')" id="btnType-Diger" class="p-3.5 rounded-2xl border border-slate-700 bg-slate-900/90 hover:border-amber-500/60 flex flex-col items-center gap-2 transition">
                 <i class="fa-solid fa-location-dot text-emerald-400 text-lg"></i>
                 <span class="text-xs font-bold text-white">Diğer</span>
               </button>
@@ -286,8 +282,8 @@
                 <p id="qaError" class="hidden text-[11px] text-red-400 mt-1">Lütfen ilçe ve semt seçiniz.</p>
               </div>
 
-              <button onclick="saveQuickAddress()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-3 rounded-xl shadow-lg shadow-amber-500/20 transition active:scale-95">
-                Kaydet ve Kesin Kayıtları Sorgula
+              <button type="button" onclick="saveQuickAddress()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-3 rounded-xl shadow-lg shadow-amber-500/20 transition active:scale-95">
+                Kaydet ve Resmi Kayıtları Sorgula
               </button>
             </div>
           </div>
@@ -298,9 +294,10 @@
           <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
             <div class="flex items-center justify-between">
               <span id="activeProviderBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                Elektrik & Su Resmi Veri Takibi
+                Resmi Kurum Veri Takibi
               </span>
-              <button onclick="switchTab('adreslerim')" class="text-xs text-amber-400 hover:text-amber-300 font-medium flex items-center gap-1">
+              <!-- ADRES DEĞİŞTİR BUTONU: Doğrudan mevcut adresi düzenleme modunda açar -->
+              <button type="button" onclick="openChangeCurrentAddress()" class="text-xs bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-400 px-2.5 py-1 rounded-lg font-bold flex items-center gap-1.5 transition">
                 <i class="fa-solid fa-pen-to-square"></i> Adres Değiştir / Ekle
               </button>
             </div>
@@ -312,7 +309,7 @@
                   <p id="activeStreetText" class="text-xs text-slate-300 mt-0.5"></p>
                 </div>
               </div>
-              <button onclick="switchTab('gecmis')" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-xl flex items-center gap-1.5">
+              <button type="button" onclick="switchTab('gecmis')" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 px-2.5 py-1.5 rounded-xl flex items-center gap-1.5">
                 <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> Geçmiş
               </button>
             </div>
@@ -324,7 +321,7 @@
 
         <!-- Uygulamayı Paylaş & ALO 186 / 185 -->
         <div class="pt-1 space-y-2.5">
-          <button onclick="shareApp()" class="w-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-semibold text-xs py-3 rounded-2xl flex items-center justify-center gap-2 transition">
+          <button type="button" onclick="shareApp()" class="w-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-semibold text-xs py-3 rounded-2xl flex items-center justify-center gap-2 transition">
             <i class="fa-brands fa-whatsapp text-base"></i> Uygulamayı Paylaş
           </button>
 
@@ -351,23 +348,23 @@
         </div>
       </section>
 
-      <!-- SEKME 2: GEÇMİŞ KESİNTİLER -->
+      <!-- SEKME 2: GEÇMİŞ KESİNTİLER (SADECE RESMİ KAYITLAR) -->
       <section id="tab-gecmis" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
           <div class="flex items-center justify-between">
             <div>
               <h2 class="text-sm font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> Geçmiş Kesinti Kayıtları
+                <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> Resmi Geçmiş Kesinti Kayıtları
               </h2>
-              <p id="historyAddressSubtitle" class="text-xs text-slate-400 mt-0.5">Seçili semtinizdeki saat ve dakika detaylı kesinti arşivi</p>
+              <p id="historyAddressSubtitle" class="text-xs text-slate-400 mt-0.5">Yalnızca resmi kurumlarda yayınlanmış kesinti kayıtları gösterilir</p>
             </div>
           </div>
 
           <div class="grid grid-cols-4 gap-1.5 pt-1">
-            <button onclick="setHistoryRange(1)" id="histBtn-1" class="py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">Son 1 Ay</button>
-            <button onclick="setHistoryRange(3)" id="histBtn-3" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">3 Ay</button>
-            <button onclick="setHistoryRange(6)" id="histBtn-6" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">6 Ay</button>
-            <button onclick="setHistoryRange(12)" id="histBtn-12" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">1 Yıl</button>
+            <button type="button" onclick="setHistoryRange(1)" id="histBtn-1" class="py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 transition">Son 1 Ay</button>
+            <button type="button" onclick="setHistoryRange(3)" id="histBtn-3" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">3 Ay</button>
+            <button type="button" onclick="setHistoryRange(6)" id="histBtn-6" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">6 Ay</button>
+            <button type="button" onclick="setHistoryRange(12)" id="histBtn-12" class="py-2 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-600 transition">1 Yıl</button>
           </div>
 
           <div id="historyStatsBar" class="grid grid-cols-2 gap-2 pt-1"></div>
@@ -376,18 +373,28 @@
         <div id="historyListContainer" class="space-y-2.5"></div>
       </section>
 
-      <!-- SEKME 3: ADRESLERİM -->
+      <!-- SEKME 3: ADRESLERİM (DOĞRUDAN ADRES GÜNCELLEME VE DEĞİŞTİRME DESTEKLİ) -->
       <section id="tab-adreslerim" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
-          <h2 class="text-sm font-bold text-white mb-1">Kayıtlı Adreslerim</h2>
-          <p class="text-xs text-slate-400 mb-3">Sorgulamak istediğiniz adrese dokunun veya aşağıdan yeni adres ekleyin.</p>
+          <div class="flex items-center justify-between mb-1">
+            <h2 class="text-sm font-bold text-white">Kayıtlı Adreslerim</h2>
+            <button type="button" onclick="prepareNewAddressForm()" class="text-[11px] text-amber-400 font-bold flex items-center gap-1">
+              <i class="fa-solid fa-plus"></i> Yeni Ekle
+            </button>
+          </div>
+          <p class="text-xs text-slate-400 mb-3">Geçiş yapmak için adrese dokunun veya <strong>Düzenle</strong> ile mevcut adresi değiştirin.</p>
           <div id="savedAddressesList" class="space-y-2.5"></div>
         </div>
 
-        <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
-          <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-plus-circle text-amber-400"></i> Yeni Adres Ekle
-          </h3>
+        <div id="addressFormCard" class="bg-slate-800/70 border border-amber-500/40 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 id="addressFormTitle" class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-pen-to-square text-amber-400"></i> Adresi Değiştir / Kaydet
+            </h3>
+            <span id="editModeBadge" class="hidden text-[10px] font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/40">
+              Düzenleme Modu
+            </span>
+          </div>
 
           <div class="grid grid-cols-3 gap-2">
             <button type="button" onclick="setFormLabel('Evim')" class="py-2 rounded-xl bg-slate-900 border border-slate-700 hover:border-amber-500 text-xs font-semibold text-white">🏠 Evim</button>
@@ -426,8 +433,8 @@
             </div>
           </div>
 
-          <button onclick="addNewAddress()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-2.5 rounded-xl transition active:scale-98">
-            Adresi Hafızaya Kaydet
+          <button type="button" id="btnSaveOrUpdateAddress" onclick="saveOrUpdateAddress()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm py-3 rounded-xl shadow-lg shadow-amber-500/20 transition active:scale-95">
+            Adresi Güncelle ve Kaydet
           </button>
         </div>
       </section>
@@ -472,7 +479,7 @@
                 <option value="soft">🎵 Yumuşak Melodik Uyarı</option>
                 <option value="mute">🔕 Sessiz (Sadece Görsel Bildirim)</option>
               </select>
-              <button onclick="previewSelectedSound()" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 text-amber-400 text-xs font-semibold flex items-center gap-1.5 shrink-0">
+              <button type="button" onclick="previewSelectedSound()" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-700 border border-slate-700 text-amber-400 text-xs font-semibold flex items-center gap-1.5 shrink-0">
                 <i class="fa-solid fa-play"></i> Dinle
               </button>
             </div>
@@ -489,7 +496,7 @@
           <div class="space-y-2 pt-1">
             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Senaryo Test Butonları</p>
 
-            <button onclick="runProTest('pre_elec')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-amber-500/30 hover:border-amber-500 transition flex items-center justify-between group">
+            <button type="button" onclick="runProTest('pre_elec')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-amber-500/30 hover:border-amber-500 transition flex items-center justify-between group">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0">
                   <i class="fa-regular fa-clock text-sm"></i>
@@ -502,7 +509,7 @@
               <i class="fa-solid fa-circle-play text-amber-400 text-sm"></i>
             </button>
 
-            <button onclick="runProTest('now_elec')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-red-500/30 hover:border-red-500 transition flex items-center justify-between group">
+            <button type="button" onclick="runProTest('now_elec')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-red-500/30 hover:border-red-500 transition flex items-center justify-between group">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-xl bg-red-500/15 text-red-400 flex items-center justify-center shrink-0">
                   <i class="fa-solid fa-bolt text-sm"></i>
@@ -515,7 +522,7 @@
               <i class="fa-solid fa-circle-play text-red-400 text-sm"></i>
             </button>
 
-            <button onclick="runProTest('water')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-sky-500/30 hover:border-sky-500 transition flex items-center justify-between group">
+            <button type="button" onclick="runProTest('water')" class="w-full text-left p-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-900 border border-sky-500/30 hover:border-sky-500 transition flex items-center justify-between group">
               <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0">
                   <i class="fa-solid fa-droplet text-sm"></i>
@@ -530,10 +537,10 @@
           </div>
 
           <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-700/60">
-            <button onclick="loadFromLiveJson(); switchTab('kesintiler');" class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-[11px] font-semibold text-emerald-300 flex items-center justify-center gap-1.5">
-              <i class="fa-solid fa-rotate"></i> Kesin Veriye Dön
+            <button type="button" onclick="loadFromLiveJson(); switchTab('kesintiler');" class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-[11px] font-semibold text-emerald-300 flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-rotate"></i> Resmi Veriye Dön
             </button>
-            <button onclick="resetToFirstTimeVisitor()" class="px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-[11px] font-semibold text-red-300 flex items-center justify-center gap-1.5">
+            <button type="button" onclick="resetToFirstTimeVisitor()" class="px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-[11px] font-semibold text-red-300 flex items-center justify-center gap-1.5">
               <i class="fa-solid fa-trash-can"></i> Adresleri Sıfırla
             </button>
           </div>
@@ -609,19 +616,19 @@
 
     <!-- Alt Menü -->
     <nav class="bg-slate-900/95 backdrop-blur border-t border-slate-800 px-4 py-2.5 flex items-center justify-around fixed bottom-0 w-full max-w-md z-30">
-      <button onclick="switchTab('kesintiler')" id="nav-kesintiler" class="flex flex-col items-center gap-1 text-amber-400">
+      <button type="button" onclick="switchTab('kesintiler')" id="nav-kesintiler" class="flex flex-col items-center gap-1 text-amber-400">
         <i class="fa-solid fa-bolt text-lg"></i>
         <span class="text-[11px] font-semibold">Kesintiler</span>
       </button>
-      <button onclick="switchTab('gecmis')" id="nav-gecmis" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+      <button type="button" onclick="switchTab('gecmis')" id="nav-gecmis" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
         <i class="fa-solid fa-clock-rotate-left text-lg"></i>
         <span class="text-[11px] font-semibold">Geçmiş</span>
       </button>
-      <button onclick="switchTab('adreslerim')" id="nav-adreslerim" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+      <button type="button" onclick="switchTab('adreslerim')" id="nav-adreslerim" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
         <i class="fa-solid fa-map-location-dot text-lg"></i>
         <span class="text-[11px] font-semibold">Adreslerim</span>
       </button>
-      <button onclick="switchTab('ayarlar')" id="nav-ayarlar" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
+      <button type="button" onclick="switchTab('ayarlar')" id="nav-ayarlar" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200">
         <i class="fa-solid fa-sliders text-lg"></i>
         <span class="text-[11px] font-semibold">Ayarlar</span>
       </button>
@@ -676,7 +683,6 @@
     const STORAGE_KEY = "kh_user_addresses_v5";
     const THEME_KEY = "kh_dark_mode_v2";
 
-    // Eski sürümlerdeki kayıtlı adresleri kaybetmemek için otomatik taşıma (Migration)
     function loadSavedAddressesSafely() {
       const current = localStorage.getItem(STORAGE_KEY);
       if (current) {
@@ -702,6 +708,7 @@
     let currentScenario = "live";
     let selectedQuickLabel = "Evim";
     let selectedHistoryMonths = 1;
+    let editingAddressId = null;
     let audioCtx = null;
 
     function escapeHtml(str) {
@@ -741,7 +748,6 @@
       return formatted;
     }
 
-    // CANLI DESTEK SİSTEMİ FONKSİYONLARI
     function toggleLiveSupport(show) {
       const modal = document.getElementById("liveSupportModal");
       if (!modal) return;
@@ -774,14 +780,14 @@
         if (questionText.includes("listede görünmüyor")) {
           appendSupportChatBubble(
             "Destek Asistanı",
-            "Anlık arıza kaynaklı kesintiler dağıtım şirketinin sistemine 15-30 dakika gecikmeli düşebilir. Dilerseniz ALO 186 (Elektrik) veya ALO 185 (Su) hattını arayabilir ya da sokağınızı bize bildirebilirsiniz.",
+            "Uygulamamız yalnızca resmi kurumların (BEDAŞ, AYEDAŞ, İSKİ) yayınladığı kesin kayıtları gösterir. Henüz resmi siteye düşmemiş anlık arızalar için ALO 186 veya ALO 185'i arayabilir ya da sokağınızı bize bildirebilirsiniz.",
             false,
             `<a href="mailto:${CONTACT_EMAIL}?subject=Listede%20Olmayan%20Kesinti%20Bildirimi" class="inline-block bg-emerald-500 text-slate-950 font-bold text-[10px] px-2.5 py-1.5 rounded-lg mt-1">📩 Sokağımı Destek Ekibine Bildir</a>`
           );
         } else if (questionText.includes("nereden alınıyor")) {
           appendSupportChatBubble(
             "Destek Asistanı",
-            "Uygulamamızdaki tüm veriler <strong>BEDAŞ</strong> (Avrupa Yakası), <strong>AYEDAŞ</strong> (Anadolu Yakası) ve <strong>İSKİ</strong> resmi kesinti duyuru sistemlerinden otomatik çekilmektedir. Her kesinti kartının altındaki <strong>'Detay'</strong> butonuna basarak resmi kanıt bağlantısını görebilirsiniz."
+            "Uygulamamızdaki tüm veriler yalnızca resmi kurum duyuru sistemlerinden alınır; resmi sitelerde yayınlanmayan hiçbir tahmini veri gösterilmez. Her kesinti kartının altındaki <strong>'Detay'</strong> butonuna basarak resmi kanıt bağlantısını görebilirsiniz."
           );
         } else {
           appendSupportChatBubble(
@@ -808,7 +814,7 @@
       setTimeout(() => {
         appendSupportChatBubble(
           "Destek Asistanı",
-          "Mesajınız kaydedildi. Yetkili ekibimizin size en hızlı şekilde dönüş yapabilmesi için aşağıdaki butona dokunarak mesajınızı doğrudan destek adresimize iletebilirsiniz:",
+          "Mesajınız hazırlandı. Aşağıdaki butona dokunarak doğrudan destek ekibimize iletebilirsiniz:",
           false,
           `<a href="${mailHref}" class="inline-block bg-emerald-500 text-slate-950 font-bold text-[11px] px-3 py-1.5 rounded-xl mt-1"><i class="fa-solid fa-paper-plane mr-1"></i> Mesajı Yetkiliye İlet (${CONTACT_EMAIL})</a>`
         );
@@ -1152,6 +1158,7 @@
       saveAddresses();
       currentScenario = "live";
       renderMainScreen(true);
+      showPush("Adres Kaydedildi", `${district} / ${neighborhood} Mah. resmi kesinti kayıtları sorgulandı.`, "emerald");
     }
 
     function setFormLabel(lbl) {
@@ -1161,6 +1168,7 @@
     function resetToFirstTimeVisitor() {
       localStorage.removeItem(STORAGE_KEY);
       addresses = [];
+      editingAddressId = null;
       document.getElementById("quickAddressForm").classList.add("hidden");
       populateDistrictSelect();
       renderMainScreen(false);
@@ -1179,6 +1187,115 @@
       return istanbulData[districtName] || { yaka: "Avrupa", kurum: "BEDAŞ" };
     }
 
+    // ADRES DEĞİŞTİRME HATASI ÇÖZÜMÜ: Ana ekrandan "Adres Değiştir"e basınca mevcut adresi forma yükler
+    function openChangeCurrentAddress() {
+      const active = getActiveAddress();
+      switchTab("adreslerim");
+      if (active) {
+        loadAddressIntoEditForm(active.id);
+      } else {
+        prepareNewAddressForm();
+      }
+      setTimeout(() => {
+        document.getElementById("addressFormCard")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+    }
+
+    function loadAddressIntoEditForm(id) {
+      const target = addresses.find(a => a.id === id);
+      if (!target) return;
+
+      editingAddressId = target.id;
+      document.getElementById("addressFormTitle").innerHTML = `<i class="fa-solid fa-pen-to-square text-amber-400"></i> Mevcut Adresi Değiştir (${escapeHtml(target.label)})`;
+      document.getElementById("editModeBadge").classList.remove("hidden");
+      document.getElementById("btnSaveOrUpdateAddress").textContent = "Adresi Güncelle ve Kaydet";
+
+      document.getElementById("inpLabel").value = target.label || "Evim";
+      const distSelect = document.getElementById("inpDistrict");
+      const neighSelect = document.getElementById("inpNeighborhood");
+      const customInp = document.getElementById("inpCustomNeighborhood");
+
+      distSelect.value = target.district;
+      fillNeighborhoodSelect(target.district, neighSelect, customInp);
+
+      const cleanTargetMah = formatMah(target.neighborhood);
+      let foundInList = false;
+      for (const opt of neighSelect.options) {
+        if (opt.value === cleanTargetMah) {
+          neighSelect.value = cleanTargetMah;
+          foundInList = true;
+          break;
+        }
+      }
+      if (!foundInList && cleanTargetMah) {
+        neighSelect.value = "__custom__";
+        customInp.classList.remove("hidden");
+        customInp.value = cleanTargetMah;
+      }
+
+      document.getElementById("inpOptionalDetail").value = target.optionalDetail || "";
+    }
+
+    function prepareNewAddressForm() {
+      editingAddressId = null;
+      document.getElementById("addressFormTitle").innerHTML = `<i class="fa-solid fa-plus-circle text-amber-400"></i> Yeni Adres Ekle`;
+      document.getElementById("editModeBadge").classList.add("hidden");
+      document.getElementById("btnSaveOrUpdateAddress").textContent = "Yeni Adresi Kaydet";
+      document.getElementById("inpLabel").value = "Evim";
+      buildDistrictGroups(document.getElementById("inpDistrict"));
+      updateNeighborhoodOptions();
+      document.getElementById("inpOptionalDetail").value = "";
+      document.getElementById("addressFormCard")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function saveOrUpdateAddress() {
+      const label = document.getElementById("inpLabel").value.trim() || "Evim";
+      const district = document.getElementById("inpDistrict").value;
+      const neighSelectVal = document.getElementById("inpNeighborhood").value;
+      const customNeighVal = formatMah(document.getElementById("inpCustomNeighborhood").value);
+      const neighborhood = neighSelectVal === "__custom__" ? customNeighVal : formatMah(neighSelectVal);
+      const optionalDetail = document.getElementById("inpOptionalDetail").value.trim();
+      const errEl = document.getElementById("inpError");
+
+      if (!district || !neighborhood) {
+        errEl.classList.remove("hidden");
+        return;
+      }
+      errEl.classList.add("hidden");
+
+      silentEnableNotifications();
+
+      if (editingAddressId !== null && addresses.some(a => a.id === editingAddressId)) {
+        // Mevcut adresi doğrudan güncelle ve aktif yap
+        addresses = addresses.map(a =>
+          a.id === editingAddressId
+            ? { ...a, label, district, neighborhood, optionalDetail, active: true }
+            : { ...a, active: false }
+        );
+      } else {
+        // Aynı başlıkta (Örn: Evim) adres varsa üzerine yaz, yoksa yeni ekle
+        const existingSameLabel = addresses.find(a => normalizeTr(a.label) === normalizeTr(label));
+        if (existingSameLabel) {
+          addresses = addresses.map(a =>
+            a.id === existingSameLabel.id
+              ? { ...a, label, district, neighborhood, optionalDetail, active: true }
+              : { ...a, active: false }
+          );
+        } else {
+          addresses = addresses.map(a => ({ ...a, active: false }));
+          addresses.push({ id: Date.now(), label, district, neighborhood, optionalDetail, active: true });
+        }
+      }
+
+      editingAddressId = null;
+      saveAddresses();
+      renderAddresses();
+      currentScenario = "live";
+      renderMainScreen(true);
+      switchTab("kesintiler");
+      showPush("Adresiniz Güncellendi", `Yeni adresiniz: ${district} / ${neighborhood} Mah.${optionalDetail ? " (" + optionalDetail + ")" : ""}`, "emerald");
+    }
+
     function switchTab(tabName) {
       updateLiveTimestamp();
       ["kesintiler", "gecmis", "adreslerim", "ayarlar"].forEach(t => {
@@ -1192,7 +1309,13 @@
       activeNav.classList.remove("text-slate-400");
       activeNav.classList.add("text-amber-400");
 
-      if (tabName === "adreslerim") renderAddresses();
+      if (tabName === "adreslerim") {
+        renderAddresses();
+        const active = getActiveAddress();
+        if (active && editingAddressId === null) {
+          loadAddressIntoEditForm(active.id);
+        }
+      }
       if (tabName === "gecmis") renderHistorySection();
     }
 
@@ -1323,47 +1446,7 @@
       renderHistorySection();
     }
 
-    function formatPastDate(daysAgo) {
-      const d = new Date();
-      d.setDate(d.getDate() - daysAgo);
-      const pad = n => String(n).padStart(2, "0");
-      return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
-    }
-
-    function calcExactDuration(startStr, endStr) {
-      const [sh, sm] = startStr.split(":").map(Number);
-      const [eh, em] = endStr.split(":").map(Number);
-      const totalMins = (eh * 60 + em) - (sh * 60 + sm);
-      const hours = Math.floor(totalMins / 60);
-      const mins = totalMins % 60;
-      if (hours > 0 && mins > 0) return `${hours} saat ${mins} dakika`;
-      if (hours > 0) return `${hours} saat 0 dakika`;
-      return `${mins} dakika`;
-    }
-
-    function generateAddressHistory(addr) {
-      const info = getDistrictInfo(addr.district);
-      const mah = formatMah(addr.neighborhood);
-
-      const rawTemplates = [
-        { daysAgo: 6, monthsAgo: 0.2, start: "09:30", end: "13:15", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Alçak Gerilim (AG) Şebeke Bakım ve Trafo Yenileme" },
-        { daysAgo: 19, monthsAgo: 0.6, start: "10:15", end: "12:40", kurum: "İSKİ", type: "Arıza Su Kesintisi", reason: "Ana İsale Hattı Vana ve Şebeke Onarımı" },
-        { daysAgo: 48, monthsAgo: 1.6, start: "09:00", end: "14:30", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Yatırım ve Ekonomik Ömrünü Tamamlamış Kablo Yenileme" },
-        { daysAgo: 76, monthsAgo: 2.5, start: "13:20", end: "15:50", kurum: info.kurum, type: "Arıza Elektrik Kesintisi", reason: "Trafo Merkezi Sigorta ve Koruma Rölesi Değişimi" },
-        { daysAgo: 125, monthsAgo: 4.1, start: "11:00", end: "13:45", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Abone Bağlantısı ve Pano Bakım Çalışması" },
-        { daysAgo: 162, monthsAgo: 5.4, start: "09:10", end: "12:25", kurum: "İSKİ", type: "Planlı Su Kesintisi", reason: "Bölgesel Depo Temizliği ve Basınç Dengeleme" },
-        { daysAgo: 245, monthsAgo: 8.1, start: "09:00", end: "15:30", kurum: info.kurum, type: "Planlı Elektrik Kesintisi", reason: "Kapsamlı Havai Hat ve Aydınlatma Bakım Çalışması" },
-        { daysAgo: 330, monthsAgo: 11.0, start: "14:10", end: "16:05", kurum: info.kurum, type: "Arıza Elektrik Kesintisi", reason: "Şebeke Yükü Dengeleme ve Hat Onarımı" }
-      ];
-
-      return rawTemplates.map(item => ({
-        ...item,
-        date: formatPastDate(item.daysAgo),
-        duration: calcExactDuration(item.start, item.end),
-        semt: `${addr.district} / ${mah} Mah.${addr.optionalDetail ? " (" + escapeHtml(addr.optionalDetail) + ")" : ""}`
-      }));
-    }
-
+    // GEÇMİŞ SEKMESİ: SADECE RESMİ SİTELERDE YAYINLANMIŞ GERÇEK KAYITLARI GÖSTERİR (Uydurma/Şablon Veri Yok)
     function renderHistorySection() {
       const active = getActiveAddress();
       const subtitle = document.getElementById("historyAddressSubtitle");
@@ -1371,12 +1454,12 @@
       const listContainer = document.getElementById("historyListContainer");
 
       if (!active) {
-        subtitle.textContent = "Geçmiş kesintileri görmek için önce bir semt ekleyin.";
+        subtitle.textContent = "Resmi geçmiş kesinti kayıtlarını görmek için önce bir adres ekleyin.";
         statsBar.innerHTML = "";
         listContainer.innerHTML = `
           <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-5 text-center space-y-3">
             <p class="text-xs text-slate-300">Henüz kayıtlı adresiniz bulunmuyor.</p>
-            <button onclick="switchTab('kesintiler')" class="bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl">Adres Ekle</button>
+            <button type="button" onclick="switchTab('kesintiler')" class="bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl">Adres Ekle</button>
           </div>
         `;
         return;
@@ -1385,14 +1468,25 @@
       const mah = formatMah(active.neighborhood);
       subtitle.textContent = `${active.label}: ${active.district} / ${mah} Mah.${active.optionalDetail ? " — " + active.optionalDetail : ""}`;
 
-      const allRecords = generateAddressHistory(active);
-      const filtered = allRecords.filter(r => r.monthsAgo <= selectedHistoryMonths);
+      // Yalnızca kesintiler.json içindeki resmi kayıtları filtrele
+      const officialPool = [];
+      if (liveData) {
+        if (Array.isArray(liveData.gecmis_kesintiler)) officialPool.push(...liveData.gecmis_kesintiler);
+        if (Array.isArray(liveData.kesintiler)) officialPool.push(...liveData.kesintiler);
+      }
+
+      const matchedOfficial = officialPool.filter(
+        k =>
+          normalizeTr(k.ilce) === normalizeTr(active.district) &&
+          (normalizeTr(formatMah(k.mahalle)).includes(normalizeTr(mah)) ||
+            normalizeTr(mah).includes(normalizeTr(formatMah(k.mahalle))))
+      );
 
       const rangeLabels = { 1: "Son 1 Ay", 3: "Son 3 Ay", 6: "Son 6 Ay", 12: "Son 1 Yıl" };
       statsBar.innerHTML = `
         <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
-          <p class="text-[10px] text-slate-400 uppercase">${rangeLabels[selectedHistoryMonths]} Toplam Kayıt</p>
-          <p class="text-sm font-bold text-amber-400 mt-0.5">${filtered.length} Kesinti</p>
+          <p class="text-[10px] text-slate-400 uppercase">${rangeLabels[selectedHistoryMonths]} Resmi Kayıt</p>
+          <p class="text-sm font-bold text-amber-400 mt-0.5">${matchedOfficial.length} Kesinti</p>
         </div>
         <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
           <p class="text-[10px] text-slate-400 uppercase">Sorgulanan Bölge</p>
@@ -1401,34 +1495,21 @@
       `;
 
       listContainer.innerHTML = "";
-      filtered.forEach(item => {
-        const isSu = item.kurum === "İSKİ";
-        listContainer.innerHTML += `
-          <div class="bg-slate-800/80 border ${isSu ? "border-sky-500/30" : "border-slate-700/80"} rounded-2xl p-4 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold ${isSu ? "text-sky-400" : "text-amber-400"} flex items-center gap-1.5">
-                <i class="fa-solid ${isSu ? "fa-droplet" : "fa-bolt"}"></i> ${item.kurum} • ${item.type}
-              </span>
-              <span class="text-xs font-bold text-white bg-slate-900 px-2.5 py-0.5 rounded-lg border border-slate-700">
-                <i class="fa-regular fa-calendar mr-1 text-slate-400"></i>${item.date} (${item.daysAgo} gün önce)
-              </span>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2 bg-slate-900/90 border border-slate-800 rounded-xl p-2.5 text-xs">
-              <div>
-                <span class="text-[10px] text-slate-400 block">Kesinti Saat Aralığı</span>
-                <span class="font-bold text-amber-400">${item.start} — ${item.end}</span>
-              </div>
-              <div>
-                <span class="text-[10px] text-slate-400 block">Net Kesinti Süresi</span>
-                <span class="font-bold text-white">${item.duration}</span>
-              </div>
-            </div>
-
-            <p class="text-xs text-slate-300"><strong class="text-slate-400">Neden:</strong> ${item.reason}</p>
-            <p class="text-[11px] text-slate-400"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i>Bölge: ${item.semt}</p>
+      if (matchedOfficial.length === 0) {
+        listContainer.innerHTML = `
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 text-center space-y-2">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-xl"></i>
+            <p class="text-xs font-bold text-white">Resmi Geçmiş Kesinti Kaydı Yok</p>
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              <strong>${escapeHtml(active.district)} / ${escapeHtml(mah)} Mah.</strong> için resmi kurum sitelerinde yayınlanmış geçmiş kesinti kaydı bulunmamaktadır. (Yalnızca resmi yayınlanan veriler gösterilir).
+            </p>
           </div>
         `;
+        return;
+      }
+
+      matchedOfficial.forEach((k, idx) => {
+        listContainer.innerHTML += buildVerifiedOutageCardHtml(k, active.optionalDetail || "", 200 + idx);
       });
     }
 
@@ -1436,8 +1517,8 @@
       const active = getActiveAddress();
       const url = window.location.href;
       const text = active
-        ? `⚡ İstanbul (${active.district} / ${formatMah(active.neighborhood)} Mah.) elektrik ve su kesintilerini sokak kanıtlı olarak buradan takip ediyorum: ${url}`
-        : `⚡ İstanbul'da semtindeki elektrik ve su kesintilerini anında görmek için adresini seç: ${url}`;
+        ? `⚡ İstanbul (${active.district} / ${formatMah(active.neighborhood)} Mah.) elektrik ve su kesintilerini resmi kaynak kanıtlı olarak buradan takip ediyorum: ${url}`
+        : `⚡ İstanbul'da semtindeki resmi elektrik ve su kesintilerini anında görmek için adresini seç: ${url}`;
 
       if (navigator.share) {
         navigator.share({ title: "Kesinti Habercisi: İstanbul", text, url }).catch(() => {});
@@ -1494,11 +1575,12 @@
       banner.classList.add("notif-hidden");
     }
 
+    // 1 DAKİKADA BİR ÖNBELLEKSİZ (NO-STORE) CANLI VERİ ÇEKME SİSTEMİ
     async function loadFromLiveJson() {
       currentScenario = "live";
       updateLiveTimestamp();
       try {
-        const res = await fetch("kesintiler.json?t=" + Date.now());
+        const res = await fetch("kesintiler.json?t=" + Date.now(), { cache: "no-store" });
         if (res.ok) {
           liveData = await res.json();
         }
@@ -1510,7 +1592,7 @@
       const container = document.getElementById("savedAddressesList");
       container.innerHTML = "";
       if (addresses.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400">Henüz kayıtlı adresiniz yok. Aşağıdan ekleyebilirsiniz.</p>`;
+        container.innerHTML = `<p class="text-xs text-slate-400">Henüz kayıtlı adresiniz yok. Aşağıdaki formdan ekleyebilirsiniz.</p>`;
         return;
       }
       addresses.forEach(addr => {
@@ -1531,9 +1613,14 @@
               <p class="text-[11px] text-slate-400">${escapeHtml(mahName)} Mah.${detailText}</p>
             </div>
           </div>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1.5">
             ${addr.active ? '<span class="text-[10px] font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Aktif</span>' : ""}
-            <button onclick="event.stopPropagation(); deleteAddress(${addr.id})" class="text-slate-500 hover:text-red-400 px-1.5"><i class="fa-solid fa-trash text-xs"></i></button>
+            <button type="button" title="Bu Adresi Değiştir" onclick="event.stopPropagation(); loadAddressIntoEditForm(${addr.id}); document.getElementById('addressFormCard')?.scrollIntoView({ behavior: 'smooth' });" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 px-2 py-1 rounded-lg">
+              <i class="fa-solid fa-pen"></i> Düzenle
+            </button>
+            <button type="button" title="Sil" onclick="event.stopPropagation(); deleteAddress(${addr.id})" class="text-slate-400 hover:text-red-400 px-1.5 py-1">
+              <i class="fa-solid fa-trash text-xs"></i>
+            </button>
           </div>
         `;
         container.appendChild(div);
@@ -1550,41 +1637,16 @@
 
     function deleteAddress(id) {
       addresses = addresses.filter(a => a.id !== id);
+      if (editingAddressId === id) editingAddressId = null;
       if (!addresses.some(a => a.active) && addresses.length > 0) {
         addresses[0].active = true;
       }
       saveAddresses();
       renderAddresses();
       renderMainScreen(false);
-    }
-
-    function addNewAddress() {
-      const label = document.getElementById("inpLabel").value.trim() || "Evim";
-      const district = document.getElementById("inpDistrict").value;
-      const neighSelectVal = document.getElementById("inpNeighborhood").value;
-      const customNeighVal = formatMah(document.getElementById("inpCustomNeighborhood").value);
-      const neighborhood = neighSelectVal === "__custom__" ? customNeighVal : formatMah(neighSelectVal);
-      const optionalDetail = document.getElementById("inpOptionalDetail").value.trim();
-      const errEl = document.getElementById("inpError");
-
-      if (!district || !neighborhood) {
-        errEl.classList.remove("hidden");
-        return;
+      if (addresses.length === 0) {
+        switchTab("kesintiler");
       }
-      errEl.classList.add("hidden");
-
-      silentEnableNotifications();
-
-      const newAddr = { id: Date.now(), label, district, neighborhood, optionalDetail, active: true };
-      addresses = addresses.map(a => ({ ...a, active: false }));
-      addresses.push(newAddr);
-      saveAddresses();
-      document.getElementById("inpCustomNeighborhood").value = "";
-      document.getElementById("inpOptionalDetail").value = "";
-      renderAddresses();
-      currentScenario = "live";
-      renderMainScreen(true);
-      switchTab("kesintiler");
     }
 
     function manualRefresh() {
@@ -1618,7 +1680,6 @@
       return cleanText.replace(regex, '<mark class="bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">$1</mark>');
     }
 
-    // KESİNTİ KARTININ EN ALTINDAKİ "DETAY (KAYNAK KANITI)" AÇMA/KAPAMA FONKSİYONU
     function toggleProofDetail(detailId, chevId) {
       const box = document.getElementById(detailId);
       const chev = document.getElementById(chevId);
@@ -1633,26 +1694,25 @@
     function getOfficialSourceMeta(kurum) {
       if (kurum === "İSKİ") {
         return {
-          fullName: "İSKİ (İstanbul Su ve Kanalizasyon İdaresi) Arıza Kesinti Sistemi",
+          fullName: "İSKİ (İstanbul Su ve Kanalizasyon İdaresi) Resmi Arıza & Kesinti Sistemi",
           officialUrl: "https://iski.istanbul/abone-hizmetleri/ariza-kesinti/",
           domain: "iski.istanbul"
         };
       }
       if (kurum === "AYEDAŞ") {
         return {
-          fullName: "AYEDAŞ (İstanbul Anadolu Yakası Elektrik Dağıtım A.Ş.) Planlı Kesinti Sistemi",
+          fullName: "AYEDAŞ (İstanbul Anadolu Yakası Elektrik Dağıtım A.Ş.) Resmi Kesinti Sistemi",
           officialUrl: "https://www.ayedas.com.tr/planli-kesintiler",
           domain: "ayedas.com.tr"
         };
       }
       return {
-        fullName: "BEDAŞ (Boğaziçi Elektrik Dağıtım A.Ş.) Planlı Kesinti ve Arıza Sistemi",
+        fullName: "BEDAŞ (Boğaziçi Elektrik Dağıtım A.Ş.) Resmi Planlı Kesinti Sistemi",
         officialUrl: "https://www.bedas.com.tr/tr/planli-kesintiler/",
         domain: "bedas.com.tr"
       };
     }
 
-    // SOKAK KANITLI VE EN ALTTA "DETAY" KAYNAK KANIT KUTULU KART OLUŞTURUCU
     function buildVerifiedOutageCardHtml(k, userDetail, idx = 0) {
       const isSu = k.kurum === "İSKİ";
       const streets = extractStreetsFromRecord(k);
@@ -1696,7 +1756,7 @@
             <div class="bg-sky-500/15 border border-sky-500/40 rounded-xl p-2.5 flex items-start gap-2">
               <i class="fa-solid fa-location-crosshairs text-sky-400 text-sm mt-0.5"></i>
               <div class="text-xs text-slate-200 leading-relaxed">
-                <strong class="text-sky-400">CİVAR SOKAK BİLGİSİ:</strong> Girdiğiniz <strong>"${safeUserDetail}"</strong> adresi doğrudan listede yok ancak <strong>hemen civarınızdaki sokaklarda</strong> kesinleşmiş kesinti mevcuttur.
+                <strong class="text-sky-400">CİVAR SOKAK BİLGİSİ:</strong> Girdiğiniz <strong>"${safeUserDetail}"</strong> adresi doğrudan listede yok ancak <strong>hemen civarınızdaki sokaklarda</strong> resmi kesinti mevcuttur.
               </div>
             </div>
           `;
@@ -1705,15 +1765,15 @@
 
       const highlightedOfficialText = highlightUserDetailInText(k.aciklama || "", userDetail);
       const sourceMeta = getOfficialSourceMeta(k.kurum);
-      const detailId = `proofDetailBox_${idx}_${Date.now()}`;
-      const chevId = `proofChev_${idx}_${Date.now()}`;
+      const detailId = `proofDetailBox_${idx}`;
+      const chevId = `proofChev_${idx}`;
       const checkTime = liveData?.son_guncelleme || updateLiveTimestamp();
 
       return `
         <div class="bg-slate-800/90 border ${isSu ? "border-sky-500/50" : "border-amber-500/50"} rounded-2xl p-4 space-y-3 shadow-md">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold ${isSu ? "text-sky-400" : "text-amber-400"} flex items-center gap-1.5">
-              <i class="fa-solid ${isSu ? "fa-droplet" : "fa-bolt"}"></i> Kesinleşmiş Kesinti Kaydı
+              <i class="fa-solid ${isSu ? "fa-droplet" : "fa-bolt"}"></i> Kesinleşmiş Resmi Kesinti Kaydı
             </span>
             <span class="text-[11px] font-bold text-white bg-slate-900 px-2.5 py-0.5 rounded-lg border border-slate-700">
               ${escapeHtml(k.tarih)} • ${escapeHtml(k.baslangic)} - ${escapeHtml(k.bitis)}
@@ -1794,17 +1854,17 @@
       const mahName = formatMah(active.neighborhood);
       const userDetail = active.optionalDetail || "";
 
-      document.getElementById("activeProviderBadge").textContent = `${info.yaka} Yakası • Kesin Veri Sorgusu`;
+      document.getElementById("activeProviderBadge").textContent = `${info.yaka} Yakası • Resmi Veri Sorgusu`;
       document.getElementById("activeAddressTitle").textContent = `${active.label} (${active.district} / ${mahName} Mah.)`;
       document.getElementById("activeStreetText").textContent = userDetail
         ? `Takip Edilen Cadde/Sokak: ${userDetail}`
-        : `Semt Geneli Tüm Sokaklar Takip Ediliyor`;
+        : `Semt Geneli Resmi Duyurular Takip Ediliyor`;
 
       const statusCard = document.getElementById("statusCard");
       const outageList = document.getElementById("outageList");
       outageList.innerHTML = "";
 
-      // TEST MODU SENARYOLARI
+      // TEST MODU SENARYOLARI (Ayarlardan kullanıcı kendi tıkladığında çalışır)
       if (currentScenario === "test_pre_elec" || currentScenario === "test_now_elec" || currentScenario === "test_water") {
         const isSu = currentScenario === "test_water";
         const testStreets = userDetail
@@ -1840,7 +1900,7 @@
         return;
       }
 
-      // GERÇEK VE KESİN VERİ KONTROLÜ
+      // SADECE RESMİ SİTELERDE YAYINLANAN VERİ KONTROLÜ (kesintiler.json)
       const verifiedMatches =
         liveData && Array.isArray(liveData.kesintiler)
           ? liveData.kesintiler.filter(
@@ -1856,7 +1916,7 @@
         statusCard.innerHTML = `
           <div class="flex items-center justify-between">
             <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wide">
-              ⚠️ Kesinleşmiş Kesinti Kaydı Var
+              ⚠️ Resmi Kesinti Kaydı Var
             </span>
             <span class="text-xs text-amber-400 font-semibold">${verifiedMatches.length} Resmi Kayıt</span>
           </div>
@@ -1875,7 +1935,7 @@
           const streets = extractStreetsFromRecord(ilk);
           playNotificationTone(ilk.kurum === "İSKİ" ? "water" : "now_elec");
           sendSystemNotification(
-            `${active.district} / ${mahName} Mah. Kesin Kesinti Kaydı!`,
+            `${active.district} / ${mahName} Mah. Resmi Kesinti Kaydı!`,
             `Etkilenen Sokaklar: ${streets.slice(0, 3).join(", ")} (${ilk.baslangic} - ${ilk.bitis}).`,
             "amber"
           );
@@ -1883,7 +1943,7 @@
         return;
       }
 
-      // EĞER RESMİ VERİDE KESİNTİ YOKSA
+      // EĞER RESMİ SİTEDE YAYINLANMIŞ KESİNTİ YOKSA
       statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
       statusCard.innerHTML = `
         <div class="flex items-center gap-3.5">
@@ -1891,10 +1951,10 @@
             <i class="fa-solid fa-circle-check"></i>
           </div>
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Resmi Kayıt Sorgulandı</span>
-            <h3 class="text-base font-bold text-white mt-0.5">Kayıtlı Kesinti Bulunmuyor</h3>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400">Resmi Kurum Kayıtları Sorgulandı</span>
+            <h3 class="text-base font-bold text-white mt-0.5">Yayınlanmış Kesinti Bulunmuyor</h3>
             <p class="text-xs text-slate-300 mt-1 leading-relaxed">
-              <strong>${escapeHtml(active.district)} / ${escapeHtml(mahName)} Mah.${userDetail ? " (" + escapeHtml(userDetail) + ")" : ""}</strong> ve civar sokakları için resmi elektrik ve su kesinti listesinde aktif veya planlanmış bir kesinti kaydı yoktur.
+              <strong>${escapeHtml(active.district)} / ${escapeHtml(mahName)} Mah.${userDetail ? " (" + escapeHtml(userDetail) + ")" : ""}</strong> ve civar sokakları için resmi kurum sitelerinde yayınlanmış aktif veya planlı bir kesinti kaydı yoktur.
             </p>
           </div>
         </div>
@@ -1905,11 +1965,17 @@
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
 
-    window.addEventListener("focus", updateLiveTimestamp);
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) updateLiveTimestamp();
+    window.addEventListener("focus", () => {
+      loadFromLiveJson();
     });
-    setInterval(updateLiveTimestamp, 30000);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) loadFromLiveJson();
+    });
+
+    // HER 1 DAKİKADA BİR (60.000 ms) OTOMATİK CANLI VERİ VE SAAT GÜNCELLEMESİ
+    setInterval(() => {
+      loadFromLiveJson();
+    }, 60000);
 
     window.addEventListener("DOMContentLoaded", () => {
       const savedTheme = localStorage.getItem(THEME_KEY);
