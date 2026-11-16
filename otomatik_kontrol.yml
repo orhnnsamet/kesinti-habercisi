@@ -1,19 +1,32 @@
 name: BEDAS ve ISKI Kesinti Robotu
+
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    # GitHub'ın izin verdiği en hızlı güvenli sınır: Her 5 dakikada bir çalışır
+    - cron: '*/5 * * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   kontrol-et:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Depoyu Ac
+        uses: actions/checkout@v4
+
+      - name: Python Kur
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python bedas_bot.py
-      - run: |
+
+      - name: BEDAS Robotunu Calistir
+        run: python bedas_bot.py
+
+      - name: Yeni Veriyi Kaydet
+        run: |
           git config --global user.name "Kesinti Robotu"
           git config --global user.email "bot@kesintihabercisi.com"
           git add kesintiler.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Kesintiler guncellendi" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Resmi kesinti verileri guncellendi" && git push)
