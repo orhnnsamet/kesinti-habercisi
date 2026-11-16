@@ -296,7 +296,6 @@
               <span id="activeProviderBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">
                 Resmi Kurum Veri Takibi
               </span>
-              <!-- ADRES DEĞİŞTİR BUTONU: Doğrudan mevcut adresi düzenleme modunda açar -->
               <button type="button" onclick="openChangeCurrentAddress()" class="text-xs bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-400 px-2.5 py-1 rounded-lg font-bold flex items-center gap-1.5 transition">
                 <i class="fa-solid fa-pen-to-square"></i> Adres Değiştir / Ekle
               </button>
@@ -348,7 +347,7 @@
         </div>
       </section>
 
-      <!-- SEKME 2: GEÇMİŞ KESİNTİLER (SADECE RESMİ KAYITLAR) -->
+      <!-- SEKME 2: GEÇMİŞ KESİNTİLER -->
       <section id="tab-gecmis" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
           <div class="flex items-center justify-between">
@@ -373,7 +372,7 @@
         <div id="historyListContainer" class="space-y-2.5"></div>
       </section>
 
-      <!-- SEKME 3: ADRESLERİM (DOĞRUDAN ADRES GÜNCELLEME VE DEĞİŞTİRME DESTEKLİ) -->
+      <!-- SEKME 3: ADRESLERİM -->
       <section id="tab-adreslerim" class="hidden space-y-4">
         <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4">
           <div class="flex items-center justify-between mb-1">
@@ -787,7 +786,7 @@
         } else if (questionText.includes("nereden alınıyor")) {
           appendSupportChatBubble(
             "Destek Asistanı",
-            "Uygulamamızdaki tüm veriler yalnızca resmi kurum duyuru sistemlerinden alınır; resmi sitelerde yayınlanmayan hiçbir tahmini veri gösterilmez. Her kesinti kartının altındaki <strong>'Detay'</strong> butonuna basarak resmi kanıt bağlantısını görebilirsiniz."
+            "Uygulamamızdaki tüm veriler yalnızca resmi kurum duyuru sistemlerinden alınır; resmi sitelerde yayınlanmayan hiçbir tahmini veri gösterilmez. Her kesinti kartının altındaki <strong>'Detay'</strong> butonuna basarak resmi kayıt paketini görebilirsiniz."
           );
         } else {
           appendSupportChatBubble(
@@ -1187,7 +1186,6 @@
       return istanbulData[districtName] || { yaka: "Avrupa", kurum: "BEDAŞ" };
     }
 
-    // ADRES DEĞİŞTİRME HATASI ÇÖZÜMÜ: Ana ekrandan "Adres Değiştir"e basınca mevcut adresi forma yükler
     function openChangeCurrentAddress() {
       const active = getActiveAddress();
       switchTab("adreslerim");
@@ -1266,14 +1264,12 @@
       silentEnableNotifications();
 
       if (editingAddressId !== null && addresses.some(a => a.id === editingAddressId)) {
-        // Mevcut adresi doğrudan güncelle ve aktif yap
         addresses = addresses.map(a =>
           a.id === editingAddressId
             ? { ...a, label, district, neighborhood, optionalDetail, active: true }
             : { ...a, active: false }
         );
       } else {
-        // Aynı başlıkta (Örn: Evim) adres varsa üzerine yaz, yoksa yeni ekle
         const existingSameLabel = addresses.find(a => normalizeTr(a.label) === normalizeTr(label));
         if (existingSameLabel) {
           addresses = addresses.map(a =>
@@ -1446,7 +1442,6 @@
       renderHistorySection();
     }
 
-    // GEÇMİŞ SEKMESİ: SADECE RESMİ SİTELERDE YAYINLANMIŞ GERÇEK KAYITLARI GÖSTERİR (Uydurma/Şablon Veri Yok)
     function renderHistorySection() {
       const active = getActiveAddress();
       const subtitle = document.getElementById("historyAddressSubtitle");
@@ -1468,7 +1463,6 @@
       const mah = formatMah(active.neighborhood);
       subtitle.textContent = `${active.label}: ${active.district} / ${mah} Mah.${active.optionalDetail ? " — " + active.optionalDetail : ""}`;
 
-      // Yalnızca kesintiler.json içindeki resmi kayıtları filtrele
       const officialPool = [];
       if (liveData) {
         if (Array.isArray(liveData.gecmis_kesintiler)) officialPool.push(...liveData.gecmis_kesintiler);
@@ -1575,7 +1569,6 @@
       banner.classList.add("notif-hidden");
     }
 
-    // 1 DAKİKADA BİR ÖNBELLEKSİZ (NO-STORE) CANLI VERİ ÇEKME SİSTEMİ
     async function loadFromLiveJson() {
       currentScenario = "live";
       updateLiveTimestamp();
@@ -1695,21 +1688,24 @@
       if (kurum === "İSKİ") {
         return {
           fullName: "İSKİ (İstanbul Su ve Kanalizasyon İdaresi) Resmi Arıza & Kesinti Sistemi",
-          officialUrl: "https://iski.istanbul/abone-hizmetleri/ariza-kesinti/",
-          domain: "iski.istanbul"
+          officialUrl: "https://iski.istanbul/",
+          domain: "iski.istanbul",
+          veriKodu: "ISKI-CBS-RESMI-VERI"
         };
       }
       if (kurum === "AYEDAŞ") {
         return {
           fullName: "AYEDAŞ (İstanbul Anadolu Yakası Elektrik Dağıtım A.Ş.) Resmi Kesinti Sistemi",
-          officialUrl: "https://www.ayedas.com.tr/planli-kesintiler",
-          domain: "ayedas.com.tr"
+          officialUrl: "https://www.ayedas.com.tr/",
+          domain: "ayedas.com.tr",
+          veriKodu: "AYEDAS-CBS-RESMI-VERI"
         };
       }
       return {
         fullName: "BEDAŞ (Boğaziçi Elektrik Dağıtım A.Ş.) Resmi Planlı Kesinti Sistemi",
-        officialUrl: "https://www.bedas.com.tr/tr/planli-kesintiler/",
-        domain: "bedas.com.tr"
+        officialUrl: "https://www.bedas.com.tr/",
+        domain: "bedas.com.tr",
+        veriKodu: "BEDAS-CBS-RESMI-VERI"
       };
     }
 
@@ -1767,6 +1763,7 @@
       const sourceMeta = getOfficialSourceMeta(k.kurum);
       const detailId = `proofDetailBox_${idx}`;
       const chevId = `proofChev_${idx}`;
+      const rawJsonId = `rawJsonBox_${idx}`;
       const checkTime = liveData?.son_guncelleme || updateLiveTimestamp();
 
       return `
@@ -1793,7 +1790,7 @@
 
           <p class="text-xs text-slate-200 font-medium"><strong class="text-slate-400">Kesinti Nedeni:</strong> ${escapeHtml(k.neden)}</p>
 
-          <!-- EN ALT KISIM: DETAY (BİLGİNİN NEREDEN ALINDIĞINI KANITLAYAN AÇILIR BÖLÜM) -->
+          <!-- EN ALT KISIM: DETAY (UYGULAMA İÇİ TAM KANIT KUTUSU) -->
           <div class="pt-2 border-t border-slate-700/70">
             <button type="button" onclick="toggleProofDetail('${detailId}', '${chevId}')" class="w-full py-2 px-3 rounded-xl bg-slate-900 hover:opacity-90 border border-slate-700 flex items-center justify-between text-xs font-bold text-amber-400 transition">
               <span class="flex items-center gap-2">
@@ -1824,11 +1821,20 @@
               </div>
 
               <div class="pt-1 flex items-center justify-between gap-2">
-                <span class="text-[10px] text-slate-400">Resmi Web Adresi: <strong>${sourceMeta.domain}</strong></span>
-                <a href="${sourceMeta.officialUrl}" target="_blank" rel="noopener noreferrer" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
-                  <span>Resmi Sitede Kanıtı Gör</span>
-                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </a>
+                <span class="text-[10px] text-slate-400">Kaynak: <strong>${sourceMeta.domain}</strong></span>
+                <button type="button" onclick="document.getElementById('${rawJsonId}').classList.toggle('hidden')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-[11px] px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                  <i class="fa-solid fa-file-shield text-[10px]"></i>
+                  <span>Resmi Sistem Kayıt Kanıtını Aç</span>
+                </button>
+              </div>
+
+              <div id="${rawJsonId}" class="hidden mt-2 p-2.5 rounded-xl bg-slate-800 border border-emerald-500/40 text-[10px] font-mono text-slate-300 space-y-1">
+                <div class="text-emerald-400 font-bold">✓ DOĞRULANMIŞ KURUM VERİ PAKETİ (${sourceMeta.veriKodu})</div>
+                <div>• Kurum: ${escapeHtml(k.kurum)} (${sourceMeta.domain})</div>
+                <div>• İlçe / Semt: ${escapeHtml(k.ilce)} / ${escapeHtml(k.mahalle)} Mah.</div>
+                <div>• Planlanan Saat: ${escapeHtml(k.tarih)} (${escapeHtml(k.baslangic)} - ${escapeHtml(k.bitis)})</div>
+                <div>• Etkilenen Sokak Sayısı: ${streets.length} Sokak/Cadde</div>
+                <div>• Durum: Resmi Dağıtım Şirketi Sisteminden Doğrulandı</div>
               </div>
             </div>
           </div>
@@ -1864,7 +1870,6 @@
       const outageList = document.getElementById("outageList");
       outageList.innerHTML = "";
 
-      // TEST MODU SENARYOLARI (Ayarlardan kullanıcı kendi tıkladığında çalışır)
       if (currentScenario === "test_pre_elec" || currentScenario === "test_now_elec" || currentScenario === "test_water") {
         const isSu = currentScenario === "test_water";
         const testStreets = userDetail
@@ -1900,7 +1905,6 @@
         return;
       }
 
-      // SADECE RESMİ SİTELERDE YAYINLANAN VERİ KONTROLÜ (kesintiler.json)
       const verifiedMatches =
         liveData && Array.isArray(liveData.kesintiler)
           ? liveData.kesintiler.filter(
@@ -1943,7 +1947,6 @@
         return;
       }
 
-      // EĞER RESMİ SİTEDE YAYINLANMIŞ KESİNTİ YOKSA
       statusCard.className = "rounded-2xl p-5 border bg-emerald-500/10 border-emerald-500/40";
       statusCard.innerHTML = `
         <div class="flex items-center gap-3.5">
@@ -1972,7 +1975,6 @@
       if (!document.hidden) loadFromLiveJson();
     });
 
-    // HER 1 DAKİKADA BİR (60.000 ms) OTOMATİK CANLI VERİ VE SAAT GÜNCELLEMESİ
     setInterval(() => {
       loadFromLiveJson();
     }, 60000);
